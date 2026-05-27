@@ -1,0 +1,19 @@
+.main_content_wrapper{
+    background-color: #35273A;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 40px 20px 0 20px;
+    margin: 0 auto;
+    max-width: 1260px;
+    width: 100%;
+    box-sizing: border-box;
+}
