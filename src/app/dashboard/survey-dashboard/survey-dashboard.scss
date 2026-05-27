@@ -17,3 +17,50 @@ header{
     width: 100%;
     box-sizing: border-box;
 }
+
+h1, h2, h3{
+    font-family: "Nerko", sans-serif;
+}
+
+h1{
+    &.h1__hero{
+        color: #FFB770;
+    }
+}
+
+.hero-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // text-align: center;
+    padding: 0 20px;
+    margin: 0 auto;
+    max-width: 1260px;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+.headline-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    // text-align: center;
+    
+    &__hero-description{
+        color: #FFFFFF;
+        font-family: "Mulish SemiBold", sans-serif;
+    }
+}
+
+@font-face {
+    font-family: "Nerko";
+    src: url("/assets/fonts/Nerko_One/NerkoOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Mulish SemiBold";
+    src: url("/assets/fonts/Mulish/static/Mulish-SemiBold.ttf") format("truetype");
+}
