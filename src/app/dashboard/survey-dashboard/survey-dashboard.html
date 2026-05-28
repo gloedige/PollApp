@@ -1,6 +1,6 @@
 <div class="main_content_wrapper">
     <header>
-        <img src="../../../../assets/images/logo_orange.png" alt="">
+        <img src="/assets/images/logo_orange.png" alt="Logo">
     </header>
     <section class="hero-section">
         <div class="headline-container">
@@ -16,4 +16,13 @@
             <img src="/assets/images/hero_img_hover.png" alt="hero image hover" class="hero-img-container__hover-img">
         </div>
     </section>
-</div>
+    <section class="ending-soon-section">
+        <h2 class="h2__ending-soon">Your surveys</h2>
+        <p class="ending-soon-section__description">Ending soon surveys</p>
+        @if (endingSoonSurvey(); as survey) {
+        <app-survey-card [survey]="survey" listType="ending_soon"></app-survey-card>
+        } @else {
+        <p>No surveys ending soon.</p>
+        }
+    </section>
+</div>          

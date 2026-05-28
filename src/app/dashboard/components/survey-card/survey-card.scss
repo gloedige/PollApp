@@ -1,0 +1,32 @@
+@use '../../../styles/abstract/color_variables' as colors;
+
+.survey-card{
+    background-color: colors.$gothic_purple;
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    span{
+        color: colors.$secondary_orange;
+        font-family: "Mulish SemiBold", sans-serif;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+    }
+    h2{
+        color: colors.$white;
+        font-family: "Mulish SemiBold", sans-serif;
+        font-size: 1.25rem;
+        margin: 0;
+    }
+    p{
+        color: colors.$white;
+        font-family: "Mulish Regular", sans-serif;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+}
