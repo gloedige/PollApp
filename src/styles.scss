@@ -1,4 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@use './app/styles/base/fonts';
+
+:root {
+    --font-family-headlines: "Nerko", sans-serif;
+    --font-family-text-default: "Mulish Regular", sans-serif;
+    --font-family-text-articles: "Mulish Medium", sans-serif;
+    --font-family-text-semi-bold: "Mulish SemiBold", sans-serif;
+    --font-family-text-bold: "Mulish Bold", sans-serif;
+    --font-family-primary-button: "Nokora Bold", sans-serif;
+    --font-family-secondary-button: "Nokora Regular", sans-serif;
+}
+
 body{
     margin: 0;
 }
