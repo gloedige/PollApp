@@ -1,5 +1,7 @@
+@use '../../styles/abstract/color_variables' as colors;
+
 .main_content_wrapper{
-    background-color: #35273A;
+    background-color: colors.$dark_purple;
     width: 100%;
     height: 100vh;
     z-index: 1;
@@ -27,7 +29,7 @@ h1{
     line-height: 89px;
     margin: 0;
     &.h1__hero{
-        color: #FFB770;
+        color: colors.$light_orange;
     }
 }
 
@@ -82,9 +84,9 @@ h1{
     flex: 1;
     
     &__hero-description{
-        color: #FFFFFF;
+        color: colors.$white;
         font-family: "Mulish SemiBold", sans-serif;
-        font-size: 24px;
+        font-size: 1.5rem;
         padding: 24px 46px 40px 0;
         margin: 0;
     }

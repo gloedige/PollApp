@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@use './app/styles/base/fonts';
+@use 'app/styles/base/fonts';
+@use 'app/styles/components/button';
+@use 'app/styles/abstract/color_variables' as colors;
 
 :root {
     --font-family-headlines: "Nerko", sans-serif;
