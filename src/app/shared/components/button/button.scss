@@ -1,5 +1,9 @@
 @use '../../../styles/abstract/color_variables' as colors;
 
+:host {
+    display: inline-block;
+}
+
 .button{
     cursor: pointer;
     display: flex;
