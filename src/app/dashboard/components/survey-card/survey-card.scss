@@ -1,32 +1,64 @@
 @use '../../../styles/abstract/color_variables' as colors;
 
 .survey-card{
-    background-color: colors.$gothic_purple;
-    border-radius: 20px;
-    padding: 24px;
-    width: 100%;
-    max-width: 400px;
+    background-color: colors.$transparent_gray;
+    border-radius: 5px;
+    border-top-right-radius: 50px;
+    padding: 12px 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-
-    span{
-        color: colors.$secondary_orange;
-        font-family: "Mulish SemiBold", sans-serif;
-        font-size: 0.875rem;
-        text-transform: uppercase;
+    
+    &--ending-soon{
+        height: 320px;
+        width: 310px;
+        color: colors.$dark_purple;
+        background-color: colors.$light_gray;
+        border-radius: 0px;
+        border-top-right-radius: 80px;
+        padding: 40px 44px 60px 44px;
+        
     }
-    h2{
+    
+    &__category{
+        color: colors.$secondary_orange;
+        font-family: var(--font-family-text-semi-bold);
+        font-size: 1rem;
+
+        &--ending-soon{
+            color: colors.$dark_purple;
+            font-size: 0.875rem;
+        }
+    }
+    
+    &__title{
         color: colors.$white;
-        font-family: "Mulish SemiBold", sans-serif;
-        font-size: 1.25rem;
-        margin: 0;
+        font-family: var(--font-family-text-bold);
+        font-size: 1.5rem;
+        margin: 8px 0 24px 0;
+        
+        &--ending-soon{
+            color: colors.$dark_purple;
+            font-size: 1.625rem;
+            margin: 8px 13px 64px 0;
+        }
     }
     p{
-        color: colors.$white;
-        font-family: "Mulish Regular", sans-serif;
-        font-size: 0.875rem;
+        color: colors.$dark_purple;
+        font-family: var(--font-family-text-articles);
+        font-size: 0.75rem;
         margin: 0;
+        padding: 3px 6px;
+        background-color: colors.$secondary_orange;
+        border-top-right-radius: 14px;
+        width: fit-content;
+    }
+
+    &__footer{
+        display: flex;
+        justify-content: flex-end;
+        &--ending-soon{
+            justify-content: flex-start;
+        }
     }
 }

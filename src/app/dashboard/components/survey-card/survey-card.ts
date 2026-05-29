@@ -10,5 +10,6 @@ import { Survey } from '../../interfaces/survey';
 })
 export class SurveyCard {
   @Input({required: true}) survey!: Survey;
+  @Input() showsEndingSoon = false;
 
 }
