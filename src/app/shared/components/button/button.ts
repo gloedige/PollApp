@@ -9,4 +9,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class Button {
   readonly primary = input<boolean>(true);
+  readonly text = input<string>('Button');
 }
