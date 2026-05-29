@@ -14,10 +14,10 @@
         </div>
     </section>
     <section class="ending-soon-section">
-        <h2 class="h2__ending-soon">Your surveys</h2>
+        <h2 class="ending-soon-section__title">Your surveys</h2>
         <p class="ending-soon-section__description">Ending soon surveys</p>
         @if (endingSoonSurvey(); as survey) {
-        <app-survey-card [survey]="survey" listType="ending_soon"></app-survey-card>
+        <app-survey-card [survey]="survey" listType="ending_soon" [showsEndingSoon]="true"></app-survey-card>
         } @else {
         <p>No surveys ending soon.</p>
         }

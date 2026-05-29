@@ -91,3 +91,30 @@ h1{
         margin: 0;
     }
 }
+
+.ending-soon-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+    margin: 92px auto 0 auto;
+    max-width: 1080px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &__title{
+        color: colors.$light_orange;
+        font-family: var(--font-family-headlines);
+        font-size: 4.5rem;
+        line-height: 100%;
+        margin: 0 auto;
+    }
+
+    &__description{
+        color: colors.$white;
+        font-family: var(--font-family-text-articles);
+        font-size: 2rem;
+        margin: 56px 0 32px 0;
+    }
+}
