@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Survey, SurveyType } from '../../interfaces/survey';
+import { Survey } from '../../interfaces/survey';
 
 @Component({
   selector: 'app-survey-card',
@@ -10,6 +10,5 @@ import { Survey, SurveyType } from '../../interfaces/survey';
 })
 export class SurveyCard {
   @Input({required: true}) survey!: Survey;
-  @Input() listType: SurveyType = 'active';
 
 }
