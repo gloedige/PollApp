@@ -1,0 +1,63 @@
+@use '../../../styles/abstract/color_variables' as colors;
+
+.button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    
+    &__primary{
+        font-family: var(--font-family-primary-button);
+        background-color: colors.$secondary_orange;
+        color: colors.$gothic_purple;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 1.125rem;
+        display: inline-flex;
+        align-items: center;
+        overflow: hidden;
+        transition: background-color 0.3s ease, padding-right 0.3s ease;
+        
+        &--icon{
+            width: 0;
+            height: 20px;
+            margin-left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-6px);
+            object-fit: contain;
+            transition: width 0.3s ease, margin-left 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        }
+    }
+    &__primary:hover{
+        background-color: colors.$light_orange;
+
+    }
+    &__primary:hover .button__primary--icon{
+        width: 20px;
+        margin-left: 12px;
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    &__secondary{
+        font-family: var(--font-family-secondary-button);
+        background-color: colors.$light_pastel;
+        color: colors.$dark_purple;
+        border: none;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+        &--isActive{
+            background-color: colors.$light_orange;
+        }
+    }
+
+    &__secondary:hover{
+        background-color: colors.$secondary_orange;
+    }
+}
