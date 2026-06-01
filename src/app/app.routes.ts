@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
-import { SurveyDashboard } from './dashboard/survey-dashboard/survey-dashboard';
+import { SurveyDashboard } from './features/survey-dashboard/survey-dashboard';
+import { SurveyDetail } from './features/survey-detail/survey-detail';
 
 export const routes: Routes = [
-    {path: "", component: SurveyDashboard}
+    {path: "", redirectTo: "dashboard", pathMatch: "full"},
+    {path: "dashboard", component: SurveyDashboard},
+    {path: "detail/:id", component: SurveyDetail}
 ];
