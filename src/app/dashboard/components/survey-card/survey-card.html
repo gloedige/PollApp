@@ -1,11 +1,11 @@
-<article class="survey-card" [class.survey-card--ending-soon]="showsEndingSoon">
+<article class="survey-card" [class.survey-card--ending-soon]="showsEndingSoonCard">
     <div class="survey-card__header">
-        <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoon">Team activities</span> <!-- TODO: connect to survey category -->
+        <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoonCard">{{ survey.category}}</span> <!-- TODO: connect to survey category -->
     </div>
     <div class="card-body">
-        <h2 class="survey-card__title" [class.survey-card__title--ending-soon]="showsEndingSoon">Let's plan the next team event together</h2>
+        <h2 class="survey-card__title" [class.survey-card__title--ending-soon]="showsEndingSoonCard">{{ survey.title }}</h2>
     </div>
-    <div class="survey-card__footer" [class.survey-card__footer--ending-soon]="showsEndingSoon">
-        <p>Ends in 1 Day</p>
+    <div class="survey-card__footer" [class.survey-card__footer--ending-soon]="showsEndingSoonCard">
+        <p>{{endsInText}}</p>
     </div>
 </article>

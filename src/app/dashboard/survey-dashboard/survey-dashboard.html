@@ -16,10 +16,14 @@
     <section class="ending-soon-section">
         <h2 class="ending-soon-section__title">Your surveys</h2>
         <p class="ending-soon-section__description">Ending soon surveys</p>
-        @if (endingSoonSurvey(); as survey) {
-        <app-survey-card [survey]="survey" listType="ending_soon" [showsEndingSoon]="true"></app-survey-card>
-        } @else {
-        <p>No surveys ending soon.</p>
-        }
+        <div class="ending-soon-section__surveys">
+            @if (endingSoonSurvey(); as survey) {
+                @for (survey of surveys(); track $index) {
+                    <app-survey-card [survey]="survey" listType="ending_soon" [showsEndingSoonCard]="true"></app-survey-card>
+                }
+            } @else {
+                <p>No surveys ending soon.</p>
+            }
+        </div>
     </section>
 </div>          
