@@ -32,22 +32,36 @@
                 <app-button [primary]="false" [text]="'Active surveys'"></app-button>
                 <app-button [primary]="false" [text]="'Past surveys'"></app-button>
             </div>
-            <button class="nav-bar__menu-button">
-                Sort by categories
-                <img src="/assets/icons/arrow_drop_down_open_default.png" alt="Arrow Down" class="nav-bar__menu-button__default-img">
-                <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="nav-bar__menu-button__hover-img">
-                <img src="/assets/icons/arrow_drop_down_open_active.png" alt="Arrow Down Active" class="nav-bar__menu-button__active-img">
-                <div class="dropdown-content">
-                    <menu>
-                        <li class="menu-item">Team Activities</li>
-                        <li class="menu-item">Health & Wellness</li>
-                        <li class="menu-item">Gaming & Entertainment</li>
-                        <li class="menu-item">Education & Learning</li>
-                        <li class="menu-item">Lifestyle & Preferences</li>
-                        <li class="menu-item">Technology & Innovation</li>
-                    </menu>
-                </div>
-            </button>
+            <div class="nav-bar__menu-container">
+                <button class="nav-bar__menu-button">
+                    Sort by categories
+                    <div class="nav-bar__menu-button--arrow-container">
+                        <img src="/assets/icons/arrow_drop_down_open_default.png" alt="Arrow Down" class="nav-bar__menu-button--default-img">
+                        <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="nav-bar__menu-button--hover-img">
+                        <img src="/assets/icons/arrow_drop_down_open_active.png" alt="Arrow Down Active" class="nav-bar__menu-button--active-img">
+                    </div>
+                </button>
+                <menu class="nav-bar__dropdown-content">
+                    <li>
+                        <a class="menu-item">Team Activities</a>
+                    </li>
+                    <li>
+                        <a class="menu-item">Health & Wellness</a>
+                    </li>
+                    <li>
+                        <a class="menu-item">Gaming & Entertainment</a>
+                    </li>
+                    <li>
+                        <a class="menu-item">Education & Learning</a>
+                    </li>
+                    <li>
+                        <a class="menu-item">Lifestyle & Preferences</a>
+                    </li>
+                    <li>
+                        <a class="menu-item">Technology & Innovation</a>
+                    </li>
+                </menu>
+            </div>
         </nav>
         <div class="all-surveys-section__surveys">
             @if (surveys().length > 0) {

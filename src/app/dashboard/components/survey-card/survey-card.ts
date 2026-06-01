@@ -39,9 +39,11 @@ export class SurveyCard {
     } else if (daysUntilExpiry === 0) {
       return 'Ends today';
     } else if (daysUntilExpiry === 1) {
-      return 'Ends in 1 day';
+      return 'Ends in 1 Day';
+    } else if (daysUntilExpiry < 0) {
+      return 'Expired';
     } else {
-      return `Ends in ${daysUntilExpiry} days`;
+      return `Ends in ${daysUntilExpiry} Days`;
     }
   }
 
