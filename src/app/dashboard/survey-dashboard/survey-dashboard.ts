@@ -11,6 +11,7 @@ import { Button } from '../../shared/components/button/button';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SurveyDashboard {
+  @Input() isMenuOpen = false;
   readonly surveys = signal<Survey[]>([
     {
       id: 1,
@@ -38,4 +39,9 @@ export class SurveyDashboard {
     },
   ]);
   readonly endingSoonSurvey = computed(() => this.surveys()[0] ?? null);
+
+  toggleStateOfDropdownMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
 }
