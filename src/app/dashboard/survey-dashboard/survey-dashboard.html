@@ -26,4 +26,37 @@
             }
         </div>
     </section>
+    <section class="all-surveys-section">
+        <nav class="nav-bar">
+            <div class="nav-bar__button-container">
+                <app-button [primary]="false" [text]="'Active surveys'"></app-button>
+                <app-button [primary]="false" [text]="'Past surveys'"></app-button>
+            </div>
+            <button class="nav-bar__menu-button">
+                Sort by categories
+                <img src="/assets/icons/arrow_drop_down_open_default.png" alt="Arrow Down" class="nav-bar__menu-button__default-img">
+                <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="nav-bar__menu-button__hover-img">
+                <img src="/assets/icons/arrow_drop_down_open_active.png" alt="Arrow Down Active" class="nav-bar__menu-button__active-img">
+                <div class="dropdown-content">
+                    <menu>
+                        <li class="menu-item">Team Activities</li>
+                        <li class="menu-item">Health & Wellness</li>
+                        <li class="menu-item">Gaming & Entertainment</li>
+                        <li class="menu-item">Education & Learning</li>
+                        <li class="menu-item">Lifestyle & Preferences</li>
+                        <li class="menu-item">Technology & Innovation</li>
+                    </menu>
+                </div>
+            </button>
+        </nav>
+        <div class="all-surveys-section__surveys">
+            @if (surveys().length > 0) {
+                @for (survey of surveys(); track $index) {
+                    <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
+                }
+            } @else {
+                <p>No recently edited surveys.</p>
+            }
+        </div>
+    </section>
 </div>          
