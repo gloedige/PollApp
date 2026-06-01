@@ -28,6 +28,14 @@ export class SurveyDashboard {
       category: 'Work culture',
       state: 'active',
     },
+    {
+      id: 3,
+      title: 'Select topics for our monthly knowledge sharing sessions',
+      expiry_date: '2026-05-30',
+      description: 'Help us choose topics for our monthly knowledge sharing sessions.',
+      category: 'Professional development',
+      state: 'past',
+    },
   ]);
   readonly endingSoonSurvey = computed(() => this.surveys()[0] ?? null);
 }

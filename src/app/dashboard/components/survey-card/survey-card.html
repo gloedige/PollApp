@@ -2,7 +2,7 @@
     <div class="survey-card__header">
         <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoonCard">{{ survey.category}}</span> <!-- TODO: connect to survey category -->
     </div>
-    <div class="card-body">
+    <div class="survey-card__body">
         <h2 class="survey-card__title" [class.survey-card__title--ending-soon]="showsEndingSoonCard">{{ survey.title }}</h2>
     </div>
     <div class="survey-card__footer" [class.survey-card__footer--ending-soon]="showsEndingSoonCard">

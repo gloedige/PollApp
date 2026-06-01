@@ -8,6 +8,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     
     &--ending-soon{
         height: 320px;
@@ -35,12 +36,11 @@
         color: colors.$white;
         font-family: var(--font-family-text-bold);
         font-size: 1.5rem;
-        margin: 8px 0 24px 0;
+        margin: 8px 0;
         
         &--ending-soon{
             color: colors.$dark_purple;
             font-size: 1.625rem;
-            margin: 8px 13px 64px 0;
         }
     }
     p{
@@ -52,6 +52,10 @@
         background-color: colors.$secondary_orange;
         border-top-right-radius: 14px;
         width: fit-content;
+    }
+
+    &__body{
+        flex: 1;
     }
 
     &__footer{
