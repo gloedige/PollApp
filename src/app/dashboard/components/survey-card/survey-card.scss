@@ -14,11 +14,14 @@
         height: 320px;
         width: 310px;
         color: colors.$dark_purple;
-        background-color: colors.$light_gray;
+        background-color: colors.$light_purple_1;
         border-radius: 0px;
         border-top-right-radius: 80px;
         padding: 40px 44px 60px 44px;
-        
+    }
+
+    &--ending-soon:hover {
+        background-color: colors.$light_purple_2;
     }
     
     &__category{
