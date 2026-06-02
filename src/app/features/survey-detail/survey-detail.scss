@@ -6,6 +6,59 @@
     background-color: colors.$light_purple_3;
 }
 
-header{
+.survey-detail-shell{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 40px 20px 0 20px;
+    margin: 0 auto;
+    max-width: 1100px;
+    width: 100%;
+    gap: 42px;
+    box-sizing: border-box;
+}
+
+.survey-detail-container{
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin: 92px auto 0 auto;
+    max-width: 740px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.survey-detail-header{
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    margin-bottom: 48px;
+
+    h1{
+        font-family: var(--font-family-headlines);
+        font-size: 3.5rem;
+        line-height: 50px;
+        margin: 0;
+        color: colors.$light_orange;
+    }
+
+    &__expiry-date-category-container{
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+
+        .expiry-date{
+            font-family: "Mulish Regular", sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+            color: colors.$dark_purple;
+        }
+
+        .category{
+            font-family: "Mulish SemiBold", sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+            color: colors.$dark_purple;
+        }
+    }
 }
