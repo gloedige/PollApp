@@ -34,6 +34,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 48px;
+    gap: 8px;
 
     h1{
         font-family: var(--font-family-headlines);
@@ -44,23 +45,37 @@
         color: colors.$primary_orange;
     }
 
+    &__state{
+        color: colors.$gothic_purple;
+        font-family: var(--font-family-text-semi-bold);
+        font-size: 1rem;
+        margin: 0;
+        padding: 3px 12px 3px 8px;
+        background-color: colors.$primary_orange;
+        border-top-right-radius: 14px;
+        width: fit-content;
+    }
+
     &__expiry-date-category-container{
+        justify-content: space-between;
         display: flex;
         flex-direction: row;
-        gap: 16px;
+        font-family: var(--font-family-text-articles);
+        font-size: 0.875rem;
+        color: colors.$dark_purple;
+        margin: 0;    
+    }
 
-        .expiry-date{
-            font-family: "Mulish Regular", sans-serif;
-            font-size: 16px;
-            line-height: 20px;
-            color: colors.$dark_purple;
-        }
+    &__expiry-date,
+    &__category{
+        margin: 0;
+    }
 
-        .category{
-            font-family: "Mulish SemiBold", sans-serif;
-            font-size: 16px;
-            line-height: 20px;
-            color: colors.$dark_purple;
-        }
+    &__description{
+        color: colors.$dark_purple;
+        font-family: var(--font-family-text-articles);
+        font-size: 1rem;
+        line-height: 100%;
+        margin: 0;
     }
 }
