@@ -1,22 +1,9 @@
 @use '../../styles/abstract/color_variables' as colors;
+@use '../../styles/layout/header.scss';
+@use '../../styles/layout/page_shell.scss';
 
-.main_content_wrapper{
+.body-color{
     background-color: colors.$dark_purple;
-    width: 100%;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 40px 20px 0 20px;
-    margin: 0 auto;
-    max-width: 1260px;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 h1, h2, h3{

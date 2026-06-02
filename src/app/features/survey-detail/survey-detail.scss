@@ -1,0 +1,11 @@
+    
+@use '../../styles/abstract/color_variables' as colors;
+@use '../../styles/layout/header.scss';
+
+.body-color{
+    background-color: colors.$light_purple_3;
+}
+
+header{
+    justify-content: space-between;
+}
