@@ -1,7 +1,8 @@
 import { SurveyCard } from '../components/survey-card/survey-card';
-import { ChangeDetectionStrategy, Component, computed, signal, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, Input, inject, Renderer2 } from '@angular/core';
 import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-survey-dashboard',
@@ -12,6 +13,17 @@ import { Button } from '../../shared/components/button/button';
 })
 export class SurveyDashboard {
   @Input() isMenuOpen = false;
+  private readonly renderer = inject(Renderer2);
+  private readonly document = inject(DOCUMENT);
+
+  ngOnInit(): void {
+    this.renderer.addClass(this.document.body, 'dashboard-page');
+  }
+
+  ngOnDestroy(): void {
+    this.renderer.removeClass(this.document.body, 'dashboard-page');
+  }
+
   readonly surveys = signal<Survey[]>([
     {
       id: 1,

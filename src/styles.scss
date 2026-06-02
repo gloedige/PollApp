@@ -15,3 +15,11 @@
 body{
     margin: 0;
 }
+
+body.dashboard-page {
+  background-color: colors.$dark_purple;
+}
+
+body.detail-page {
+  background-color: colors.$light_purple_3;
+}
