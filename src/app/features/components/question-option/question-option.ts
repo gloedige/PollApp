@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class QuestionOption {
   @Input() optionText = 'Option text';
-  @Input() counter_letter = 'A';
+  @Input() order_letter = 'A';
 }
   

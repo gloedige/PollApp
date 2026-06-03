@@ -16,7 +16,9 @@
                 <article class="survey-detail-header__description">Survey Description</article>
             </div>
             <div class="survey-detail-body">
-                
+                @for (item of questions(); track $index) {
+                    <app-question-option-block [questionId]="item.id"></app-question-option-block>
+                }
             </div>
             <div class="survey-detail-footer">
                 <app-button [primary]="true" [text]="'Complete survey'"></app-button>
