@@ -9,14 +9,17 @@
             <div class="survey-detail-header">
                 <p class="survey-detail-header__state">Draft</p>
                 <div class="survey-detail-header__expiry-date-category-container">
-                    <p class="survey-detail-header__expiry-date">Survey Expiry Date</p>
-                    <p class="survey-detail-header__category">Survey Category</p>
+                    <p class="survey-detail-header__expiry-date">Ends on Survey Expiry Date</p>
+                    <p class="survey-detail-header__category">Category: Survey Category</p>
                 </div>
                 <h1 class="survey-detail-header__title">Survey Title</h1>
                 <article class="survey-detail-header__description">Survey Description</article>
             </div>
             <div class="survey-detail-body">
                 
+            </div>
+            <div class="survey-detail-footer">
+                <app-button [primary]="true" [text]="'Complete survey'"></app-button>
             </div>
         </section>
         <section class="survey-results-container">
