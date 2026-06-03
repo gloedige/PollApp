@@ -1,1 +1,9 @@
-<p>question-option-block works!</p>
+<h4>#1 Question Option Block</h4>
+<p>More than one answer is possible.</p>
+<div>
+    @for (item of questions(); track $index) {
+        <app-question-option [optionText]="'Option 1'"></app-question-option>
+    }
+</div>
+
+

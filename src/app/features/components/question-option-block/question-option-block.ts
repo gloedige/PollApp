@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { QuestionOption } from '../question-option/question-option';
 
 type Question = {
     id: number;
@@ -15,7 +16,7 @@ type Option = {
 
 @Component({
   selector: 'app-question-option-block',
-  imports: [],
+  imports: [QuestionOption],
   templateUrl: './question-option-block.html',
   styleUrl: './question-option-block.scss',
 })
