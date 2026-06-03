@@ -81,6 +81,13 @@
     }
 }
 
+.survey-detail-body{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    
+}
+
 .survey-detail-footer{
     display: flex;
     justify-content: flex-end;
