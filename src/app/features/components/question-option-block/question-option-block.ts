@@ -25,12 +25,20 @@ type Option = {
 
 export class QuestionOptionBlock {
   @Input() questionId = 0;
-  readonly questionOptions = signal<Option[]>([]);
   surveyDetails = inject(SurveyDetail);
+  readonly questionOptions = signal<Option[]>([]);
+  readonly hasMultipleOptions = signal(false);
+  readonly questionText = signal('');
+  readonly numberOfQuestion = signal(0);
+  readonly order_letter = signal<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
 
   ngOnInit() {
     this.surveyDetails.getFilteredOptions(this.questionId);
     this.questionOptions.set(this.surveyDetails.filteredOptions);
+    this.hasMultipleOptions.set(this.surveyDetails.getStateOfMultipleOptions(this.questionId));
+    this.questionText.set(this.surveyDetails.questions().find(question => question.id === this.questionId)?.question ?? '');
+    this.numberOfQuestion.set(this.surveyDetails.getNumberOfQuestion(this.questionId));
+    this.order_letter.set(this.surveyDetails.order_letter);
   }
 
 

@@ -26,6 +26,9 @@ export class SurveyDetail {
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   filteredOptions: Option[] = [];
+  multipleOptions: boolean = false;
+  numberOfQuestion: number = 0;
+  order_letter: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   ngOnInit(): void {
     this.renderer.addClass(this.document.body, 'detail-page');
@@ -37,6 +40,20 @@ export class SurveyDetail {
 
   getFilteredOptions(questionId: number) {
     this.filteredOptions = this.options().filter(option => option.question_id === questionId);
+  }
+
+  getStateOfMultipleOptions(questionId: number) {
+    this.multipleOptions = this.questions().find(question => question.id === questionId)?.multiple_options ?? false;
+    return this.multipleOptions;
+  }
+
+  getNumberOfQuestion(questionId: number) {
+    this.numberOfQuestion = this.questions().findIndex(question => question.id === questionId) + 1;
+    return this.numberOfQuestion;
+  }
+
+  getOrderLetter(index: number) {
+    return this.order_letter[index] ?? '';
   }
 
 

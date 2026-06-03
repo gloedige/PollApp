@@ -1,9 +1,9 @@
 <div class="question-option-block-container">
-    <h4>#1 Question text</h4>
-    <p>More than one answer is possible.</p>
+    <h4>{{ numberOfQuestion() }}. {{ questionText() }}</h4>
+    <p [class.hidden]="!hasMultipleOptions()">More than one answer is possible.</p>
     <div>
         @for (item of questionOptions(); track $index) {
-            <app-question-option [optionText]="item.option_text" [order_letter]="'A'"></app-question-option>
+            <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]"></app-question-option>
         }
     </div>
 </div>
