@@ -3,7 +3,7 @@
     <p [class.hidden]="!hasMultipleOptions()" class="question-option-block-container__subtitle">More than one answer is possible.</p>
     <div class="question-option-block-container__options">
         @for (item of questionOptions(); track $index) {
-            <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]"></app-question-option>
+            <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]" [optionId]="item.id"></app-question-option>
         }
     </div>
 </div>

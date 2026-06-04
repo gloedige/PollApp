@@ -7,7 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './question-option.scss',
 })
 export class QuestionOption {
-  @Input() optionText = 'Option text';
-  @Input() order_letter = 'A';
+  @Input() optionText: string = 'Option text';
+  @Input() order_letter: string = 'A';
+  @Input() optionId: number = 0;
 }
   
