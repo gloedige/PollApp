@@ -1,7 +1,7 @@
 @if (primary()) {
     <button class="button button__primary">
         {{text()}}
-        <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon">
+        <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon" [class.hidden]="hideIcon">
     </button>
 } @else {
     <button class="button button__secondary">

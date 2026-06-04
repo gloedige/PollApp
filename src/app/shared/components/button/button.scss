@@ -11,7 +11,7 @@
     
     &__primary{
         font-family: var(--font-family-primary-button);
-        background-color: colors.$secondary_orange;
+        background-color: var(--button-primary-bg, #{colors.$secondary_orange});
         color: colors.$gothic_purple;
         border: none;
         padding: 12px 16px;
@@ -34,7 +34,7 @@
         }
     }
     &__primary:hover{
-        background-color: colors.$light_orange;
+        background-color: var(--button-primary-hover-bg, #{colors.$light_orange});
 
     }
     &__primary:hover .button__primary--icon{
@@ -64,4 +64,8 @@
     &__secondary:hover{
         background-color: colors.$secondary_orange;
     }
+}
+
+.hidden{
+    display: none;
 }

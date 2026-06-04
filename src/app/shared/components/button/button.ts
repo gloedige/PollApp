@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -10,4 +10,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 export class Button {
   readonly primary = input<boolean>(true);
   readonly text = input<string>('Button');
+  @Input() hideIcon: boolean = false;
 }

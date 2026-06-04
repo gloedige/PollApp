@@ -101,4 +101,9 @@
 .survey-detail-footer{
     display: flex;
     justify-content: flex-end;
+
+    app-button{
+        --button-primary-bg: #{colors.$light_orange_transparent_1};
+        --button-primary-hover-bg: #{colors.$light_orange_transparent_2};
+    }
 }
