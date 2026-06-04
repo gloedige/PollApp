@@ -4,7 +4,6 @@
         <app-button [primary]="true" [text]="'Create survey'"></app-button>
     </header>
     <div class="survey-detail-shell">
-        
         <section class="survey-detail-container">
             <div class="survey-detail-header">
                 <p class="survey-detail-header__state">Draft</p>
@@ -25,7 +24,14 @@
             </div>
         </section>
         <section class="survey-results-container">
-            
+            <h3 class="survey-results-title">Survey results <span>LIVE</span></h3>
+            <div class="survey-results-body">
+                <p class="survey-results-body__placeholder hidden">Results will be shown here after participants complete the survey.</p>
+                <p class="survey-results-body__placeholder survey-results-body__no-answers hidden">There are no answers yet.</p>
+                @for (result of results(); track $index) {
+                    <app-question-result-block [result]="result"></app-question-result-block>
+                }
+            </div>
         </section>
     </div>
 </div>

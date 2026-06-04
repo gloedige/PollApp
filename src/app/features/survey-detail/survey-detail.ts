@@ -2,6 +2,7 @@ import { Component, inject, Renderer2, signal } from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import {DOCUMENT} from "@angular/common";
 import { QuestionOptionBlock } from '../components/question-option-block/question-option-block';
+import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
 
 type Question = {
     id: number;
@@ -16,9 +17,15 @@ type Option = {
     option_selected: boolean;
 }
 
+type Result = {
+    id: number;
+    question_id: number;
+    option_id: number;
+}
+
 @Component({
   selector: 'app-survey-detail',
-  imports: [Button, QuestionOptionBlock],
+  imports: [Button, QuestionOptionBlock, QuestionResultBlock],
   templateUrl: './survey-detail.html',
   styleUrl: './survey-detail.scss',
 })
@@ -132,5 +139,38 @@ export class SurveyDetail {
         option_text: 'Stress management',
         option_selected: false
     },
-  ]); 
+  ]);
+
+  readonly results = signal<Result[]>([
+    {
+      id: 1,
+      question_id: 1,
+      option_id: 1
+    },
+    {
+      id: 2,
+      question_id: 1,
+      option_id: 2
+    },
+    {
+      id: 3,
+      question_id: 2,
+      option_id: 4
+    },
+    {
+      id: 4,
+      question_id: 3,
+      option_id: 7
+    },
+    {
+      id: 5,
+      question_id: 3,
+      option_id: 8
+    },
+    {
+      id: 6,
+      question_id: 3,
+      option_id: 9
+    }
+  ]);
 }
