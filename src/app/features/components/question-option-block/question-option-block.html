@@ -1,6 +1,11 @@
 <div class="question-option-block-container">
-    <h4 class="question-option-block-container__title">{{ numberOfQuestion() }}. {{ questionText() }}</h4>
-    <p [class.hidden]="!hasMultipleOptions()" class="question-option-block-container__subtitle">More than one answer is possible.</p>
+    <div class="question-option-block-container__header">
+        <h4 class="question-option-block-container__title">{{ numberOfQuestion() }}.</h4>
+        <div class="question-option-block-container__header-content">
+            <h4 class="question-option-block-container__title">{{ questionText() }}</h4>
+            <p [class.hidden]="!hasMultipleOptions()" class="question-option-block-container__subtitle">More than one answer is possible.</p>
+        </div>
+    </div>
     <div class="question-option-block-container__options">
         @for (item of questionOptions(); track $index) {
             <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]" [optionId]="item.id"></app-question-option>

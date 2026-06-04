@@ -3,7 +3,7 @@
 .question-option-container{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     gap: 4px;
     font-family: var(--font-family-text-default);
     font-size: 1rem;
@@ -16,22 +16,24 @@
     }
 
     &__checkbox{
-        width: 15px;
-        height: 15px;
-        border-radius: 3px;
-        box-sizing: border-box;
-        border: 1.5px solid colors.$dark_purple;
+        width: 21px;
+        height: 21px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 15px;
-
+        margin: 0 12px 0 4px;
+        
         input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
             margin: 0;
             cursor: pointer;
+            width: 15px;
+            height: 15px;
+            box-sizing: border-box;
+            border: 1.5px solid colors.$dark_purple;
+            border-radius: 3px;
         }
 
         input[type="checkbox"]::before {
@@ -44,7 +46,7 @@
         }
         
         input[type="checkbox"]:checked {
-            border-radius: 3px;
+            border: none;
             background-color: colors.$primary_orange;
         }
         

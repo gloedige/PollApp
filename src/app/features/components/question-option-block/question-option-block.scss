@@ -1,11 +1,23 @@
 @use '../../../styles/abstract/color_variables' as colors;
 
+:host {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+}
 
 .question-option-block-container{
     display: flex;
     flex-direction: column;
     max-width: 300px;
     width: 100%;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 6px;
+    }
 
     &__title{
         font-family: var(--font-family-text-bold);
