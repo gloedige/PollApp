@@ -28,8 +28,8 @@
             <div class="survey-results-body">
                 <p class="survey-results-body__placeholder hidden">Results will be shown here after participants complete the survey.</p>
                 <p class="survey-results-body__placeholder survey-results-body__no-answers hidden">There are no answers yet.</p>
-                @for (result of results(); track $index) {
-                    <app-question-result-block [questionId]="result.question_id" [result]="result"></app-question-result-block>
+                @for (item of questions(); track $index) {
+                    <app-question-result-block [questionId]="item.id"></app-question-result-block>
                 }
             </div>
         </section>
