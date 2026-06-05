@@ -1,7 +1,9 @@
 <div class="question-result-block-container">
-    <h4 class="question-result-block-container__title">{{ numberOfQuestion() }}.</h4>
-    <div class="question-result-block-container__header-content">
-        <h4 class="question-result-block-container__title">{{ questionText() }}</h4>
+    <div class="question-result-block-container__header">
+        <h4 class="question-result-block-container__title">{{ numberOfQuestion() }}.</h4>
+        <div class="question-result-block-container__header-content">
+            <h4 class="question-result-block-container__title">{{ questionText() }}</h4>
+        </div>
     </div>
     <div class="question-result-block-container__options">
         @for (item of questionOptions(); track $index) {
