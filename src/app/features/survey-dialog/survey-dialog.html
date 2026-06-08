@@ -8,23 +8,33 @@
             </div>
         </header>
         <form class="dialog-container-form">
-            <div class="dialog-container-form__detail-container">
-                <div class="dialog-container-form__detail-container--title-date-container">
+            <div class="form-detail-container">
+                <div class="form-detail-container--title-date-container">
                     <label for="survey-title" class="dialog-container-form__label">Survey name</label>
-                    <input id="survey-title" type="text" class="dialog-container-form__input">
-                    <div class="dialog-container-form__detail-container--date-category-container">
-                        <div class="dialog-container-form__detail-container--date-container">
-                            <label for="survey-expiry-date" class="dialog-container-form__label">Survey end date <span class="dialog-container-form__label--optional">(optional)</span></label>
-                            <input id="survey-expiry-date" type="date" class="dialog-container-form__input">
+                    <div class="form-detail-container__input-container">
+                        <input id="survey-title" type="text" class="dialog-container-form__input">
+                        <div class="form-detail-container__icon-container">
+                            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
                         </div>
-                        <div class="dialog-container-form__detail-container--category-container">
-                            
+                    </div>
+                    <div class="form-detail-container--date-category-container">
+                        <div class="form-detail-container--date-container">
+                            <label for="survey-expiry-date" class="dialog-container-form__label">Survey end date <span class="dialog-container-form__label--optional">(optional)</span></label>
+                            <div class="form-detail-container__input-container">
+                                <input id="survey-expiry-date" type="date" class="dialog-container-form__input">
+                            </div>
+                        </div>
+                        <div class="form-detail-container--category-container">
+
                         </div>
                     </div>   
                 </div>
-                 <div class="dialog-container-form__detail-container--description-container">
+                 <div class="form-detail-container--description-container">
                      <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
-                     <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea"></textarea>
+                     <div class="form-detail-container__input-container">
+                         <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea"></textarea>
+                     </div>
                 </div>
             </div>
             <div class="dialog-container-form__question-container">
