@@ -1,0 +1,46 @@
+<div class="dialog-background">
+    <div class="dialog-container">
+        <header class="dialog-container-header">
+            <p class="dialog-container-header__state">Draft</p>
+            <div class="dialog-container-header__headline-cancel-button-container">
+                <h2 class="dialog-container-header__title">Create a new survey</h2>
+                <app-button [primary]="true" [text]="'Cancel'" [hideIcon]="false"></app-button>
+            </div>
+        </header>
+        <form class="dialog-container-form">
+            <div class="dialog-container-form__detail-container">
+                <div class="dialog-container-form__detail-container--title-date-container">
+                    <label for="survey-title" class="dialog-container-form__label">Survey name</label>
+                    <input id="survey-title" type="text" class="dialog-container-form__input">
+                    <div class="dialog-container-form__detail-container--date-category-container">
+                        <div class="dialog-container-form__detail-container--date-container">
+                            <label for="survey-expiry-date" class="dialog-container-form__label">Survey end date <span class="dialog-container-form__label--optional">(optional)</span></label>
+                            <input id="survey-expiry-date" type="date" class="dialog-container-form__input">
+                        </div>
+                        <div class="dialog-container-form__detail-container--category-container">
+                            
+                        </div>
+                    </div>   
+                </div>
+                 <div class="dialog-container-form__detail-container--description-container">
+                     <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
+                     <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea"></textarea>
+                </div>
+            </div>
+            <div class="dialog-container-form__question-container">
+                <div class="dialog-container-form__question-container__question">
+                    <label for="question-1" class="dialog-container-form__label">1. Question</label>
+                    <input id="question-1" type="text" class="dialog-container-form__input">
+                </div>
+                <div class="dialog-container-form__question-container__question">
+                    <label for="question-2" class="dialog-container-form__label">2. Question</label>
+                    <input id="question-2" type="text" class="dialog-container-form__input">
+                </div>
+                <app-button [primary]="false" [text]="'Add question'" [hideIcon]="false"></app-button>
+            </div>
+        </form>
+        <footer class="dialog-container-footer">
+            <app-button [primary]="true" [text]="'Publish'" [hideIcon]="true"></app-button>
+        </footer>
+    </div>
+</div>

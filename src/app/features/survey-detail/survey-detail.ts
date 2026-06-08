@@ -3,6 +3,7 @@ import { Button } from "../../shared/components/button/button";
 import {DOCUMENT} from "@angular/common";
 import { QuestionOptionBlock } from '../components/question-option-block/question-option-block';
 import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
+import { SurveyDialog } from '../survey-dialog/survey-dialog';
 
 type Question = {
     id: number;
@@ -25,7 +26,7 @@ type Result = {
 
 @Component({
   selector: 'app-survey-detail',
-  imports: [Button, QuestionOptionBlock, QuestionResultBlock],
+  imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog],
   templateUrl: './survey-detail.html',
   styleUrl: './survey-detail.scss',
 })
