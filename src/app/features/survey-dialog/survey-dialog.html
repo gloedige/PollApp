@@ -23,17 +23,23 @@
                             <label for="survey-expiry-date" class="dialog-container-form__label">Survey end date <span class="dialog-container-form__label--optional">(optional)</span></label>
                             <div class="form-detail-container__input-container">
                                 <input id="survey-expiry-date" type="date" class="dialog-container-form__input">
+                                <div class="form-detail-container__icon-container">
+                                    <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                                    <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-detail-container--category-container">
-
-                        </div>
+                        <app-category-menu></app-category-menu>
                     </div>   
                 </div>
                  <div class="form-detail-container--description-container">
                      <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
-                     <div class="form-detail-container__input-container">
+                     <div class="form-detail-container__input-container form-detail-container__input-container--description">
                          <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea"></textarea>
+                         <div class="form-detail-container__icon-container">
+                            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
+                        </div>
                      </div>
                 </div>
             </div>

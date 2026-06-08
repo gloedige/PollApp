@@ -2,11 +2,12 @@ import { SurveyCard } from '../components/survey-card/survey-card';
 import { ChangeDetectionStrategy, Component, computed, signal, Input, inject, Renderer2 } from '@angular/core';
 import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
+import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-survey-dashboard',
-  imports: [SurveyCard, Button],
+  imports: [SurveyCard, Button, CategoryMenu],
   templateUrl: './survey-dashboard.html',
   styleUrl: './survey-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

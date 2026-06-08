@@ -49,6 +49,12 @@
         display: flex;
         justify-content: space-between;
         align-items: end;
+
+        app-button{
+            --button-primary-bg: #{colors.$light_orange_transparent_1};
+            --button-primary-hover-bg: #{colors.$light_orange_transparent_2};
+            --button-primary-color: #{colors.$light_purple_3};
+        }
     }
 
     &__title{
@@ -92,6 +98,7 @@
         border-top-right-radius: 20px;
         border: none;
         background-color: colors.$light_purple_3;
+        width: 100%;
 
         &::placeholder{
             color: colors.$dark_purple;
@@ -99,7 +106,8 @@
         }
 
         &--textarea{
-            flex-grow: 1;
+            height: 100%;
+            box-sizing: border-box;
         }
     }
 }
@@ -146,6 +154,11 @@
             flex-direction: row;
             gap: 8px;
             align-items: center;
+            flex-grow: 1;
+
+             &--description{
+               align-items: flex-start;
+            }
           
         }
 
@@ -166,11 +179,11 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            width: 100%;
+            width: 50%;
         }
-        &--category-container{
+        &--date-category-container{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 4px;
             width: 100%;
         }

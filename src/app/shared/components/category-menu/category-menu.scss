@@ -1,0 +1,112 @@
+@use '../../../styles/abstract/color_variables' as colors;
+
+.menu-container{
+    position: relative;
+
+    &__dropdown-content{
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: colors.$white;
+        color: colors.$dark_purple;
+        min-width: 100%;
+        box-sizing: border-box;
+        z-index: 50;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin: 4px 0 0 0;
+
+        list-style: none;
+        font-family: var(--font-family-text-default);
+        font-size: 0.875rem;
+
+        &--is-open{
+            display: flex;
+        }
+
+        &__item{
+            cursor: pointer;
+        }
+
+        &__item:hover{
+            background-color: colors.$light_purple_2;
+        }
+    }
+
+    &__selected-category{
+        margin: 0;
+        color: colors.$primary_orange;
+        font-family: var(--font-family-text-default);
+        font-size: 0.875rem;
+        padding: 4px 4px 4px 10px;
+    }
+
+    
+    &__button{
+        display: flex;
+        flex-direction: row;
+        color: colors.$white;
+        font-family: var(--font-family-text-bold);
+        font-size: 1.125rem;
+        padding: 4px 6px 4px 10px;
+        gap: 9px;
+        background-color: transparent;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover,
+        &--is-open{
+            background-color: colors.$transparent_gray;
+        }
+
+        &--arrow-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        &--default-img{
+            position: absolute;
+            max-width: 100%;
+        }
+
+        &:not(&--is-open):hover &--default-img{
+            opacity: 0;
+        }
+
+        &--hover-img{
+            position: absolute;
+            max-width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        &:not(&--is-open):hover &--hover-img{
+            opacity: 1;
+        }
+
+        &--active-img{
+            position: absolute;
+            max-width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        &--is-open &--default-img,
+        &--is-open &--hover-img{
+            opacity: 0;
+        }
+
+        &--is-open &--active-img{
+            opacity: 1;
+        }
+    }
+}
