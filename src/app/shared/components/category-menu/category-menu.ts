@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'app-category-menu',
@@ -8,8 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoryMenu {
   @Input() isMenuOpen = false;
+  readonly text = input<string>('Button');
 
-  toggleStateOfDropdownMenu() {
+  toggleStateOfDropdownMenu(event: Event): void {
     this.isMenuOpen = !this.isMenuOpen;
+    event.preventDefault();
   }
 }

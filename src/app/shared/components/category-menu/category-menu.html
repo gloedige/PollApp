@@ -1,6 +1,6 @@
  <div class="menu-container">
-    <button class="menu-container__button" (click)="toggleStateOfDropdownMenu()" [class.menu-container__button--is-open]="isMenuOpen">
-        Sort by categories
+    <button class="menu-container__button" (click)="toggleStateOfDropdownMenu($event)" [class.menu-container__button--is-open]="isMenuOpen">
+        {{text()}}
         <div class="menu-container__button--arrow-container">
             <img src="/assets/icons/arrow_drop_down_open_default.png" alt="Arrow Down" class="menu-container__button--default-img">
             <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="menu-container__button--hover-img">
