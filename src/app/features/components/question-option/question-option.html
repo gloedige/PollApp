@@ -1,7 +1,5 @@
 <div class="question-option-container">
-    <div class="question-option-container__checkbox">
-        <input type="checkbox" id="{{optionId}}" name="{{optionId}}" value="{{optionId}}">
-    </div>
+    <app-checkbox [optionId]="optionId"></app-checkbox>
     <span class="question-option-container__order-letter">{{order_letter}}.</span>
     <label class="question-option-container__label" for="{{optionId}}">{{ optionText }}</label>
 </div>

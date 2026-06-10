@@ -15,47 +15,6 @@
         background-color: colors.$secondary_orange_transparent;
     }
 
-    &__checkbox{
-        width: 21px;
-        height: 21px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 12px 0 4px;
-        
-        input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            margin: 0;
-            cursor: pointer;
-            width: 15px;
-            height: 15px;
-            box-sizing: border-box;
-            border: 1.5px solid colors.$dark_purple;
-            border-radius: 3px;
-        }
-
-        input[type="checkbox"]::before {
-            content: '';
-            display: block;
-            width: 15px;
-            height: 15px;
-            clip-path: polygon(24% 43%, 14% 52%, 37% 83%, 87% 23%, 79% 15%, 39% 63%);
-            background-color: transparent;
-        }
-        
-        input[type="checkbox"]:checked {
-            border: none;
-            background-color: colors.$primary_orange;
-        }
-        
-        input[type="checkbox"]:checked::before {
-            background-color: colors.$dark_purple;
-            display: block;
-        }
-    }
-
     &__order-letter{
         font-weight: 700;
     }
