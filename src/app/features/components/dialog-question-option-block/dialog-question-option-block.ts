@@ -46,6 +46,7 @@ export class DialogQuestionOptionBlock {
   ngOnInit() {
     this.getNextOrderLetter();
     this.getNextQuestionNumber();
+    this.question.clientId = this.createNewClientId();
   }
 
   getNextOrderLetter() {

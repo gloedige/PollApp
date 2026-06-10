@@ -1,0 +1,47 @@
+@use '../../../styles/abstract/color_variables' as colors;
+@use '../../../styles/vendor/mixin' as mixins;
+
+.dialog-option-shell{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.question-title{
+    font-family: var(--font-family-text-bold);
+    font-size: 1.125rem;
+    color: colors.$light_purple_3;
+}
+
+.question-input{
+    @include mixins.dialog-input();
+}
+
+.question-icon-container{
+    position: relative;
+    width: 26px;
+    height: 26px;
+
+    &__icon-default, &__icon-hover{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        cursor: pointer;   
+    }
+    &__icon-default{
+        opacity: 1;
+    }
+    &__icon-hover{
+        opacity: 0;
+    }
+    &__icon-default:hover{
+        opacity: 0;
+    }
+    &__icon-hover:hover{
+        opacity: 1;
+    }
+}
