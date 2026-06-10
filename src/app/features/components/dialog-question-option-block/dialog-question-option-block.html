@@ -1,20 +1,20 @@
-<div class="dialog-question-option-shell">
-    <div class="dialog-question-option-shell__header">
-        <label for="question_title{{questionNumber}}" class="question-title">{{questionNumber}}. Question</label>
-        <div class="form-detail-container__icon-container">
-            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-        </div>
-        <input id="question_title{{questionNumber}}" type="text" class="dialog-question-option-shell__input" placeholder="Question text">
-    </div>
-    <div class="dialog-question-option-shell__header-options">
-        <p class="header-options-title">Answers</p>
-        <div class="multiple-options-container">
-            <input type="checkbox" id="multiple_options_{{questionNumber}}" class="multiple-options-container__checkbox">
-            <label for="multiple_options_{{questionNumber}}" class="multiple-options-container__checkbox-label">Allow multiple answers.</label>
+<div class="dialog-question-option-block-shell">
+    <div class="dialog-question-option-block-header">
+        <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title">{{questionNumber}}. Question</label>
+        <div class="dialog-question-option-block-header__icon-container">
+            <img src="/assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__icon-container--icon-default" alt="delete icon">
+            <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__icon-container--icon-hover" alt="delete hover icon">
         </div>
     </div>
-    <div class="dialog-question-option-shell__options">
-        <app-dialog-question-option [order_letter]="order_letter()"></app-dialog-question-option>
+    <input id="question_title_{{question.clientId}}" type="text" class="dialog-question-option-block-input" placeholder="Question text">
+    <div class="dialog-question-option-block-shell-header-options">
+        <p class="dialog-question-option-block-shell-header-options__title">Answers</p>
+        <div class="dialog-question-option-block-shell-header-options__multiple-options-container">
+             <app-checkbox [questionId]="question.clientId"></app-checkbox>
+            <label for="multiple_options_{{question.clientId}}" class="dialog-question-option-block-shell-header-options__multiple-options-container--checkbox-label">Allow multiple answers.</label>
+        </div>
+    </div>
+    <div class="dialog-question-option-block-shell__options">
+        <app-dialog-question-option [order_letter]="order_letter()" [optionId]="option.clientId"></app-dialog-question-option>
     </div>
 </div>

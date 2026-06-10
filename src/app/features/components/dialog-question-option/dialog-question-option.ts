@@ -8,8 +8,8 @@ import { Component, Input} from '@angular/core';
 })
 export class DialogQuestionOption {
   @Input() order_letter: string = 'A';
+  @Input() optionId: string = '';
   optionText: string = '';
-  optionId: number = 0;
 
 
 }
