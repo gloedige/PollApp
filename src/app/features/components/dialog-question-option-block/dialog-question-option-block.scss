@@ -1,13 +1,13 @@
 @use '../../../styles/abstract/color_variables' as colors;
+@use '../../../styles/vendor/mixin' as mixins;
 
 .dialog-question-option-block-shell{
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: center;
-    width: 50%; // temporary, to be adjusted later
     flex-grow: 1;
-
+    margin-bottom: 16px;
 }
 
 .dialog-question-option-block-header{
@@ -50,19 +50,10 @@
 }
 
 .dialog-question-option-block-input{
-    font-family: var(--font-family-text-default);
-    font-size: 1rem;
-    color: colors.$dark_purple;
-    padding: 8px 12px;
-    border-radius: 5px;
-    border-top-right-radius: 20px;
-    border: none;
-    background-color: colors.$light_purple_3;
-    width: 100%;
-    box-sizing: border-box;
+    @include mixins.dialog-input();
 }
 
-.dialog-question-option-block-shell-header-options{
+.dialog-question-option-block-options-header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -86,25 +77,6 @@
             --checkbox-margin: 0;
         }
 
-        &--icon-default, &--icon-hover{
-            width: 26px;
-            height: 26px;
-            position: absolute;
-            cursor: pointer;   
-        }
-        &--icon-default{
-            opacity: 1;
-        }
-        &--icon-hover{
-            opacity: 0;
-        }
-        &--icon-default:hover{
-            opacity: 0;
-        }
-        &--icon-hover:hover{
-            opacity: 1;
-        }
-
         &--checkbox-label{
             font-family: var(--font-family-text-default);
             font-size: 0.75rem;
@@ -114,4 +86,11 @@
             align-items: center;            
         }
     }
+}
+
+.dialog-question-option-block-option-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
 }

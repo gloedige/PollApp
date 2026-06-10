@@ -1,6 +1,7 @@
 @use '../../styles/abstract/color_variables' as colors;
 @use '../../styles/layout/header.scss';
 @use '../../styles/layout/page_shell.scss';
+@use '../../styles/vendor/mixin' as mixins;
 
 .dialog-background{
     position: fixed;
@@ -90,15 +91,7 @@
     }
 
     &__input{
-        font-family: var(--font-family-text-default);
-        font-size: 1rem;
-        color: colors.$dark_purple;
-        padding: 8px 12px;
-        border-radius: 5px;
-        border-top-right-radius: 20px;
-        border: none;
-        background-color: colors.$light_purple_3;
-        width: 100%;
+        @include mixins.dialog-input();
 
         &::placeholder{
             color: colors.$dark_purple;
@@ -109,6 +102,12 @@
             height: 100%;
             box-sizing: border-box;
         }
+    }
+
+    &__question-container{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
     }
 }
 
