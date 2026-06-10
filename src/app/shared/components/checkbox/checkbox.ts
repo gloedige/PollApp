@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class Checkbox {
   @Input() optionId?: number = 0;
-  @Input() questionId: string = '';
+  @Input() questionId: string = '123';
+  @Input() isCheckboxForMultipleOptions: boolean = false;
 }

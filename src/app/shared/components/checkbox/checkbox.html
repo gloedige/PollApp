@@ -1,3 +1,7 @@
 <div class="survey-checkbox">
-    <input type="checkbox" id="{{optionId}}" name="{{optionId}}" value="{{optionId}}">
+    @if (isCheckboxForMultipleOptions) {
+        <input type="checkbox" id="multiple_options_{{questionId}}" name="{{questionId}}" value="{{optionId}}">
+    } @else {
+        <input type="checkbox" id="{{optionId}}" name="{{optionId}}" value="{{optionId}}">
+    }
 </div>
