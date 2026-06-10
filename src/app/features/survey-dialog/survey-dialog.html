@@ -44,14 +44,7 @@
                 </div>
             </div>
             <div class="dialog-container-form__question-container">
-                <div class="dialog-container-form__question-container__question">
-                    <label for="question-1" class="dialog-container-form__label">1. Question</label>
-                    <input id="question-1" type="text" class="dialog-container-form__input">
-                </div>
-                <div class="dialog-container-form__question-container__question">
-                    <label for="question-2" class="dialog-container-form__label">2. Question</label>
-                    <input id="question-2" type="text" class="dialog-container-form__input">
-                </div>
+                <app-dialog-question-option-block></app-dialog-question-option-block>
                 <app-button [primary]="false" [text]="'Add question'" [hideIcon]="false"></app-button>
             </div>
         </form>

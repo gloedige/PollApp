@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-dialog-question-option',
@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './dialog-question-option.html',
   styleUrl: './dialog-question-option.scss',
 })
-export class DialogQuestionOption {}
+export class DialogQuestionOption {
+  @Input() order_letter: string = 'A';
+  optionText: string = '';
+  optionId: number = 0;
+
+
+}

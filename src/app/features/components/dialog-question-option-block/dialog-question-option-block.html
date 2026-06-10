@@ -1,1 +1,20 @@
-<p>dialog-question-option-block works!</p>
+<div class="dialog-question-option-shell">
+    <div class="dialog-question-option-shell__header">
+        <label for="question_title{{questionNumber}}" class="question-title">{{questionNumber}}. Question</label>
+        <div class="form-detail-container__icon-container">
+            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
+        </div>
+        <input id="question_title{{questionNumber}}" type="text" class="dialog-question-option-shell__input" placeholder="Question text">
+    </div>
+    <div class="dialog-question-option-shell__header-options">
+        <p class="header-options-title">Answers</p>
+        <div class="multiple-options-container">
+            <input type="checkbox" id="multiple_options_{{questionNumber}}" class="multiple-options-container__checkbox">
+            <label for="multiple_options_{{questionNumber}}" class="multiple-options-container__checkbox-label">Allow multiple answers.</label>
+        </div>
+    </div>
+    <div class="dialog-question-option-shell__options">
+        <app-dialog-question-option [order_letter]="order_letter()"></app-dialog-question-option>
+    </div>
+</div>
