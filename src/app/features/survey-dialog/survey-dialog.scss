@@ -108,6 +108,12 @@
         display: flex;
         flex-direction: column;
         width: 50%;
+
+        app-button{
+            --button-primary-bg: #{transparent};
+            --button-primary-hover-bg: #{transparent};
+            --button-primary-color: #{colors.$light_purple_3};
+        }
     }
 }
 
