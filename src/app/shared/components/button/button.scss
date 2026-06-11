@@ -8,9 +8,9 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    font-family: var(--font-family-primary-button);
     
     &__primary{
-        font-family: var(--font-family-primary-button);
         background-color: var(--button-primary-bg, #{colors.$secondary_orange});
         color: var(--button-primary-color, #{colors.$gothic_purple});
         border: none;
@@ -45,6 +45,52 @@
     }
 
     &__secondary{
+        background-color: colors.$light_orange_transparent_1;
+        color: colors.$light_purple_3;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: background-color 0.3s ease;
+
+        &--icon{
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: filter 0.3s ease;
+        }
+    }
+
+    &__secondary:hover{
+        background-color: colors.$light_orange_transparent_2;
+    }
+
+    &__tertiary{
+        background-color: transparent;
+        color: colors.$light_purple_3;
+        line-height: 100%;
+        border: none;
+        border-bottom: 1px solid colors.$light_purple_3;
+        padding: 0;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        
+
+        &--icon{
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: filter 0.3s ease;
+        }
+    }
+
+    &__filter{
         font-family: var(--font-family-secondary-button);
         background-color: colors.$light_pastel;
         color: colors.$dark_purple;
@@ -61,7 +107,7 @@
         }
     }
 
-    &__secondary:hover{
+    &__filter:hover{
         background-color: colors.$secondary_orange;
     }
 }

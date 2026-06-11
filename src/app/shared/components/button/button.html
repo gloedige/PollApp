@@ -1,10 +1,31 @@
-@if (primary()) {
+@if (buttonType() === 'primary') {
     <button class="button button__primary">
         {{text()}}
-        <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon" [class.hidden]="hideIcon">
+        @if (publishNewSurvey()) {
+            <img src="/assets/icons/check_icon.png" alt="check icon" class="button__primary--icon" [class.hidden]="hideIcon">
+        } @else {
+            <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon" [class.hidden]="hideIcon">
+        }
     </button>
-} @else {
-    <button class="button button__secondary">
+}
+@if (buttonType() === 'secondary') {
+     <button class="button button__secondary">
+        {{text()}}
+        @if (cancelNewSurvey()) {
+            <img src="/assets/icons/close_icon_white.png" alt="cancel icon" class="button__secondary--icon" [class.hidden]="hideIcon">
+        } @else {
+            <img src="/assets/icons/add_circle_icon_white.png" alt="add circle icon" class="button__secondary--icon" [class.hidden]="hideIcon">
+        }
+    </button>
+} 
+@if (buttonType() === 'tertiary') {
+     <button class="button button__tertiary">
+        {{text()}}
+        <img src="/assets/icons/add_circle_icon_white.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon">
+    </button>
+} 
+@if (buttonType() === 'filter') {
+     <button class="button button__filter">
         {{text()}}
     </button>
 }

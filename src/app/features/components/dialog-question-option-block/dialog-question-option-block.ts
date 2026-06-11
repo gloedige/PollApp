@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { Checkbox } from "../../../shared/components/checkbox/checkbox";
+import { Button } from '../../../shared/components/button/button';
 
 type QuestionDraft = {
   clientId: string;
@@ -19,7 +20,7 @@ type OptionDraft = {
 
 @Component({
   selector: 'app-dialog-question-option-block',
-  imports: [DialogQuestionOption, Checkbox],
+  imports: [DialogQuestionOption, Checkbox, Button],
   templateUrl: './dialog-question-option-block.html',
   styleUrl: './dialog-question-option-block.scss',
 })

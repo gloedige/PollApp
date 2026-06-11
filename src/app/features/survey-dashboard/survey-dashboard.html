@@ -6,7 +6,7 @@
         <div class="headline-container">
             <h1 class="h1__hero">Collect Feedback,<br>Unlock Ideas</h1>
             <p class="headline-container__hero-description">Create and share surveys in minutes – from team events to workplace culture. Collect opinions, engage your audience, and turn feedback into action.</p>
-            <app-button [primary]="true" [text]="'New survey'"></app-button>
+            <app-button [buttonType]="'primary'" [publishNewSurvey]="false" [text]="'New survey'"></app-button>
         </div>
         <div class="hero-img-container">
             <img src="/assets/images/hero_img_default.png" alt="hero image" class="hero-img-container__default-img">
@@ -29,8 +29,8 @@
     <section class="all-surveys-section">
         <nav class="nav-bar">
             <div class="nav-bar__button-container">
-                <app-button [primary]="false" [text]="'Active surveys'"></app-button>
-                <app-button [primary]="false" [text]="'Past surveys'"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Active surveys'"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Past surveys'"></app-button>
             </div>
             <app-category-menu [text]="'Select category'"></app-category-menu>
         </nav>
