@@ -4,10 +4,11 @@ import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import {DOCUMENT} from "@angular/common";
+import { SurveyDialog } from '../survey-dialog/survey-dialog';
 
 @Component({
   selector: 'app-survey-dashboard',
-  imports: [SurveyCard, Button, CategoryMenu],
+  imports: [SurveyCard, Button, CategoryMenu, SurveyDialog],
   templateUrl: './survey-dashboard.html',
   styleUrl: './survey-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
