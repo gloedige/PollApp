@@ -18,43 +18,22 @@ export class SurveyDashboard {
   @Input() isMenuOpen = false;
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
-  dbService = inject(SupabaseService);
-
+  private readonly dbService = inject(SupabaseService);
+  
+  readonly surveys = this.dbService.surveys;
+  readonly endingSoonSurveys = this.dbService.endingSoonSurveys;
+  
   ngOnInit(): void {
     this.renderer.addClass(this.document.body, 'dashboard-page');
     this.dbService.getAllSurveys();
+    this.dbService.getFilteredSurveysEndingSoon();
+    
   }
+
 
   ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'dashboard-page');
   }
-
-  surveys = this.dbService.surveys;
-
-  readonly surveysTestData = signal<Survey[]>([
-    {
-      id: 1,
-      title: 'Let\'s plan the next team event together',
-      expiry_date: '2026-06-02',
-      description: 'Vote for activities, dates, and locations for the next team event.',
-      category: 'Team activities'
-    },
-    {
-      id: 2,
-      title: 'How should we improve our weekly stand-up?',
-      expiry_date: '2026-06-10',
-      description: 'Share ideas to make our weekly stand-up shorter, clearer, and more useful.',
-      category: 'Work culture'
-    },
-    {
-      id: 3,
-      title: 'Select topics for our monthly knowledge sharing sessions',
-      expiry_date: '2026-05-30',
-      description: 'Help us choose topics for our monthly knowledge sharing sessions.',
-      category: 'Professional development'
-    },
-  ]);
-  readonly endingSoonSurvey = computed(() => this.surveys()[0] ?? null);
 
   toggleStateOfDropdownMenu() {
     this.isMenuOpen = !this.isMenuOpen;

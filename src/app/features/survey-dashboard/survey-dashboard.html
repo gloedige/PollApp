@@ -17,13 +17,9 @@
         <h2 class="ending-soon-section__title">Your surveys</h2>
         <p class="ending-soon-section__description">Ending soon surveys</p>
         <div class="ending-soon-section__surveys">
-            @if (endingSoonSurvey(); as survey) {
-                @for (survey of surveys(); track $index) {
+                @for (survey of endingSoonSurveys(); track survey.id) {
                     <app-survey-card [survey]="survey" listType="ending_soon" [showsEndingSoonCard]="true"></app-survey-card>
                 }
-            } @else {
-                <p>No surveys ending soon.</p>
-            }
         </div>
     </section>
     <section class="all-surveys-section">
@@ -36,7 +32,7 @@
         </nav>
         <div class="all-surveys-section__surveys">
             @if (surveys().length > 0) {
-                @for (survey of surveys(); track $index) {
+                @for (survey of surveys(); track survey.id) {
                     <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
                 }
             } @else {
