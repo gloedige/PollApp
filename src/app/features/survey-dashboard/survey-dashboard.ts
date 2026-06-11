@@ -5,6 +5,7 @@ import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import {DOCUMENT} from "@angular/common";
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
+import { SupabaseService } from '../services/supabase-service';
 
 @Component({
   selector: 'app-survey-dashboard',
@@ -17,16 +18,20 @@ export class SurveyDashboard {
   @Input() isMenuOpen = false;
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
+  dbService = inject(SupabaseService);
 
   ngOnInit(): void {
     this.renderer.addClass(this.document.body, 'dashboard-page');
+    this.dbService.getAllSurveys();
   }
 
   ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'dashboard-page');
   }
 
-  readonly surveys = signal<Survey[]>([
+  surveys = this.dbService.surveys;
+
+  readonly surveysTestData = signal<Survey[]>([
     {
       id: 1,
       title: 'Let\'s plan the next team event together',

@@ -8,24 +8,11 @@
         </div>
     </button>
     <menu class="menu-container__dropdown-content" [class.menu-container__dropdown-content--is-open]="isMenuOpen">
-        <li>
-            <a class="menu-container__dropdown-content__item">Team Activities</a>
-        </li>
-        <li>
-            <a class="menu-container__dropdown-content__item">Health & Wellness</a>
-        </li>
-        <li>
-            <a class="menu-container__dropdown-content__item">Gaming & Entertainment</a>
-        </li>
-        <li>
-            <a class="menu-container__dropdown-content__item">Education & Learning</a>
-        </li>
-        <li>
-            <a class="menu-container__dropdown-content__item">Lifestyle & Preferences</a>
-        </li>
-        <li>
-            <a class="menu-container__dropdown-content__item">Technology & Innovation</a>
-        </li>
+        @for (categoryType of categoryTypes; track categoryType) {
+            <li>
+                <a class="menu-container__dropdown-content__item">{{categoryType}}</a>
+            </li>
+        }
     </menu>
     <p class="menu-container__selected-category">Team Activities</p>
 </div>
