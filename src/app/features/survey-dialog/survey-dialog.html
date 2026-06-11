@@ -45,6 +45,9 @@
             </div>
             <div class="dialog-container-form__question-container">
                 <app-dialog-question-option-block></app-dialog-question-option-block>
+                <div class="dialog-container-form__add-question-button-container">
+                    <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false"></app-button>
+                </div>
             </div>
         </form>
         <footer class="dialog-container-footer">

@@ -71,7 +71,7 @@
 .dialog-container-form{
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 64px;
     margin: 32px 0 48px 0;
     padding: 40px 33px; 
     background-color: colors.$light_purple_4;
@@ -105,15 +105,15 @@
     }
 
     &__question-container{
-        display: flex;
-        flex-direction: column;
-        width: 50%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 64px;
+    }
 
-        app-button{
-            --button-primary-bg: #{transparent};
-            --button-primary-hover-bg: #{transparent};
-            --button-primary-color: #{colors.$light_purple_3};
-        }
+    &__add-question-button-container{
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
     }
 }
 
