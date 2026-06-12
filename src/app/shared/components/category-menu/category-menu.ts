@@ -11,6 +11,11 @@ export class CategoryMenu {
   readonly text = input<string>('Button');
   readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
 
+  /**
+   * This function toggles the state of the dropdown menu. It updates the isMenuOpen property to show or 
+   * hide the menu and prevents the default action of the event.
+   * @param event The event that triggered the toggle action.
+   */
   toggleStateOfDropdownMenu(event: Event): void {
     this.isMenuOpen = !this.isMenuOpen;
     event.preventDefault();

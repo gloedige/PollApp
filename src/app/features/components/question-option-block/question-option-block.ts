@@ -32,6 +32,12 @@ export class QuestionOptionBlock {
   readonly numberOfQuestion = signal(0);
   readonly order_letter = signal<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
 
+  /**
+   * This function is called when the component is initialized. It retrieves the filtered options for the given question ID from the survey 
+   * details service and updates the questionOptions signal with the fetched options. It also checks if the question has multiple options and 
+   * updates the hasMultipleOptions signal accordingly. Additionally, it retrieves the question text and number of the question and updates the 
+   * respective signals. Finally, it sets the order_letter signal with a predefined array of letters.
+   */
   ngOnInit() {
     this.surveyDetails.getFilteredOptions(this.questionId);
     this.questionOptions.set(this.surveyDetails.filteredOptions);

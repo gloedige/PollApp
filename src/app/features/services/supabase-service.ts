@@ -23,6 +23,11 @@ export class SupabaseService {
   surveys = signal<Survey[]>([]);
   endingSoonSurveys = signal<Survey[]>([]);
 
+  /**
+   * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
+   * It also subscribes to real-time changes for the surveys table.
+   * @returns - A promise that resolves when the surveys are fetched and the subscription is set up.
+   */
   async getAllSurveys() {
     let { data: surveys, error } = await this.supabase
     .from('surveys')
@@ -33,6 +38,11 @@ export class SupabaseService {
     this.subscribeToSurveyChanges();
   }
 
+  /**
+   * This function retrieves surveys that are ending soon (within the next 3 days) from the Supabase database and updates the 
+   * endingSoonSurveys signal with the fetched data.
+   * @returns - A promise that resolves when the surveys are fetched and the endingSoonSurveys signal is updated.
+   */
   async getFilteredSurveysEndingSoon() {
     const today = new Date().toISOString().slice(0, 10);
     const threeDaysLater = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
@@ -51,6 +61,11 @@ export class SupabaseService {
     }
   }
 
+  /**
+   * This function sets up real-time subscriptions to the surveys table in the Supabase database. It listens for INSERT, UPDATE, and 
+   * DELETE events and updates the surveys signal accordingly when changes occur.
+   * @returns - void
+   */
   subscribeToSurveyChanges() {
   this.channels = this.supabase
     .channel('surveys')
@@ -79,6 +94,10 @@ export class SupabaseService {
     .subscribe();
   }
 
+  /**
+   * This function is called when the component is destroyed. It checks if there are any active channels for real-time subscriptions and 
+   * removes them to clean up resources.
+   */
   ngOnDestroy() {
     if (this.channels) {
       this.supabase.removeChannel(this.channels);

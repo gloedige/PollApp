@@ -37,16 +37,31 @@ export class DialogQuestionOptionBlock {
     options: []
   };
 
+  /**
+   * This function is called when the component is initialized. It retrieves the next question number, creates a new client ID for 
+   * the question, and initializes the default options for the question.
+   */
   ngOnInit() {
     this.getNextQuestionNumber();
     this.question.clientId = this.createNewClientId();
     this.initializeDefaultOptions();
   }
 
+  /**
+   * This function generates a new client ID using the crypto.randomUUID() method, which creates a unique identifier for the question. 
+   * This ID is used to uniquely identify each question within the survey.
+   * @returns A unique client ID for the question.
+   */
   createNewClientId() {
     return crypto.randomUUID();
   }
 
+  /**
+   * This function initializes the default options for a question. It creates a specified number of options (defined by minimumNumberOfOptions)
+   * and adds them to the question's options array. Each option is assigned a unique client ID and is associated with the question's client ID.
+   * The text for each option is initialized as an empty string.
+    * @returns - void
+   */
   initializeDefaultOptions() {
     for (let index = 0; index < this.minimumNumberOfOptions; index++) {
       const newOption: OptionDraft = {
@@ -58,6 +73,12 @@ export class DialogQuestionOptionBlock {
     }
   }
 
+  /**
+   * This function adds a new option to the question's options array. It creates a new option with a unique client ID, associates it with the question's
+   * client ID, and initializes the option text as an empty string. The new option is then pushed to the question's options array, allowing users to add 
+   * more options to the question.
+   * @returns - void
+   */
   addOption() {
     const newOption: OptionDraft = {
       clientId: this.createNewClientId(),
@@ -67,6 +88,10 @@ export class DialogQuestionOptionBlock {
     this.question.options.push(newOption);
   }
 
+  /**
+   * This function increments the question number and returns the next question number.
+   * @returns The next question number.
+   */
   getNextQuestionNumber() {
     this.questionNumber++;
     return this.questionNumber;
