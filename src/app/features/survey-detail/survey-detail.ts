@@ -5,6 +5,7 @@ import { QuestionOptionBlock } from '../components/question-option-block/questio
 import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SurveyService } from '../services/survey-service';
+import { SupabaseService } from '../services/supabase-service';
 
 type Question = {
     id: number;
@@ -40,6 +41,7 @@ export class SurveyDetail {
   order_letter: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   surveyService = inject(SurveyService);
   survey = this.surveyService.surveyDetail;
+  dbService = inject(SupabaseService);
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific 

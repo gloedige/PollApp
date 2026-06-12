@@ -2,12 +2,19 @@ import { Injectable, signal } from '@angular/core';
 import { createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Survey } from '../interfaces/survey';
+import { Question } from '../interfaces/question';
+import { Result } from '../interfaces/result';
+import { Option } from '../interfaces/option';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SupabaseService {
   private supabase: SupabaseClient;
+  questions = signal<Question[]>([]);
+  options = signal<Option[]>([]);
+  results = signal<Result[]>([]);
+
   constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
@@ -59,6 +66,18 @@ export class SupabaseService {
       this.endingSoonSurveys.set(surveys);
       console.log('Fetched ending soon surveys:', surveys);
     }
+  }
+
+  async getQuestionsBySurveyId(surveyId: number) {
+    let { data: questions, error } = await this.supabase
+    .from('questions')
+    .select('*')
+    .eq('survey_id', surveyId);
+    if (questions) {
+      console.log(`Fetched questions for survey ID ${surveyId}:`, questions);
+      return questions;
+    }
+    return [];
   }
 
   /**
