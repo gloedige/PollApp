@@ -1,6 +1,6 @@
-<article class="survey-card" [class.survey-card--ending-soon]="showsEndingSoonCard">
+<a class="survey-card" [routerLink]="['/detail', survey.id]" [class.survey-card--ending-soon]="showsEndingSoonCard" (click)="onSurveyClick(survey.id)">
     <div class="survey-card__header">
-        <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoonCard">{{ survey.category}}</span> <!-- TODO: connect to survey category -->
+        <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoonCard">{{ survey.category}}</span>
     </div>
     <div class="survey-card__body">
         <h2 class="survey-card__title" [class.survey-card__title--ending-soon]="showsEndingSoonCard">{{ survey.title }}</h2>
@@ -8,4 +8,4 @@
     <div class="survey-card__footer" [class.survey-card__footer--ending-soon]="showsEndingSoonCard">
         <p>{{endsInText}}</p>
     </div>
-</article>
+</a>

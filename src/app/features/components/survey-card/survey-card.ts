@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { Survey } from '../../interfaces/survey';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-survey-card',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './survey-card.html',
   styleUrl: './survey-card.scss',
 })
 export class SurveyCard {
   @Input({required: true}) survey!: Survey;
   @Input() showsEndingSoonCard = false;
+  readonly activeSurveyId = signal<number | null>(null);
 
   /**
    * This function calculates the number of days until the survey expires based on the current date and the survey's expiry date.
@@ -73,5 +75,11 @@ export class SurveyCard {
   get isExpired(): boolean {
     const daysUntilExpiry = this.getDaysUntilExpiry();
     return daysUntilExpiry !== null && daysUntilExpiry < 0;
+  }
+
+  // TODO: probably the id has to be passed as routing link parameter to the survey detail page, so that the survey detail component can fetch the corresponding survey data based on the id
+  onSurveyClick(surveyId: number) {
+    console.log(`Survey with ID ${surveyId} clicked.`);
+    this.activeSurveyId.set(surveyId);
   }
 }
