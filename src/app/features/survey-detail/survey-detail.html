@@ -4,15 +4,16 @@
         <app-button [buttonType]="'primary'" [text]="'Create survey'"></app-button>
     </header>
     <div class="survey-detail-shell">
+        @if (survey(); as survey) {
         <section class="survey-detail-container">
             <div class="survey-detail-header">
                 <p class="survey-detail-header__state">Draft</p>
                 <div class="survey-detail-header__expiry-date-category-container">
-                    <p class="survey-detail-header__expiry-date">Ends on Survey Expiry Date</p>
-                    <p class="survey-detail-header__category">Category: Survey Category</p>
+                    <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date}}</p>
+                    <p class="survey-detail-header__category">Category: {{survey.category}}</p>
                 </div>
-                <h1 class="survey-detail-header__title">Survey Title</h1>
-                <article class="survey-detail-header__description">Survey Description</article>
+                <h1 class="survey-detail-header__title">{{survey.title}}</h1>
+                <article class="survey-detail-header__description">{{survey.description}}</article>
             </div>
             <div class="survey-detail-body">
                 @for (item of questions(); track $index) {
@@ -23,6 +24,11 @@
                 <app-button [buttonType]="'primary'" [text]="'Complete survey'" [hideIcon]="true"></app-button>
             </div>
         </section>
+        } @else {
+            <section class="survey-detail-container">
+                <p>Keine Umfrage ausgewählt.</p>
+            </section>
+        }
         <section class="survey-results-container">
             <h3 class="survey-results-title">Survey results <span>LIVE</span></h3>
             <div class="survey-results-body">

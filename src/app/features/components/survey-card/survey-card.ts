@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, inject } from '@angular/core';
 import { Survey } from '../../interfaces/survey';
 import {RouterLink} from "@angular/router";
+import { SurveyService } from '../../services/survey-service';
 
 @Component({
   selector: 'app-survey-card',
@@ -13,6 +14,7 @@ export class SurveyCard {
   @Input({required: true}) survey!: Survey;
   @Input() showsEndingSoonCard = false;
   readonly activeSurveyId = signal<number | null>(null);
+  surveyService = inject(SurveyService);
 
   /**
    * This function calculates the number of days until the survey expires based on the current date and the survey's expiry date.
@@ -80,6 +82,7 @@ export class SurveyCard {
   // TODO: probably the id has to be passed as routing link parameter to the survey detail page, so that the survey detail component can fetch the corresponding survey data based on the id
   onSurveyClick(surveyId: number) {
     console.log(`Survey with ID ${surveyId} clicked.`);
-    this.activeSurveyId.set(surveyId);
+    this.surveyService.surveyDetail.set(this.survey);
+    // this.activeSurveyId.set(surveyId);
   }
 }

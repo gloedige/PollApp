@@ -1,10 +1,10 @@
-import { Component, inject, Renderer2, signal } from '@angular/core';
+import { Component, inject, Renderer2, signal} from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import {DOCUMENT} from "@angular/common";
 import { QuestionOptionBlock } from '../components/question-option-block/question-option-block';
 import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
-import { SurveyCard } from '../components/survey-card/survey-card';
+import { SurveyService } from '../services/survey-service';
 
 type Question = {
     id: number;
@@ -34,11 +34,12 @@ type Result = {
 export class SurveyDetail {
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
-  private activeSurveyCard = inject(SurveyCard);
   filteredOptions: Option[] = [];
   multipleOptions: boolean = false;
   numberOfQuestion: number = 0;
   order_letter: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  surveyService = inject(SurveyService);
+  survey = this.surveyService.surveyDetail;
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific 
@@ -48,8 +49,7 @@ export class SurveyDetail {
    */
   ngOnInit(): void {
     this.renderer.addClass(this.document.body, 'detail-page');
-    this.getActiveSurveyId();
-    console.log('Active survey ID in SurveyDetail:', this.getActiveSurveyId());
+    
   }
 
   /**
@@ -106,9 +106,6 @@ export class SurveyDetail {
    * for fetching the corresponding survey data based on the ID or for other purposes related to the active survey.
    * @returns - The active survey ID from the activeSurveyCard component.
    */
-  getActiveSurveyId() {
-    return this.activeSurveyCard.activeSurveyId();
-  }
 
 
   readonly questions = signal<Question[]>([
