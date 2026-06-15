@@ -28,21 +28,9 @@ export class SupabaseService {
 
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
-  endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
+ 
 
-  /**
-   * This function filters the surveys to find those that are ending soon. It checks if the expiry date of each survey 
-   * is within the next three days.
-   * @returns - An array of surveys that are ending soon.
-   */
-  getFilteredSurveysEndingSoon() {
-    return this.surveys().filter(survey => {
-      const today = new Date();
-      const expiryDate = new Date(survey.expiry_date);
-      const threeDaysLater = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
-      return expiryDate >= today && expiryDate <= threeDaysLater;
-    });
-  }
+
 
   /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.

@@ -6,6 +6,7 @@ import { CategoryMenu } from '../../shared/components/category-menu/category-men
 import {DOCUMENT} from "@angular/common";
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SupabaseService } from '../services/supabase-service';
+import { SurveyService } from '../services/survey-service';
 
 @Component({
   selector: 'app-survey-dashboard',
@@ -18,10 +19,11 @@ export class SurveyDashboard {
   @Input() isMenuOpen = false;
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
+  private readonly surveyService = inject(SurveyService);
   private readonly dbService = inject(SupabaseService);
   
-  readonly surveys = this.dbService.surveys;
-  readonly endingSoonSurveys = this.dbService.endingSoonSurveys;
+  readonly surveys = this.surveyService.surveys;
+  readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;
   
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply 
