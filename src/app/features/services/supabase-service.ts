@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Survey } from '../interfaces/survey';
@@ -28,7 +28,21 @@ export class SupabaseService {
 
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
-  endingSoonSurveys = signal<Survey[]>([]);
+  endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
+
+  /**
+   * This function filters the surveys to find those that are ending soon. It checks if the expiry date of each survey 
+   * is within the next three days.
+   * @returns - An array of surveys that are ending soon.
+   */
+  getFilteredSurveysEndingSoon() {
+    return this.surveys().filter(survey => {
+      const today = new Date();
+      const expiryDate = new Date(survey.expiry_date);
+      const threeDaysLater = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+      return expiryDate >= today && expiryDate <= threeDaysLater;
+    });
+  }
 
   /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
@@ -42,32 +56,14 @@ export class SupabaseService {
     if (!surveys) return;
     this.surveys.set(surveys);
     console.log('Fetched surveys:', surveys);
-    this.subscribeToSurveyChanges();
   }
 
   /**
-   * This function retrieves surveys that are ending soon (within the next 3 days) from the Supabase database and updates the 
-   * endingSoonSurveys signal with the fetched data.
-   * @returns - A promise that resolves when the surveys are fetched and the endingSoonSurveys signal is updated.
+   * This function retrieves questions for a specific survey from the Supabase database based on the provided survey ID. It 
+   * returns an array of questions associated with that survey.
+   * @param surveyId - The ID of the survey for which to fetch questions.
+   * @returns - A promise that resolves to an array of questions for the specified survey.
    */
-  async getFilteredSurveysEndingSoon() {
-    const today = new Date().toISOString().slice(0, 10);
-    const threeDaysLater = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
-    .toISOString().slice(0, 10);
-
-    let { data: surveys, error } = await this.supabase
-    .from('surveys')
-    .select('*')
-    .gte('expiry_date', today)
-    .lte('expiry_date', threeDaysLater)
-    .order('expiry_date', { ascending: true })
-    .limit(6);
-    if (surveys) {
-      this.endingSoonSurveys.set(surveys);
-      console.log('Fetched ending soon surveys:', surveys);
-    }
-  }
-
   async getQuestionsBySurveyId(surveyId: number) {
     let { data: questions, error } = await this.supabase
     .from('questions')

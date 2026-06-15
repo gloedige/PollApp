@@ -26,14 +26,13 @@ export class SurveyDashboard {
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply 
    * specific styles for the survey dashboard page. It also calls the getAllSurveys() method to fetch all surveys 
-   * from the database and the getFilteredSurveysEndingSoon() method to fetch surveys that are ending soon.
+   * from the database.
    * @returns - void
    */
   ngOnInit(): void {
     this.renderer.addClass(this.document.body, 'dashboard-page');
     this.dbService.getAllSurveys();
-    this.dbService.getFilteredSurveysEndingSoon();
-    
+    this.dbService.subscribeToSurveyChanges();
   }
 
   /**
