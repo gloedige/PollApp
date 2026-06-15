@@ -24,6 +24,10 @@ export class SurveyDashboard {
   
   readonly surveys = this.surveyService.surveys;
   readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;
+  filterdSurveys = computed(() => this.surveyService.activeSurveys());
+
+  buttonIsActive: boolean = true;
+
   
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply 
@@ -50,6 +54,16 @@ export class SurveyDashboard {
    */
   toggleStateOfDropdownMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  showActiveSurveys() {
+    this.filterdSurveys = computed(() => this.surveyService.activeSurveys());
+    this.buttonIsActive = true;
+  }
+
+  showPastSurveys() {
+    this.filterdSurveys = computed(() => this.surveyService.pastSurveys());
+    this.buttonIsActive = false;
   }
 
 }

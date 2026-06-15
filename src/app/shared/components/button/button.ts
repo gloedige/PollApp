@@ -13,4 +13,5 @@ export class Button {
   readonly buttonType = input<'primary' | 'secondary' | 'tertiary' | 'filter'>('primary');
   readonly text = input<string>('Button');
   @Input() hideIcon: boolean = false;
+  @Input() isActive: boolean = false;
 }

@@ -25,7 +25,7 @@
     </button>
 } 
 @if (buttonType() === 'filter') {
-     <button class="button button__filter">
+     <button class="button button__filter" [class.button__filter--isActive]="isActive">
         {{text()}}
     </button>
 }

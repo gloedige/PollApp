@@ -11,6 +11,8 @@ export class SurveyService {
   private readonly dbService = inject(SupabaseService);
   surveys = this.dbService.surveys;
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
+  activeSurveys = computed(() => this.surveys().filter(survey => new Date(survey.expiry_date) > new Date()));
+  pastSurveys = computed(() => this.surveys().filter(survey => new Date(survey.expiry_date) <= new Date()));
 
   constructor() {
     

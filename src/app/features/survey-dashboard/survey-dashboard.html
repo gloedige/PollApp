@@ -25,14 +25,14 @@
     <section class="all-surveys-section">
         <nav class="nav-bar">
             <div class="nav-bar__button-container">
-                <app-button [buttonType]="'filter'" [text]="'Active surveys'"></app-button>
-                <app-button [buttonType]="'filter'" [text]="'Past surveys'"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Active surveys'" [isActive]="buttonIsActive" (click)="showActiveSurveys()"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Past surveys'" [isActive]="!buttonIsActive" (click)="showPastSurveys()"></app-button>
             </div>
             <app-category-menu [text]="'Select category'"></app-category-menu>
         </nav>
         <div class="all-surveys-section__surveys">
-            @if (surveys().length > 0) {
-                @for (survey of surveys(); track survey.id) {
+            @if (filterdSurveys().length > 0) {
+                @for (survey of filterdSurveys(); track survey.id) {
                     <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
                 }
             } @else {
