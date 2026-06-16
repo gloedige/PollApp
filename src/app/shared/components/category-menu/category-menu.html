@@ -10,9 +10,9 @@
     <menu class="menu-container__dropdown-content" [class.menu-container__dropdown-content--is-open]="isMenuOpen">
         @for (categoryType of categoryTypes; track categoryType) {
             <li>
-                <a class="menu-container__dropdown-content__item">{{categoryType}}</a>
+                <a class="menu-container__dropdown-content__item" (click)="selectCategory(categoryType)">{{categoryType}}</a>
             </li>
         }
     </menu>
-    <p class="menu-container__selected-category">Team Activities</p>
+    <p class="menu-container__selected-category">{{surveyService.selectedCategory()}}</p>
 </div>

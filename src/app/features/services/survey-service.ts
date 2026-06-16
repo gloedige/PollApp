@@ -8,6 +8,7 @@ import { SupabaseService } from './supabase-service';
 export class SurveyService {
   surveyList = signal<Survey[]>([]);
   surveyDetail = signal<Survey | null>(null);
+  selectedCategory = signal<string | null>(null);
   private readonly dbService = inject(SupabaseService);
   surveys = this.dbService.surveys;
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));

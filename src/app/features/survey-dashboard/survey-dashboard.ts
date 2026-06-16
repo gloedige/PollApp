@@ -2,15 +2,15 @@ import { SurveyCard } from '../components/survey-card/survey-card';
 import { ChangeDetectionStrategy, Component, computed, signal, Input, inject, Renderer2 } from '@angular/core';
 import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
-import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import {DOCUMENT} from "@angular/common";
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SupabaseService } from '../services/supabase-service';
 import { SurveyService } from '../services/survey-service';
+import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 
 @Component({
   selector: 'app-survey-dashboard',
-  imports: [SurveyCard, Button, CategoryMenu, SurveyDialog],
+  imports: [SurveyCard, Button, SurveyDialog, CategoryMenu],
   templateUrl: './survey-dashboard.html',
   styleUrl: './survey-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,6 +25,7 @@ export class SurveyDashboard {
   readonly surveys = this.surveyService.surveys;
   readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;
   filterdSurveys = computed(() => this.surveyService.activeSurveys());
+  selectedCategory = this.surveyService.selectedCategory;
 
   buttonIsActive: boolean = true;
 
