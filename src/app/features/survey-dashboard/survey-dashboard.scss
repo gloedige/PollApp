@@ -133,6 +133,15 @@ h1{
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
     }
+
+    &__no-surveys{
+        color: colors.$light_purple_3;
+        font-family: var(--font-family-text-bold);
+        font-size: 1.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .nav-bar{
