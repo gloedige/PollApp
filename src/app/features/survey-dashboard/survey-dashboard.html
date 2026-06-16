@@ -31,14 +31,14 @@
             <app-category-menu [text]="'Select category'"></app-category-menu>
         </nav>
         <div class="all-surveys-section__surveys">
-            @if (filterdSurveys().length > 0) {
-                @for (survey of filterdSurveys(); track survey.id) {
+            @if (filteredSurveys().length > 0) {
+                @for (survey of filteredSurveys(); track survey.id) {
                     <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
                 }
             }
         </div>
         <div class="all-surveys-section__no-surveys">
-            @if (filterdSurveys().length === 0) {
+            @if (filteredSurveys().length === 0) {
             <p>No past surveys.</p>
             }
         </div>

@@ -11,9 +11,13 @@ export class SurveyService {
   selectedCategory = signal<string | null>(null);
   private readonly dbService = inject(SupabaseService);
   surveys = this.dbService.surveys;
+
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
+  surveyState = signal<'active' | 'past'>('active');
   activeSurveys = computed(() => this.filterActiveSurveys());
   pastSurveys = computed(() => this.filterPastSurveys());
+
+  readonly visibleSurveys = computed(this.getFilterdSurveysByStateOrCategory.bind(this));
 
 
   constructor() {
@@ -83,6 +87,29 @@ export class SurveyService {
     }
 
     return new Date(value);
+  }
+
+  /**
+   * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data. It logs the 
+   * fetched surveys to the console for debugging purposes.
+   * @returns An array of surveys filtered by the selected state and category.
+   */
+  getFilterdSurveysByStateOrCategory() {
+    const category = this.selectedCategory();
+    const state = this.surveyState();
+    const todayStart = this.getStartOfDayTimestamp(new Date());
+
+    const byState = this.surveys().filter((survey) => {
+      const expiryStart = this.getStartOfDayTimestamp(
+        this.parseSurveyDate(survey.expiry_date)
+      );
+      return state === 'active'
+        ? expiryStart >= todayStart
+        : expiryStart < todayStart;
+    });
+
+    if (!category) return byState;
+    return byState.filter((survey) => survey.category === category);
   }
 
 }

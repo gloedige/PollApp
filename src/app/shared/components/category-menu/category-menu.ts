@@ -13,10 +13,10 @@ export class CategoryMenu {
   readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
   selectedCategory = signal<typeof this.categoryTypes[number] | null>(null);
 
-  surveyService = inject(SurveyService);
+  private readonly surveyServiceMenu = inject(SurveyService);
 
   ngOnInit() {
-    this.selectedCategory.set(this.surveyService.selectedCategory());
+    this.selectedCategory.set(this.surveyServiceMenu.selectedCategory());
   }
 
   /**
@@ -35,8 +35,9 @@ export class CategoryMenu {
    */
   selectCategory(category: typeof this.categoryTypes[number]): void {
     this.selectedCategory.set(category);
-    this.surveyService.selectedCategory.set(category);
+    this.surveyServiceMenu.selectedCategory.set(category);
     this.isMenuOpen = false;
   }
+  
 }
   

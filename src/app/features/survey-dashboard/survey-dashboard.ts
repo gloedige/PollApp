@@ -24,8 +24,7 @@ export class SurveyDashboard {
   
   readonly surveys = this.surveyService.surveys;
   readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;
-  filterdSurveys = computed(() => this.surveyService.activeSurveys());
-  selectedCategory = this.surveyService.selectedCategory;
+  readonly filteredSurveys = this.surveyService.visibleSurveys;
 
   buttonIsActive: boolean = true;
 
@@ -58,12 +57,12 @@ export class SurveyDashboard {
   }
 
   showActiveSurveys() {
-    this.filterdSurveys = computed(() => this.surveyService.activeSurveys());
+    this.surveyService.surveyState.set('active');
     this.buttonIsActive = true;
   }
 
   showPastSurveys() {
-    this.filterdSurveys = computed(() => this.surveyService.pastSurveys());
+    this.surveyService.surveyState.set('past');
     this.buttonIsActive = false;
   }
 
