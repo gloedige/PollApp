@@ -28,9 +28,6 @@ export class SupabaseService {
 
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
- 
-
-
 
   /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
@@ -52,16 +49,46 @@ export class SupabaseService {
    * @param surveyId - The ID of the survey for which to fetch questions.
    * @returns - A promise that resolves to an array of questions for the specified survey.
    */
-  async getQuestionsBySurveyId(surveyId: number) {
+  async getAllQuestionsBySurveyId(surveyId: number) {
     let { data: questions, error } = await this.supabase
     .from('questions')
     .select('*')
     .eq('survey_id', surveyId);
     if (questions) {
       console.log(`Fetched questions for survey ID ${surveyId}:`, questions);
-      return questions;
+      this.questions.set(questions);
+    } else {
+      console.error(`Error fetching questions for survey ID ${surveyId}:`, error);
     }
-    return [];
+  }
+
+  /**
+   * This function retrieves all options from the Supabase database and updates the options signal with the fetched data. 
+   * It logs the fetched options or any errors that occur during the fetch process.
+   */
+  async getAllOptions() {
+    let { data: options, error } = await this.supabase
+    .from('options')
+    .select('*')
+    if (options) {
+      console.log(`Fetched options:`, options);
+      this.options.set(options);
+    } else {
+      console.error(`Error fetching options:`, error);
+    }
+  }
+
+  async getAllResultsByQuestionId(questionId: number) {
+    let { data: results, error } = await this.supabase
+    .from('results')
+    .select('*')
+    .eq('question_id', questionId);
+    if (results) {
+      console.log(`Fetched results for question ID ${questionId}:`, results);
+      this.results.set(results);
+    } else {
+      console.error(`Error fetching results for question ID ${questionId}:`, error);
+    }
   }
 
   /**

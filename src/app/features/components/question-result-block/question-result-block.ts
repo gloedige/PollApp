@@ -32,6 +32,5 @@ export class QuestionResultBlock {
   ngOnInit() {
     this.questionText.set(this.surveyDetails.questions().find(question => question.id === this.questionId)?.question ?? '');
     this.numberOfQuestion.set(this.surveyDetails.getNumberOfQuestion(this.questionId));
-    this.questionOptions.set(this.surveyDetails.filteredOptions);
   }   
 }
