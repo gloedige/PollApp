@@ -63,11 +63,21 @@ export class SurveyDashboard {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  /**
+   * This function sets the survey state to 'active' in the SurveyService, which triggers the filtering of surveys to show only those
+   * that are currently active. It also updates the buttonIsActive property to true, which can be used to visually indicate 
+   * that the "Active Surveys" button is active.
+   */
   showActiveSurveys() {
     this.surveyService.surveyState.set('active');
     this.buttonIsActive = true;
   }
 
+  /**
+   * This function sets the survey state to 'past' in the SurveyService, which triggers the filtering of surveys to show only 
+   * those that have already expired. It also updates the buttonIsActive property to false, which can be used to visually indicate 
+   * that the "Past Surveys" button is active.
+   */
   showPastSurveys() {
     this.surveyService.surveyState.set('past');
     this.buttonIsActive = false;
