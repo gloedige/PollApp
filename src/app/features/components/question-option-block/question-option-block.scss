@@ -19,6 +19,12 @@
         gap: 6px;
     }
 
+    &__header-content{
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 24px 0;
+    }
+
     &__title{
         font-family: var(--font-family-text-bold);
         font-size: 1.125rem;
@@ -30,7 +36,7 @@
         font-family: var(--font-family-text-default);
         font-size: 0.75rem;
         color: colors.$dark_purple;
-        margin: 0 0 24px 0;
+        margin: 4px 0 0 0;
     }
 
     &__options{
