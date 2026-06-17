@@ -1,59 +1,86 @@
 # PollApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+A survey/polling application built with Angular 21, featuring a dashboard to browse surveys and a detail view to fill them in.
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Framework:** Angular 21 (standalone components, signals)
+- **Language:** TypeScript (strict mode)
+- **Styling:** SCSS
+- **Unit Tests:** [Vitest](https://vitest.dev/)
+- **E2E Tests:** [Playwright](https://playwright.dev/)
+
+## Prerequisites
+
+- Node.js ≥ 20
+- npm ≥ 10
+
+## Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser at `http://localhost:4200/`.
 
-## Code scaffolding
+## Routes
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Path | Description |
+|------|-------------|
+| `/dashboard` | Survey dashboard — lists all available surveys |
+| `/detail/:id` | Survey detail — view and interact with a single survey |
 
-```bash
-ng generate component component-name
+## Project Structure
+
+```
+src/
+└── app/
+    ├── features/
+    │   ├── components/       # Shared feature components
+    │   ├── interfaces/       # TypeScript interfaces/models
+    │   ├── services/         # Feature services
+    │   ├── survey-dashboard/ # Dashboard feature
+    │   ├── survey-detail/    # Detail feature
+    │   └── survey-dialog/    # Dialog feature
+    ├── shared/               # App-wide shared utilities
+    ├── styles/               # Global style tokens/mixins
+    ├── environments/         # Environment configs
+    ├── app.config.ts
+    └── app.routes.ts
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Running Unit Tests
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Uses [Vitest](https://vitest.dev/):
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Running E2E Tests
 
-For end-to-end (e2e) testing, run:
+Uses [Playwright](https://playwright.dev/):
 
 ```bash
-ng e2e
+npx playwright test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Building
 
-## Additional Resources
+```bash
+ng build
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Build artifacts are output to the `dist/` directory.
+
+## License
+
+[MIT](LICENSE)
