@@ -30,12 +30,16 @@
             </div>
             <app-category-menu [text]="'Select category'"></app-category-menu>
         </nav>
-        <div class="all-surveys-section__surveys">
-            @if (filteredSurveys().length > 0) {
-                @for (survey of filteredSurveys(); track survey.id) {
-                    <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
-                }
-            }
+        <div class="all-surveys-section__surveys-frame">
+            <div class="all-surveys-section__surveys-scroll">
+                <div class="all-surveys-section__surveys">
+                    @if (filteredSurveys().length > 0) {
+                        @for (survey of filteredSurveys(); track survey.id) {
+                            <app-survey-card [survey]="survey" listType="recently_edited" [showsEndingSoonCard]="false"></app-survey-card>
+                        }
+                    }
+                </div>
+            </div>
         </div>
         <div class="all-surveys-section__no-surveys">
             @if (filteredSurveys().length === 0) {
