@@ -67,8 +67,13 @@
     &__footer{
         display: flex;
         justify-content: flex-end;
+        
         &--ending-soon{
             justify-content: flex-start;
+        }
+
+        &--empty{
+            display: none;
         }
     }
 }

@@ -28,6 +28,13 @@ export class SurveyDashboard {
 
   buttonIsActive: boolean = true;
 
+  readonly emptySurvey: Survey = {
+    id: 0,
+    title: 'No survey ending soon!',
+    expiry_date: '',
+    description: '',
+  };
+
   
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply 

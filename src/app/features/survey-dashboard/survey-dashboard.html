@@ -20,6 +20,9 @@
                 @for (survey of endingSoonSurveys(); track survey.id) {
                     <app-survey-card [survey]="survey" listType="ending_soon" [showsEndingSoonCard]="true"></app-survey-card>
                 }
+                @empty {
+                    <app-survey-card [survey]="emptySurvey" listType="ending_soon" [showsEndingSoonCard]="true"></app-survey-card>
+                }
         </div>
     </section>
     <section class="all-surveys-section">
