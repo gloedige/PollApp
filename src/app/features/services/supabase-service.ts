@@ -40,7 +40,6 @@ export class SupabaseService {
     .select('*');
     if (!surveys) return;
     this.surveys.set(surveys);
-    console.log('Fetched surveys:', surveys);
   }
 
   /**
@@ -55,7 +54,6 @@ export class SupabaseService {
     .select('*')
     .eq('survey_id', surveyId);
     if (questions) {
-      console.log(`Fetched questions for survey ID ${surveyId}:`, questions);
       this.questions.set(questions);
     } else {
       console.error(`Error fetching questions for survey ID ${surveyId}:`, error);
@@ -71,7 +69,6 @@ export class SupabaseService {
     .from('options')
     .select('*')
     if (options) {
-      console.log(`Fetched options:`, options);
       this.options.set(options);
     } else {
       console.error(`Error fetching options:`, error);
@@ -85,7 +82,6 @@ export class SupabaseService {
     .select('*')
     .eq('question_id', questionId);
     if (votes) {
-      console.log(`Fetched votes for question ID ${questionId}:`, votes);
       this.votes.set(votes);
     } else {
       console.error(`Error fetching votes for question ID ${questionId}:`, error);

@@ -101,37 +101,4 @@ export class SurveyDetail {
    * @returns - The active survey ID from the activeSurveyCard component.
    */
 
-
-  readonly results = signal<Result[]>([
-    {
-      id: 1,
-      question_id: 1,
-      option_id: 1
-    },
-    {
-      id: 2,
-      question_id: 1,
-      option_id: 2
-    },
-    {
-      id: 3,
-      question_id: 2,
-      option_id: 4
-    },
-    {
-      id: 4,
-      question_id: 3,
-      option_id: 7
-    },
-    {
-      id: 5,
-      question_id: 3,
-      option_id: 8
-    },
-    {
-      id: 6,
-      question_id: 3,
-      option_id: 9
-    }
-  ]);
 }

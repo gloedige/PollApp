@@ -21,11 +21,8 @@ export class BarChartBlock {
   ngOnInit() {
     this.dbService.getAllVotesByQuestionId(this.questionId).then(() => {
       this.numberOfVotesForOption = this.dbService.votes().filter(result => result.option_id === this.optionId && result.question_id === this.questionId).length;
-      console.log('Number of votes for option:', this.numberOfVotesForOption);
       this.totalVotesForQuestion = this.dbService.votes().filter(result => result.question_id === this.questionId).length;
-      console.log('Total votes for question:', this.totalVotesForQuestion);
       this.percentageOfVotes.set(this.calculatePercentageOfVotes(this.numberOfVotesForOption, this.totalVotesForQuestion));
-      console.log('Percentage of votes for option:', this.percentageOfVotes());
       this.percentageOfVotes.set(parseFloat(this.percentageOfVotes().toFixed(0)));
     });
     
