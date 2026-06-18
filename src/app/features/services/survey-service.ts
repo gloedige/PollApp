@@ -2,7 +2,7 @@ import { Injectable, signal, inject, computed } from '@angular/core';
 import { SupabaseService } from './supabase-service';
 import { Survey } from '../interfaces/survey';
 import { Question } from '../interfaces/question';
-import { Result } from '../interfaces/result';
+import { Vote } from '../interfaces/vote';
 import { Option } from '../interfaces/option';
 
 @Injectable({

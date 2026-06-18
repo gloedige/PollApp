@@ -3,7 +3,7 @@ import { createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabas
 import { environment } from '../../environments/environment';
 import { Survey } from '../interfaces/survey';
 import { Question } from '../interfaces/question';
-import { Result } from '../interfaces/result';
+import { Vote} from '../interfaces/vote';
 import { Option } from '../interfaces/option';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   questions = signal<Question[]>([]);
   options = signal<Option[]>([]);
-  results = signal<Result[]>([]);
+  votes = signal<Vote[]>([]);
 
   constructor() {
     this.supabase = createClient(
@@ -78,16 +78,17 @@ export class SupabaseService {
     }
   }
 
-  async getAllResultsByQuestionId(questionId: number) {
-    let { data: results, error } = await this.supabase
-    .from('results')
+
+  async getAllVotesByQuestionId(questionId: number) {
+    let { data: votes, error } = await this.supabase
+    .from('votes')
     .select('*')
     .eq('question_id', questionId);
-    if (results) {
-      console.log(`Fetched results for question ID ${questionId}:`, results);
-      this.results.set(results);
+    if (votes) {
+      console.log(`Fetched votes for question ID ${questionId}:`, votes);
+      this.votes.set(votes);
     } else {
-      console.error(`Error fetching results for question ID ${questionId}:`, error);
+      console.error(`Error fetching votes for question ID ${questionId}:`, error);
     }
   }
 
