@@ -19,5 +19,12 @@ export class QuestionOption {
     this.optionSelected.emit(id);
   }
 
+  onOptionsSelected() {
+    if (this.optionId() === undefined) return;
+     else {
+      this.onCheckboxToggle(this.optionId());
+    }
+  }
+
 }
   

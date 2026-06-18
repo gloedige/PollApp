@@ -1,4 +1,4 @@
-<div class="question-option-container">
+<div class="question-option-container" (click)="onOptionsSelected()">
     <app-checkbox [optionId]="optionId()" [isCheckboxForMultipleOptions]="false" [checked]="isSelected()" (toggle)="onCheckboxToggle($event)"></app-checkbox>
     <span class="question-option-container__order-letter">{{order_letter()}}.</span>
     <label class="question-option-container__label" for="{{optionId()}}">{{ optionText() }}</label>
