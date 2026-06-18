@@ -7,12 +7,6 @@ import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SurveyService } from '../services/survey-service';
 import { SupabaseService } from '../services/supabase-service';
 
-type Result = {
-    id: number;
-    question_id: number;
-    option_id: number;
-}
-
 @Component({
   selector: 'app-survey-detail',
   imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog],

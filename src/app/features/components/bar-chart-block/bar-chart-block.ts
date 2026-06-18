@@ -1,4 +1,4 @@
-import { Component, Input, signal, inject } from '@angular/core';
+import { Component, signal, inject, input } from '@angular/core';
 import { SurveyDetail } from '../../survey-detail/survey-detail';
 import { SupabaseService } from '../../services/supabase-service';
 
@@ -11,17 +11,17 @@ import { SupabaseService } from '../../services/supabase-service';
 export class BarChartBlock {
   surveyDetails = inject(SurveyDetail);
   dbService = inject(SupabaseService);
-  @Input() optionId = 0;
-  @Input() questionId = 0;
-  @Input() order_letter = '';
+  optionId = input<number>(0);
+  questionId = input<number>(0);
+  order_letter = input<string>('');
   numberOfVotesForOption: number = 0;
   totalVotesForQuestion: number = 0;
   percentageOfVotes = signal<number>(0);
 
   ngOnInit() {
-    this.dbService.getAllVotesByQuestionId(this.questionId).then(() => {
-      this.numberOfVotesForOption = this.dbService.votes().filter(result => result.option_id === this.optionId && result.question_id === this.questionId).length;
-      this.totalVotesForQuestion = this.dbService.votes().filter(result => result.question_id === this.questionId).length;
+    this.dbService.getAllVotesByQuestionId(this.questionId()).then(() => {
+      this.numberOfVotesForOption = this.dbService.votes().filter(result => result.option_id === this.optionId() && result.question_id === this.questionId()).length;
+      this.totalVotesForQuestion = this.dbService.votes().filter(result => result.question_id === this.questionId()).length;
       this.percentageOfVotes.set(this.calculatePercentageOfVotes(this.numberOfVotesForOption, this.totalVotesForQuestion));
       this.percentageOfVotes.set(parseFloat(this.percentageOfVotes().toFixed(0)));
     });

@@ -53,23 +53,28 @@ export class QuestionOptionBlock {
   isSelected(id: number): boolean {
     return this.selectedOptionIds().includes(id);
   }
-
+  
   /**
    * This function handles the toggle event of a checkbox for an option. It checks if the question allows multiple options and updates the
    * selectedOptionIds signal accordingly. If multiple options are allowed, it adds or removes the option ID from the selectedOptionIds array.
    * If only a single option is allowed, it sets the selectedOptionIds signal to an array containing only the toggled option ID or an empty array 
    * if the same option is toggled again.
    * @param optionId - The ID of the option that was toggled. (not in use yet, but will be needed for the backend implementation)
-   */
+  */
   handleCheckboxToggle(optionId: number): void {
     const currentSelectedOptionIds = this.selectedOptionIds();
-
+    console.log('Current selected option IDs before toggle:', currentSelectedOptionIds);
     if(this.hasMultipleOptions()) {
       this.handleMultipleOptionsToggle(optionId, currentSelectedOptionIds);
     } else {
       this.handleSingleOptionToggle(optionId, currentSelectedOptionIds);
     }
-  }
+    console.log('Current selected option IDs after toggle:', this.selectedOptionIds());
+    if (this.selectedOptionIds().length > 0) {
+        this.surveyService.collectVotesOfCurrentSurvey(this.questionId(), this.selectedOptionIds());
+      }
+    }
+  
 
   /**
    * This function handles the toggle event for multiple options. It checks if the toggled option ID is already included in the currentSelectedOptionIds 

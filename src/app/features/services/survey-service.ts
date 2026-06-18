@@ -22,6 +22,8 @@ export class SurveyService {
 
   readonly visibleSurveys = computed(this.getFilterdSurveysByStateOrCategory.bind(this));
 
+  surveyVotes = signal<Vote[]>([]);
+
 
   constructor() {
     
@@ -113,6 +115,33 @@ export class SurveyService {
 
     if (!category) return byState;
     return byState.filter((survey) => survey.category === category);
+  }
+
+  //TODO: Bugfix this function. 
+  collectVotesOfCurrentSurvey(questionId: number, optionIds: number[]) {
+    const votes = this.surveyVotes();
+    console.log('surveyIds: ' , this.surveyVotes().map(vote => vote.question_id));
+
+   
+
+    if (votes.some(vote => vote.question_id === questionId)) {
+      this.deleteVoteForQuestion(questionId);
+    }
+    for (const optionId of optionIds) {
+      const newVote: Vote = {
+        id: 0, // This will be set by the backend
+        question_id: questionId,
+        option_id: optionId
+      };
+      this.surveyVotes.set([...votes, newVote]);
+    }
+    console.log('Collected votes for current survey:', this.surveyVotes());
+    
+  } 
+
+   deleteVoteForQuestion(questionId: number) {
+    const votes = this.surveyVotes();
+    this.surveyVotes.set(votes.filter(vote => vote.question_id !== questionId));
   }
 
 }
