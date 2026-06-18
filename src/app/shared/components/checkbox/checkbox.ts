@@ -1,4 +1,4 @@
-import { Component, Input, input, output } from '@angular/core';
+import { Component, Input, input, output, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -8,11 +8,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './checkbox.scss',
 })
 export class Checkbox {
-  optionId = input.required<number>();
+  optionId = input<number>(0);
   checked = input<boolean>(false);
   toggle = output<number>();
 
-  // @Input() questionId: string = '123';
+  questionId = input<string>('123');
   isCheckboxForMultipleOptions = input<boolean>(false);
 
   onChange() {
@@ -23,7 +23,7 @@ export class Checkbox {
     }
   }
 
-
+  
 
   
   control = new FormControl(false);
