@@ -27,13 +27,14 @@
     box-sizing: border-box;
     background-color: colors.$light_purple_4;
     border-top-right-radius: 160px;
+    gap: 24px;
 }
 
 .survey-detail-header{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 48px;
+    margin-bottom: 16px;
     gap: 8px;
 
     h1{

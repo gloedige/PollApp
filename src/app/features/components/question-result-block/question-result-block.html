@@ -7,7 +7,7 @@
     </div>
     <div class="question-result-block-container__options">
         @for (item of questionOptions(); track $index) {
-            <app-bar-chart-block [order_letter]="order_letter()[$index]" [optionId]="item.id"></app-bar-chart-block>
+            <app-bar-chart-block [order_letter]="order_letter()[$index]" [optionId]="item.id" [questionId]="item.question_id"></app-bar-chart-block>
         }
     </div>
 </div>
