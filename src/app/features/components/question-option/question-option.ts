@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input, output, signal } from '@angular/core';
 import { Checkbox } from '../../../shared/components/checkbox/checkbox';
 
 @Component({
@@ -8,9 +8,16 @@ import { Checkbox } from '../../../shared/components/checkbox/checkbox';
   styleUrl: './question-option.scss',
 })
 export class QuestionOption {
-  @Input() optionText: string = 'Option text';
-  @Input() order_letter: string = 'A';
-  @Input() optionId: number = 0;
-  @Input() questionId: string = '';
+  optionText = input<string>('Option text');
+  order_letter = input<string>('Order letter');
+  optionId = input.required<number>();
+  isSelected = input<boolean>(false);
+  optionSelected = output<number>();
+  isCheckboxForMultipleOptions = input<boolean>(false);
+
+  onCheckboxToggle(id: number) {
+    this.optionSelected.emit(id);
+  }
+
 }
   

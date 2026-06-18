@@ -8,7 +8,7 @@
     </div>
     <div class="question-option-block-container__options">
         @for (item of questionOptions(); track $index) {
-            <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]" [optionId]="item.id"></app-question-option>
+            <app-question-option [optionText]="item.option_text" [order_letter]="order_letter()[$index]" [optionId]="item.id" [isSelected]="isSelected(item.id)" (optionSelected)="handleCheckboxToggle($event)"></app-question-option>
         }
     </div>
 </div>
