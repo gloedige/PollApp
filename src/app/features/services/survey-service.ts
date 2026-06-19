@@ -117,31 +117,53 @@ export class SurveyService {
     return byState.filter((survey) => survey.category === category);
   }
 
-  //TODO: Bugfix this function. 
+  /**
+   * This function collects the votes for the current survey based on the selected options for a given question. 
+   * @param questionId - The ID of the question for which to collect votes.
+   * @param optionIds - An array of option IDs that have been selected for the question.
+   */
   collectVotesOfCurrentSurvey(questionId: number, optionIds: number[]) {
-    const votes = this.surveyVotes();
-    console.log('surveyIds: ' , this.surveyVotes().map(vote => vote.question_id));
+    const existingVotes = this.surveyVotes();
+    const votesWithoutQuestion = this.deleteVoteByQuestionId(questionId, existingVotes);
+    const nextVotes = this.addVotesForQuestion(questionId, optionIds, votesWithoutQuestion);
 
-   
+    this.surveyVotes.set(nextVotes);
+    console.log('Collected votes for current survey:', this.surveyVotes());
+  } 
 
-    if (votes.some(vote => vote.question_id === questionId)) {
-      this.deleteVoteForQuestion(questionId);
-    }
-    for (const optionId of optionIds) {
+  /**
+   * This function deletes votes for a specific question ID from the given array of votes. It filters out any votes
+   * that have a matching question ID.
+   * @param questionId - The ID of the question for which to delete votes.
+   * @param votes - The array of votes from which to delete votes.
+   * @returns A new array of votes with the votes for the specified question ID removed.
+   */
+  deleteVoteByQuestionId(questionId: number, votes: Vote[]): Vote[] {
+    return votes.filter(vote => vote.question_id !== questionId);
+  }
+
+  /**
+   * This function adds votes for a specific question ID to the given array of votes. It creates a new vote for each option ID
+   * and appends it to the votes array.
+   * @param questionId - The ID of the question for which to add votes.
+   * @param optionIds - An array of option IDs for which to add votes.
+   * @param votes - The array of votes to which the new votes will be added.
+   * @returns A new array of votes with the added votes for the specified question ID.
+   */
+  addVotesForQuestion(questionId: number, optionIds: number[], votes: Vote[]): Vote[] {
+    if (optionIds.length === 0) return votes;
+
+    const newVotes = optionIds.map((optionId) => {
       const newVote: Vote = {
-        id: 0, // This will be set by the backend
+        id: 0,
         question_id: questionId,
         option_id: optionId
       };
-      this.surveyVotes.set([...votes, newVote]);
-    }
-    console.log('Collected votes for current survey:', this.surveyVotes());
-    
-  } 
 
-   deleteVoteForQuestion(questionId: number) {
-    const votes = this.surveyVotes();
-    this.surveyVotes.set(votes.filter(vote => vote.question_id !== questionId));
+      return newVote;
+    });
+
+    return [...votes, ...newVotes];
   }
 
 }

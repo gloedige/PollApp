@@ -63,15 +63,14 @@ export class QuestionOptionBlock {
   */
   handleCheckboxToggle(optionId: number): void {
     const currentSelectedOptionIds = this.selectedOptionIds();
-    console.log('Current selected option IDs before toggle:', currentSelectedOptionIds);
     if(this.hasMultipleOptions()) {
       this.handleMultipleOptionsToggle(optionId, currentSelectedOptionIds);
     } else {
       this.handleSingleOptionToggle(optionId, currentSelectedOptionIds);
     }
-    console.log('Current selected option IDs after toggle:', this.selectedOptionIds());
+    this.surveyService.collectVotesOfCurrentSurvey(this.questionId(), this.selectedOptionIds());
+    //TODO: Hier aufräumen!
     if (this.selectedOptionIds().length > 0) {
-        this.surveyService.collectVotesOfCurrentSurvey(this.questionId(), this.selectedOptionIds());
       }
     }
   

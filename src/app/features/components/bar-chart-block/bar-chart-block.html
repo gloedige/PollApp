@@ -4,6 +4,6 @@
         <div class="bar-chart-bg__fill" [style.width.%]="percentageOfVotes()"></div>
     </div>
     <div class="bar-chart-block-container__info">
-        <p>{{percentageOfVotes()}}%</p>
+        <p>{{percentageOfVotes().toFixed(0)}}%</p>
     </div>
 </div>

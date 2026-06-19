@@ -17,7 +17,7 @@ type OptionDraft = {
   questionId?: string;
   text: string;
 };
-
+//TODO: create tests for user interaction with the dialog.
 @Component({
   selector: 'app-survey-dialog',
   imports: [Button, CategoryMenu, DialogQuestionOptionBlock],
