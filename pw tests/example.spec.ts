@@ -1,18 +1,38 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+const DASHBOARD_URL = 'http://localhost:4200/dashboard';
+const SURVEY_TITLE = "Let's plan the next team event together";
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+async function waitForDashboardData(page: Page) {
+  await page.goto(DASHBOARD_URL);
+
+  const endingSoonSection = page.locator('.ending-soon-section');
+  const surveyCardTitle = endingSoonSection.getByRole('heading', {
+    name: SURVEY_TITLE,
+    level: 2,
+  });
+
+  await expect(surveyCardTitle).toBeVisible({ timeout: 15_000 });
+
+  return { endingSoonSection, surveyCardTitle };
+}
+
+test('dashboard: click survey card by title', async ({ page }) => {
+  const { surveyCardTitle } = await waitForDashboardData(page);
+  await surveyCardTitle.click();
+
+  await expect(page).toHaveURL(/\/detail\/.+/);
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('set category filter to Team Activities and check if the correct survey cards are displayed', async ({ page }) => {
+  await waitForDashboardData(page);
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  const categoryFilter = page.getByRole('button', { name: 'Select category Arrow Down' });
+  await categoryFilter.click();
+  const menuOption = page.getByRole('list').getByText('Team Activities');
+  await menuOption.click();
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  const surveyCards = page.locator('.all-surveys-section__surveys');
+  await expect(surveyCards).toHaveCount(1);
+  await expect(surveyCards).toBeVisible();
 });
