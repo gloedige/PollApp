@@ -124,8 +124,9 @@ export class SurveyService {
     const existingVotes: Vote[] = this.votesOfActiveSurvey();
     const filteredVotesByQuestionId: Vote[] = this.deleteVotesByQuestionId(questionId, existingVotes);
     const updatedVotes: Vote[] = this.addVotesForQuestion(questionId, optionIds, filteredVotesByQuestionId);
-
+    
     this.votesOfActiveSurvey.set(updatedVotes);
+    console.log('votes of active survey:', this.votesOfActiveSurvey());
   } 
 
   /**

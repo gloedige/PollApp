@@ -76,7 +76,11 @@ export class SupabaseService {
     }
   }
 
-
+  /**
+   * This function retrieves all votes from the Supabase database and updates the votes signal with the fetched data.
+   * It logs the fetched votes or any errors that occur during the fetch process.
+   * @returns - A promise that resolves when the votes are fetched and the votes signal is updated.
+   */
   async getAllVotes() {
     let { data: votes, error } = await this.supabase
     .from('votes')

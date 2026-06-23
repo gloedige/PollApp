@@ -15,6 +15,11 @@ export class Checkbox {
   questionId = input<string>('123');
   isCheckboxForMultipleOptions = input<boolean>(false);
 
+  /**
+   * This function is called when the checkbox state changes. It checks if the optionId is defined and then emits the optionId to notify the 
+   * parent component about the change in checkbox state.
+   * @returns - void
+   */
   onChange() {
     if (this.optionId() === undefined) return;
     else {

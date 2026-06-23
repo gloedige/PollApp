@@ -15,10 +15,20 @@ export class QuestionOption {
   optionSelected = output<number>();
   isCheckboxForMultipleOptions = input<boolean>(false);
 
+  /**
+   * This function is called when the checkbox for an option is toggled. It emits the option ID of the toggled 
+   * checkbox to notify the parent component about the selection change.
+   * @param id - The ID of the option whose checkbox was toggled.
+   */
   onCheckboxToggle(id: number) {
     this.optionSelected.emit(id);
   }
 
+  /**
+   * This function is called when the options are selected. It checks if the optionId is defined and then calls the onCheckboxToggle
+   * function to handle the selection of the option.
+   * @returns - void
+   */
   onOptionsSelected() {
     if (this.optionId() === undefined) return;
      else {

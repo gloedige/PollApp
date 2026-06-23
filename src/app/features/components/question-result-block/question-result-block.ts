@@ -22,6 +22,10 @@ export class QuestionResultBlock {
   readonly questionOptions = computed(() => this.dbService.options().filter(option => option.question_id === this.questionId()));
   readonly order_letter = signal<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
 
+  /**
+   * This function is called when the component is initialized. It retrieves the question text and number of the question from the survey details 
+   * service based on the provided question ID. It updates the respective signals with the fetched data.
+   */
   ngOnInit() {
     this.questionText.set(this.surveyDetails.questions().find(question => question.id === this.questionId())?.question ?? '');
     this.numberOfQuestion.set(this.surveyDetails.getNumberOfQuestion(this.questionId()));

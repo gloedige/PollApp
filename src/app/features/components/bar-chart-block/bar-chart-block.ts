@@ -18,35 +18,22 @@ export class BarChartBlock {
   questionId = input<number>(0);
   order_letter = input<string>('');
 
-  // totalVotesForQuestion = computed(() => this.surveyService.completedVotesOfActiveSurvey().filter(vote => vote.question_id === this.questionId()).length);
-  // countOfVotesForOption = computed(() => this.surveyService.votesOfActiveSurvey().filter(vote => vote.option_id === this.optionId() && vote.question_id === this.questionId()).length);
-  // percentageOfVotes = computed(() => this.calculatePercentageOfVotes(this.countOfVotesForOption(), this.totalVotesForQuestion()));
-  // isOptionVoted = computed(() => this.isCurrentOptionVoted());
-
   readonly allVotes = computed(() => [...this.dbService.votes(), ...this.surveyService.votesOfActiveSurvey()]);
   readonly votesForQuestion = computed(() => this.allVotes().filter(vote => vote.question_id === this.questionId()));
   readonly votesForOption = computed(() => this.votesForQuestion().filter(vote => vote.option_id === this.optionId()));
   readonly percentage = computed(() => this.calculatePercentageOfVotes(this.votesForOption().length, this.votesForQuestion().length));
   
-  ngOnInit() {
-    // this.countOfVotesForOption.set(this.dbService.votes().filter(result => result.option_id === this.optionId() && result.question_id === this.questionId()).length);  
-    
-  }
   
-  //TODO: die Berechnung ist falsch. Es muss für alle Optionen einer Frage geprüft werden.
+  /**
+   * This function calculates the percentage of votes for a specific option based on the number of votes for that option and the total 
+   * number of votes for the corresponding question.
+   * @param numberOfVotesForOption - The number of votes for the specific option.
+   * @param totalVotesForQuestion - The total number of votes for the corresponding question.
+   * @returns - The percentage of votes for the option.
+   */
   calculatePercentageOfVotes(numberOfVotesForOption: number, totalVotesForQuestion: number): number {
     if (totalVotesForQuestion === 0) return 0;
     return (numberOfVotesForOption / totalVotesForQuestion) * 100;
-    // if (this.isOptionVoted()) {
-    //   return ((numberOfVotesForOption + 1) / (totalVotesForQuestion + 1)) * 100;
-    // } else {
-    // }
   }
   
-  // isCurrentOptionVoted(){
-  //   let doesExist = false;
-  //   doesExist = this.surveyService.votesOfActiveSurvey().some(vote => vote.option_id === this.optionId() && vote.question_id === this.questionId());
-  //   // console.log('Is current option voted? ', doesExist);
-  //   return doesExist;
-  // }
 }
