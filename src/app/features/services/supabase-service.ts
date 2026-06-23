@@ -92,37 +92,50 @@ export class SupabaseService {
     }
   }
 
+  async addNewVotes(votes: Vote[]) {
+    const { data, error } = await this.supabase
+      .from('votes')
+      .insert(votes);
+    if (error) {
+      console.error('Error adding new votes:', error);
+    } else {
+      console.log('New votes added:', data);
+      this.getAllVotes(); // Refresh the votes after adding new ones
+    }
+  }
+
   /**
    * This function sets up real-time subscriptions to the surveys table in the Supabase database. It listens for INSERT, UPDATE, and 
    * DELETE events and updates the surveys signal accordingly when changes occur.
    * @returns - void
    */
   subscribeToSurveyChanges() {
-  this.channels = this.supabase
-    .channel('surveys')
-    .on('postgres_changes',
-      { event: 'INSERT', schema: 'public', table: 'surveys' },
-      (payload) => {
-        this.surveys.update(list => [...list, payload.new as Survey]);
-      }
-    )
-    .on('postgres_changes',
-      { event: 'UPDATE', schema: 'public', table: 'surveys' },
-      (payload) => {
-        this.surveys.update(list =>
-          list.map(s => s.id === (payload.new as Survey).id ? payload.new as Survey : s)
-        );
-      }
-    )
-    .on('postgres_changes',
-      { event: 'DELETE', schema: 'public', table: 'surveys' },
-      (payload) => {
-        this.surveys.update(list =>
-          list.filter(s => s.id !== (payload.old as Survey).id)
-        );
-      }
-    )
-    .subscribe();
+    if (this.channels) return; 
+    this.channels = this.supabase
+      .channel('surveys')
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'surveys' },
+        (payload) => {
+          this.surveys.update(list => [...list, payload.new as Survey]);
+        }
+      )
+      .on('postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'surveys' },
+        (payload) => {
+          this.surveys.update(list =>
+            list.map(s => s.id === (payload.new as Survey).id ? payload.new as Survey : s)
+          );
+        }
+      )
+      .on('postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'surveys' },
+        (payload) => {
+          this.surveys.update(list =>
+            list.filter(s => s.id !== (payload.old as Survey).id)
+          );
+        }
+      )
+      .subscribe();
   }
 
   /**

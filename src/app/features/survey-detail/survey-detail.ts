@@ -1,6 +1,7 @@
 import { Component, inject, Renderer2, signal, computed} from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import {DOCUMENT} from "@angular/common";
+import {Router} from "@angular/router";
 import { QuestionOptionBlock } from '../components/question-option-block/question-option-block';
 import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
@@ -14,6 +15,7 @@ import { SupabaseService } from '../services/supabase-service';
   styleUrl: './survey-detail.scss',
 })
 export class SurveyDetail {
+  private readonly router = inject(Router);
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   readonly loadingDone = signal(false);
@@ -25,7 +27,7 @@ export class SurveyDetail {
   survey = this.surveyService.surveyDetail;
   dbService = inject(SupabaseService);
   readonly questions = this.dbService.questions;
- 
+  readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific 
@@ -90,9 +92,15 @@ export class SurveyDetail {
   }
 
   /**
-   * This function retrieves the active survey ID from the activeSurveyCard component. It returns the active survey ID, which can be used
-   * for fetching the corresponding survey data based on the ID or for other purposes related to the active survey.
-   * @returns - The active survey ID from the activeSurveyCard component.
+   * This function is called when the user completes the survey. It checks if there are any votes collected for the active survey.
+   * After storing the votes in the database, it navigates the user to the dashboard page.
+   * @returns - void
    */
+  async completeSurvey() {
+    if (this.votesOfActiveSurvey().length > 0) {
+      await this.dbService.addNewVotes(this.votesOfActiveSurvey());
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
 }

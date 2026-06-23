@@ -1,6 +1,8 @@
 <div class="main_content_wrapper align-start body-color">
     <header>
-        <img src="/assets/images/logo_purple_dark.png" alt="Logo">
+        <a href="/dashboard">
+            <img src="/assets/images/logo_purple_dark.png" alt="Logo">
+        </a>
         <app-button [buttonType]="'primary'" [text]="'Create survey'"></app-button>
     </header>
     <div class="survey-detail-shell">
@@ -25,7 +27,7 @@
                 </div>
             </div>
             <div class="survey-detail-footer">
-                <app-button [buttonType]="'primary'" [text]="'Complete survey'" [hideIcon]="true"></app-button>
+                <app-button [buttonType]="'primary'" [text]="'Complete survey'" [hideIcon]="true" (click)="completeSurvey()"></app-button>
             </div>
         </section>
         } @else {
