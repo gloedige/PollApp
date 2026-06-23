@@ -37,6 +37,7 @@ export class SurveyService {
     const threeDaysLaterStart = this.getStartOfDayTimestamp(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000));
 
     return this.surveys().filter(survey => {
+      if (!survey.expiry_date) return false;
       const expiryStart = this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date));
       return expiryStart >= todayStart && expiryStart <= threeDaysLaterStart;
     });
@@ -49,7 +50,10 @@ export class SurveyService {
    */
   filterActiveSurveys() {
     const todayStart = this.getStartOfDayTimestamp(new Date());
-    return this.surveys().filter(survey => this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) >= todayStart);
+    return this.surveys().filter(survey => {
+      if (!survey.expiry_date) return false;
+      return this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) >= todayStart;
+    });
   }
 
   /**
@@ -59,7 +63,10 @@ export class SurveyService {
    */
   filterPastSurveys() {
     const todayStart = this.getStartOfDayTimestamp(new Date());
-    return this.surveys().filter(survey => this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) < todayStart);
+    return this.surveys().filter(survey => {
+      if (!survey.expiry_date) return false;
+      return this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) < todayStart;
+    });
   }
 
   /**
@@ -79,9 +86,7 @@ export class SurveyService {
    * @returns A Date object representing the parsed date.
    */
   private parseSurveyDate(value: string | Date): Date {
-    if (value instanceof Date) {
-      return value;
-    }
+    if (value instanceof Date) return value;
 
     const dateOnlyMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
     if (dateOnlyMatch) {
@@ -103,6 +108,7 @@ export class SurveyService {
     const todayStart = this.getStartOfDayTimestamp(new Date());
 
     const byState = this.surveys().filter((survey) => {
+      if (!survey.expiry_date) return false;
       const expiryStart = this.getStartOfDayTimestamp(
         this.parseSurveyDate(survey.expiry_date)
       );
@@ -154,7 +160,6 @@ export class SurveyService {
 
     const newVotes = optionIds.map((optionId) => {
       const newVote: Vote = {
-        id: 0,
         question_id: questionId,
         option_id: optionId
       };
