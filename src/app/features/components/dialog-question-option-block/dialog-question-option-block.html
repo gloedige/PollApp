@@ -1,4 +1,4 @@
-<div class="dialog-question-option-block-shell">
+<div class="dialog-question-option-block-shell" [formGroup]="questionGroup()">
     <div class="dialog-question-option-block-header">
         <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title">{{questionNumber}}. Question</label>
         <div class="dialog-question-option-block-header__icon-container">
@@ -6,20 +6,20 @@
             <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__icon-container--icon-hover" alt="delete hover icon">
         </div>
     </div>
-    <input id="question_title_{{question.clientId}}" type="text" name="question" class="dialog-question-option-block-input">
+    <input id="question_title_{{question.clientId}}" type="text" name="question" class="dialog-question-option-block-input" formControlName="title">
     <div class="dialog-question-option-block-options-header">
         <p class="dialog-question-option-block-options-header__title">Answers</p>
         <div class="dialog-question-option-block-options-header__multiple-options-container">
-             <app-checkbox [questionId]="question.clientId" [isCheckboxForMultipleOptions]="true"></app-checkbox>
+             <app-checkbox [questionId]="question.clientId" [isCheckboxForMultipleOptions]="true" [formGroupCheckbox]="formGroupQuestionBlock()"></app-checkbox>
             <label for="multiple_options_{{question.clientId}}" class="dialog-question-option-block-options-header__multiple-options-container--checkbox-label">Allow multiple answers.</label>
         </div>
     </div>
     <div class="dialog-question-option-block-option-container">
         @for (option of question.options; track option.clientId; let index = $index) {
-             <app-dialog-question-option [order_letter]="order_letter_array[index]" [optionId]="option.clientId"></app-dialog-question-option>
+             <app-dialog-question-option [order_letter]="order_letter_array[index]" [optionId]="option.clientId" [formGroupOptionBlock]="formGroupQuestionBlock()"></app-dialog-question-option>
         }
     </div>
     <div class="dialog-question-option-block-add-option-button-container">
-        <app-button [buttonType]="'tertiary'" [text]="'Add answer'" [hideIcon]="false"></app-button>
+        <app-button [buttonType]="'tertiary'" [text]="'Add answer'" [hideIcon]="false" (click)="addOption()"></app-button>
     </div>
 </div>

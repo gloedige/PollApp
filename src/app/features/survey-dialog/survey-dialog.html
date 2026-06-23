@@ -7,12 +7,12 @@
                 <app-button [buttonType]="'secondary'" [cancelNewSurvey]="true" [text]="'Cancel'" [hideIcon]="false"></app-button>
             </div>
         </header>
-        <form class="dialog-container-form">
+        <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
             <div class="form-detail-container">
                 <div class="form-detail-container--title-date-container">
                     <label for="survey-title" class="dialog-container-form__label">Survey name</label>
                     <div class="form-detail-container__input-container">
-                        <input id="survey-title" type="text" class="dialog-container-form__input">
+                        <input id="survey-title" type="text" class="dialog-container-form__input" formControlName="survey_title">
                         <div class="form-detail-container__icon-container">
                             <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                             <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
@@ -22,7 +22,7 @@
                         <div class="form-detail-container--date-container">
                             <label for="survey-expiry-date" class="dialog-container-form__label">Survey end date <span class="dialog-container-form__label--optional">(optional)</span></label>
                             <div class="form-detail-container__input-container">
-                                <input id="survey-expiry-date" type="date" class="dialog-container-form__input">
+                                <input id="survey-expiry-date" type="date" class="dialog-container-form__input" formControlName="expiry_date">
                                 <div class="form-detail-container__icon-container">
                                     <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                                     <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
@@ -35,7 +35,7 @@
                  <div class="form-detail-container--description-container">
                      <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
                      <div class="form-detail-container__input-container form-detail-container__input-container--description">
-                         <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea"></textarea>
+                         <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea" formControlName="description"></textarea>
                          <div class="form-detail-container__icon-container">
                             <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                             <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
@@ -43,15 +43,20 @@
                      </div>
                 </div>
             </div>
-            <div class="dialog-container-form__question-container">
-                <app-dialog-question-option-block></app-dialog-question-option-block>
+            <div class="dialog-container-form__question-container" formArrayName="questions">
+                @for (questionGroup of questions.controls; track $index; let i = $index) {
+                    <app-dialog-question-option-block 
+                        [questionGroup]="questionGroup"
+                        [questionIndex] = "i + 1">
+                    </app-dialog-question-option-block>
+                }
                 <div class="dialog-container-form__add-question-button-container">
-                    <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false"></app-button>
+                    <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false" (click)="addQuestion()"></app-button>
                 </div>
             </div>
         </form>
         <footer class="dialog-container-footer">
-            <app-button [buttonType]="'primary'" [text]="'Publish'" [publishNewSurvey]="true" [hideIcon]="false"></app-button>
+            <app-button [buttonType]="'primary'" [text]="'Publish'" [publishNewSurvey]="true" [hideIcon]="false" [disabled]="!surveyForm.get('title')?.valid" [type]="'submit'"></app-button>
         </footer>
     </div>
 </div>

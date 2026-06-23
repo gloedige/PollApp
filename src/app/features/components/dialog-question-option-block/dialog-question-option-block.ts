@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { Checkbox } from "../../../shared/components/checkbox/checkbox";
 import { Button } from '../../../shared/components/button/button';
+import { FormArray, FormGroup, FormControl } from '@angular/forms';
 
 type QuestionDraft = {
   clientId: string;
@@ -18,6 +19,14 @@ type OptionDraft = {
   text: string;
 };
 
+type OptionGroup = FormGroup<{ text: FormControl<string> }>;
+
+type QuestionGroup = FormGroup<{
+  title: FormControl<string>;
+  multiple: FormControl<boolean>;
+  options: FormArray<OptionGroup>;
+}>;
+
 @Component({
   selector: 'app-dialog-question-option-block',
   imports: [DialogQuestionOption, Checkbox, Button],
@@ -30,6 +39,19 @@ export class DialogQuestionOptionBlock {
   order_letter_array: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   readonly minimumNumberOfOptions = 2;
   readonly nextOptionIndex = this.minimumNumberOfOptions;
+
+  questionGroup = input.required<QuestionGroup>();
+  questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
+
+  get options(): FormArray<OptionGroup> {
+    return this.questionGroup().controls.options;
+  }
+
+  addOption(): void {
+    this.options.push(new FormGroup({
+      text: new FormControl('', { nonNullable: true })
+    }));
+  }
 
   question: QuestionDraft = {
     clientId: '',
@@ -71,21 +93,6 @@ export class DialogQuestionOptionBlock {
       };
       this.question.options.push(newOption);
     }
-  }
-
-  /**
-   * This function adds a new option to the question's options array. It creates a new option with a unique client ID, associates it with the question's
-   * client ID, and initializes the option text as an empty string. The new option is then pushed to the question's options array, allowing users to add 
-   * more options to the question.
-   * @returns - void
-   */
-  addOption() {
-    const newOption: OptionDraft = {
-      clientId: this.createNewClientId(),
-      questionClientId: this.question.clientId,
-      text: ''
-    };
-    this.question.options.push(newOption);
   }
 
   /**

@@ -1,10 +1,10 @@
 @if (buttonType() === 'primary') {
-    <button class="button button__primary">
+    <button class="button button__primary" [class.button__primary--disabled]="disabled()" type="{{type()}}">
         {{text()}}
         @if (publishNewSurvey()) {
-            <img src="/assets/icons/check_icon.png" alt="check icon" class="button__primary--icon" [class.hidden]="hideIcon">
+            <img src="/assets/icons/check_icon.png" alt="check icon" class="button__primary--icon" [class.hidden]="hideIcon()">
         } @else {
-            <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon" [class.hidden]="hideIcon">
+            <img src="/assets/icons/add_circle_icon.png" alt="add circle icon" class="button__primary--icon" [class.hidden]="hideIcon()">
         }
     </button>
 }
@@ -12,20 +12,20 @@
      <button class="button button__secondary">
         {{text()}}
         @if (cancelNewSurvey()) {
-            <img src="/assets/icons/close_icon_white.png" alt="cancel icon" class="button__secondary--icon" [class.hidden]="hideIcon">
+            <img src="/assets/icons/close_icon_white.png" alt="cancel icon" class="button__secondary--icon" [class.hidden]="hideIcon()">
         } @else {
-            <img src="/assets/icons/add_circle_icon_white.png" alt="add circle icon" class="button__secondary--icon" [class.hidden]="hideIcon">
+            <img src="/assets/icons/add_circle_icon_white.png" alt="add circle icon" class="button__secondary--icon" [class.hidden]="hideIcon()">
         }
     </button>
 } 
 @if (buttonType() === 'tertiary') {
      <button class="button button__tertiary">
         {{text()}}
-        <img src="/assets/icons/add_circle_icon_white_small.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon">
+        <img src="/assets/icons/add_circle_icon_white_small.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon()">
     </button>
 } 
 @if (buttonType() === 'filter') {
-     <button class="button button__filter" [class.button__filter--isActive]="isActive">
+     <button class="button button__filter" [class.button__filter--isActive]="isActive()">
         {{text()}}
     </button>
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -12,6 +12,8 @@ export class Button {
   readonly cancelNewSurvey = input<boolean>(false);
   readonly buttonType = input<'primary' | 'secondary' | 'tertiary' | 'filter'>('primary');
   readonly text = input<string>('Button');
-  @Input() hideIcon: boolean = false;
-  @Input() isActive: boolean = false;
+  readonly hideIcon = input<boolean>(false);
+  readonly isActive = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
 }

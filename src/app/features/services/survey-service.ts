@@ -132,7 +132,6 @@ export class SurveyService {
     const updatedVotes: Vote[] = this.addVotesForQuestion(questionId, optionIds, filteredVotesByQuestionId);
     
     this.votesOfActiveSurvey.set(updatedVotes);
-    console.log('votes of active survey:', this.votesOfActiveSurvey());
   } 
 
   /**

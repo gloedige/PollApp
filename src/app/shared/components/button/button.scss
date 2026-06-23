@@ -32,6 +32,11 @@
             object-fit: contain;
             transition: width 0.3s ease, margin-left 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
         }
+
+        &--disabled{
+            background-color: #{colors.$transparent_gray};
+            cursor: not-allowed;
+        }
     }
     &__primary:hover{
         background-color: var(--button-primary-hover-bg, #{colors.$light_orange});

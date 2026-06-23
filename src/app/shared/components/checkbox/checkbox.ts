@@ -1,5 +1,5 @@
-import { Component, Input, input, output, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, input, output, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox',
@@ -14,6 +14,7 @@ export class Checkbox {
 
   questionId = input<string>('123');
   isCheckboxForMultipleOptions = input<boolean>(false);
+  formGroupCheckbox = input<FormGroup>();
 
   /**
    * This function is called when the checkbox state changes. It checks if the optionId is defined and then emits the optionId to notify the 
@@ -31,5 +32,4 @@ export class Checkbox {
   
 
   
-  control = new FormControl(false);
 }

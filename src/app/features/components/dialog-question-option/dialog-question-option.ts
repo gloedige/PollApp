@@ -1,4 +1,5 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, input} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-question-option',
@@ -7,9 +8,9 @@ import { Component, Input} from '@angular/core';
   styleUrl: './dialog-question-option.scss',
 })
 export class DialogQuestionOption {
-  @Input() order_letter: string = 'A';
-  @Input() optionId: string = '';
-  optionText: string = '';
-
+  order_letter = input<string>('A');
+  optionId = input<string>('');
+  optionText = input<string>('');
+  formGroupOptionBlock = input<FormGroup>();
 
 }
