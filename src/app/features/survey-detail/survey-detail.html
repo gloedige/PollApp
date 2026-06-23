@@ -6,21 +6,23 @@
     <div class="survey-detail-shell">
         @if (survey(); as survey) {
         <section class="survey-detail-container">
-            <div class="survey-detail-header">
-                <p class="survey-detail-header__state">Draft</p>
-                <div class="survey-detail-header__expiry-date-category-container">
-                    <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date}}</p>
-                    <p class="survey-detail-header__category">Category: {{survey.category}}</p>
+            <div class="survey-detail-container__wrapper">
+                <div class="survey-detail-header">
+                    <p class="survey-detail-header__state">Draft</p>
+                    <div class="survey-detail-header__expiry-date-category-container">
+                        <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date}}</p>
+                        <p class="survey-detail-header__category">Category: {{survey.category}}</p>
+                    </div>
+                    <h1 class="survey-detail-header__title">{{survey.title}}</h1>
+                    <article class="survey-detail-header__description">{{survey.description}}</article>
                 </div>
-                <h1 class="survey-detail-header__title">{{survey.title}}</h1>
-                <article class="survey-detail-header__description">{{survey.description}}</article>
-            </div>
-            <div class="survey-detail-body">
-                @if (loadingDone()) {
-                    @for (item of questions(); track $index) {
-                        <app-question-option-block [questionId]="item.id"></app-question-option-block>
+                <div class="survey-detail-body">
+                    @if (loadingDone()) {
+                        @for (item of questions(); track $index) {
+                            <app-question-option-block [questionId]="item.id"></app-question-option-block>
+                        }
                     }
-                }
+                </div>
             </div>
             <div class="survey-detail-footer">
                 <app-button [buttonType]="'primary'" [text]="'Complete survey'" [hideIcon]="true"></app-button>
