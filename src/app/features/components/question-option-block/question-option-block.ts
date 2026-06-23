@@ -1,4 +1,4 @@
-import { Component, signal, Input, inject, computed, input } from '@angular/core';
+import { Component, signal, inject, computed, input, effect } from '@angular/core';
 import { QuestionOption } from '../question-option/question-option';
 import { SurveyDetail } from '../../survey-detail/survey-detail';
 import { SupabaseService } from '../../services/supabase-service';
@@ -15,7 +15,6 @@ import { SurveyService } from '../../services/survey-service';
 export class QuestionOptionBlock {
   questionId = input<number>(0);
   selectedOptionIds = signal<number[]>([]);
-  
   surveyDetails = inject(SurveyDetail);
   dbService = inject(SupabaseService);
   readonly surveyService = inject(SurveyService);
@@ -26,7 +25,9 @@ export class QuestionOptionBlock {
   readonly numberOfQuestion = signal(0);
   readonly order_letter = signal<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
   
-
+  constructor() {
+    
+  }
 
   /**
    * This function is called when the component is initialized. It retrieves the filtered options for the given question ID from the survey 
@@ -39,7 +40,6 @@ export class QuestionOptionBlock {
     this.questionText.set(this.surveyDetails.questions().find(question => question.id === this.questionId())?.question ?? '');
     this.numberOfQuestion.set(this.surveyDetails.getNumberOfQuestion(this.questionId()));
     this.order_letter.set(this.surveyDetails.order_letter);
-
   }
 
 
@@ -68,11 +68,10 @@ export class QuestionOptionBlock {
     } else {
       this.handleSingleOptionToggle(optionId, currentSelectedOptionIds);
     }
-    this.surveyService.collectVotesOfCurrentSurvey(this.questionId(), this.selectedOptionIds());
-    //TODO: Hier aufräumen!
-    if (this.selectedOptionIds().length > 0) {
-      }
-    }
+    
+    // Trigger service update when options are selected
+    this.surveyService.collectVotesOfActiveSurvey(this.questionId(), this.selectedOptionIds());
+  }
   
 
   /**

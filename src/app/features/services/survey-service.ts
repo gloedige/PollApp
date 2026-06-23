@@ -21,9 +21,7 @@ export class SurveyService {
   pastSurveys = computed(() => this.filterPastSurveys());
 
   readonly visibleSurveys = computed(this.getFilterdSurveysByStateOrCategory.bind(this));
-
-  surveyVotes = signal<Vote[]>([]);
-
+  readonly votesOfActiveSurvey = signal<Vote[]>([]);
 
   constructor() {
     
@@ -122,13 +120,12 @@ export class SurveyService {
    * @param questionId - The ID of the question for which to collect votes.
    * @param optionIds - An array of option IDs that have been selected for the question.
    */
-  collectVotesOfCurrentSurvey(questionId: number, optionIds: number[]) {
-    const existingVotes = this.surveyVotes();
-    const votesWithoutQuestion = this.deleteVoteByQuestionId(questionId, existingVotes);
-    const nextVotes = this.addVotesForQuestion(questionId, optionIds, votesWithoutQuestion);
+  collectVotesOfActiveSurvey(questionId: number, optionIds: number[]) {
+    const existingVotes: Vote[] = this.votesOfActiveSurvey();
+    const filteredVotesByQuestionId: Vote[] = this.deleteVotesByQuestionId(questionId, existingVotes);
+    const updatedVotes: Vote[] = this.addVotesForQuestion(questionId, optionIds, filteredVotesByQuestionId);
 
-    this.surveyVotes.set(nextVotes);
-    console.log('Collected votes for current survey:', this.surveyVotes());
+    this.votesOfActiveSurvey.set(updatedVotes);
   } 
 
   /**
@@ -138,7 +135,8 @@ export class SurveyService {
    * @param votes - The array of votes from which to delete votes.
    * @returns A new array of votes with the votes for the specified question ID removed.
    */
-  deleteVoteByQuestionId(questionId: number, votes: Vote[]): Vote[] {
+  deleteVotesByQuestionId(questionId: number, votes: Vote[]): Vote[] {
+    if (questionId === 0) return votes;
     return votes.filter(vote => vote.question_id !== questionId);
   }
 
@@ -151,7 +149,7 @@ export class SurveyService {
    * @returns A new array of votes with the added votes for the specified question ID.
    */
   addVotesForQuestion(questionId: number, optionIds: number[], votes: Vote[]): Vote[] {
-    if (optionIds.length === 0) return votes;
+    if (questionId === 0 || optionIds.length === 0) return votes;
 
     const newVotes = optionIds.map((optionId) => {
       const newVote: Vote = {
@@ -165,5 +163,6 @@ export class SurveyService {
 
     return [...votes, ...newVotes];
   }
+   
 
 }

@@ -13,10 +13,10 @@ import { Vote } from '../../interfaces/vote';
 export class QuestionResultBlock {
   surveyDetails = inject(SurveyDetail);
   dbService = inject(SupabaseService);
-
   questionId = input<number>(0);
   vote = input<Vote>();
 
+  
   readonly questionText = signal('');
   readonly numberOfQuestion = signal(0);
   readonly questionOptions = computed(() => this.dbService.options().filter(option => option.question_id === this.questionId()));
@@ -25,5 +25,7 @@ export class QuestionResultBlock {
   ngOnInit() {
     this.questionText.set(this.surveyDetails.questions().find(question => question.id === this.questionId())?.question ?? '');
     this.numberOfQuestion.set(this.surveyDetails.getNumberOfQuestion(this.questionId()));
+ 
   }   
+
 }

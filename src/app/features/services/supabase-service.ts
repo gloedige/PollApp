@@ -20,6 +20,7 @@ export class SupabaseService {
       environment.supabaseUrl,
       environment.supabaseKey
     );
+    this.getAllVotes();
   }
 
   getTodos() {
@@ -76,15 +77,14 @@ export class SupabaseService {
   }
 
 
-  async getAllVotesByQuestionId(questionId: number) {
+  async getAllVotes() {
     let { data: votes, error } = await this.supabase
     .from('votes')
-    .select('*')
-    .eq('question_id', questionId);
+    .select('*');
     if (votes) {
       this.votes.set(votes);
     } else {
-      console.error(`Error fetching votes for question ID ${questionId}:`, error);
+      console.error(`Error fetching votes:`, error);
     }
   }
 
