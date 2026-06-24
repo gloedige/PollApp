@@ -2,6 +2,6 @@
     @if (isCheckboxForMultipleOptions()) {
         <input type="checkbox" id="opt_{{optionId()}}" formControlName="multiple_options_{{questionId()}}">
     } @else {
-        <input type="checkbox" id="opt_{{optionId()}}" [checked]="checked()" (change)="onChange()">
+        <input type="checkbox" id="opt_{{optionId()}}" [checked]="checked()" (change)="onChange($event)">
     }
 </div>

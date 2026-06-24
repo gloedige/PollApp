@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { Checkbox } from "../../../shared/components/checkbox/checkbox";
 import { Button } from '../../../shared/components/button/button';
-import { FormArray, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupDirective } from '@angular/forms';
 
 type QuestionDraft = {
   clientId: string;
@@ -21,18 +21,14 @@ type OptionDraft = {
 
 type OptionGroup = FormGroup<{ text: FormControl<string> }>;
 
-type QuestionGroup = FormGroup<{
-  title: FormControl<string>;
-  multiple: FormControl<boolean>;
-  options: FormArray<OptionGroup>;
-}>;
+
 
 @Component({
   selector: 'app-dialog-question-option-block',
   imports: [DialogQuestionOption, Checkbox, Button, ReactiveFormsModule],
   templateUrl: './dialog-question-option-block.html',
   styleUrl: './dialog-question-option-block.scss',
-  viewProviders: [{provide: FormGroup, useExisting: DialogQuestionOptionBlock}]
+  viewProviders: [{provide: ControlContainer, useExisting: FormGroupDirective}]
 })
 export class DialogQuestionOptionBlock {
   questionNumber: number = 0;
@@ -41,12 +37,13 @@ export class DialogQuestionOptionBlock {
   readonly minimumNumberOfOptions = 2;
   readonly nextOptionIndex = this.minimumNumberOfOptions;
 
-  questionGroup = input.required<QuestionGroup>();
   questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
 
   get options(): FormArray<OptionGroup> {
-    return this.questionGroup().controls.options;
+    return (this.controlContainer.control?.get('options') as FormArray<OptionGroup>);
   }
+
+  constructor(private controlContainer: ControlContainer) {}
 
   addOption(): void {
     this.options.push(new FormGroup({

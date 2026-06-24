@@ -46,7 +46,7 @@
             <div class="dialog-container-form__question-container" formArrayName="questions">
                 @for (questionGroup of questions.controls; track $index; let i = $index) {
                     <app-dialog-question-option-block 
-                        [questionGroup]="questionGroup"
+                        [formGroupName]="i"
                         [questionIndex] = "i + 1">
                     </app-dialog-question-option-block>
                 }

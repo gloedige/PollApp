@@ -4,25 +4,22 @@ import { CategoryMenu } from '../../shared/components/category-menu/category-men
 import { DialogQuestionOptionBlock } from '../components/dialog-question-option-block/dialog-question-option-block';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
-// type QuestionDraft = {
-//   clientId: string;
-//   id?: string;
-//   text: string;
-//   options: OptionDraft[];
-// };
 
-// type OptionDraft = {
-//   clientId: string;
-//   id?: string;
-//   questionClientId: string;
-//   questionId?: string;
-//   text: string;
-// };
+type OptionGroup = FormGroup<{
+  text: FormControl<string>
+}>;
 
-type QuestionForm = FormGroup<{
+type QuestionGroup = FormGroup<{
   title: FormControl<string>;
   multiple: FormControl<boolean>;
-  options: FormArray<FormGroup<{ text: FormControl<string> }>>;
+  options: FormArray<OptionGroup>;
+}>;
+
+type SurveyForm = FormGroup<{
+  survey_title: FormControl<string>;
+  description: FormControl<string>;
+  expiry_date: FormControl<string>;
+  questions: FormArray<QuestionGroup>;
 }>;
 
 //TODO: create tests for user interaction with the dialog.
@@ -32,9 +29,11 @@ type QuestionForm = FormGroup<{
   templateUrl: './survey-dialog.html',
   styleUrl: './survey-dialog.scss',
 })
+
 export class SurveyDialog {
-  surveyForm = new FormGroup({
+  surveyForm: SurveyForm = new FormGroup({
     survey_title: new FormControl('', {
+      nonNullable: true,
       validators: [Validators.required, Validators.minLength(3)]
     }),
     description: new FormControl('', {
@@ -44,10 +43,10 @@ export class SurveyDialog {
     expiry_date: new FormControl('', {
       nonNullable: true
     }),
-    questions: new FormArray<QuestionForm>([])
+    questions: new FormArray<QuestionGroup>([])
   });
 
-  get questions(): FormArray<QuestionForm> {
+  get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
   }
 
@@ -56,7 +55,7 @@ export class SurveyDialog {
       new FormGroup({
         title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
         multiple: new FormControl(false, { nonNullable: true }),
-        options: new FormArray([
+        options: new FormArray<OptionGroup>([
           new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
           new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
         ]),
