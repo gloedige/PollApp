@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { Checkbox } from "../../../shared/components/checkbox/checkbox";
 import { Button } from '../../../shared/components/button/button';
-import { FormArray, FormGroup, FormControl } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 type QuestionDraft = {
   clientId: string;
@@ -29,9 +29,10 @@ type QuestionGroup = FormGroup<{
 
 @Component({
   selector: 'app-dialog-question-option-block',
-  imports: [DialogQuestionOption, Checkbox, Button],
+  imports: [DialogQuestionOption, Checkbox, Button, ReactiveFormsModule],
   templateUrl: './dialog-question-option-block.html',
   styleUrl: './dialog-question-option-block.scss',
+  viewProviders: [{provide: FormGroup, useExisting: DialogQuestionOptionBlock}]
 })
 export class DialogQuestionOptionBlock {
   questionNumber: number = 0;
