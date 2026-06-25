@@ -2,12 +2,12 @@ import { Component, input} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-checkbox',
+  selector: 'app-form-checkbox',
   imports: [ReactiveFormsModule],
-  templateUrl: './checkbox.html',
-  styleUrl: './checkbox.scss',
+  templateUrl: './form-checkbox.html',
+  styleUrl: './form-checkbox.scss',
 })
-export class Checkbox{
+export class FormCheckbox{
   optionId = input<number>(0);
   questionId = input<string>('123');
   isCheckboxForMultipleOptions = input<boolean>(false);

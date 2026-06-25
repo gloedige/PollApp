@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
-import { Checkbox } from "../../../shared/components/checkbox/checkbox";
+import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
 import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupDirective } from '@angular/forms';
 
@@ -25,7 +25,7 @@ type OptionGroup = FormGroup<{ text: FormControl<string> }>;
 
 @Component({
   selector: 'app-dialog-question-option-block',
-  imports: [DialogQuestionOption, Checkbox, Button, ReactiveFormsModule],
+  imports: [DialogQuestionOption, FormCheckbox, Button, ReactiveFormsModule],
   templateUrl: './dialog-question-option-block.html',
   styleUrl: './dialog-question-option-block.scss',
   viewProviders: [{provide: ControlContainer, useExisting: FormGroupDirective}]
