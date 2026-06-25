@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
-import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupDirective } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupName } from '@angular/forms';
 
 type QuestionDraft = {
   clientId: string;
@@ -28,7 +28,7 @@ type OptionGroup = FormGroup<{ text: FormControl<string> }>;
   imports: [DialogQuestionOption, FormCheckbox, Button, ReactiveFormsModule],
   templateUrl: './dialog-question-option-block.html',
   styleUrl: './dialog-question-option-block.scss',
-  viewProviders: [{provide: ControlContainer, useExisting: FormGroupDirective}]
+  viewProviders: [{provide: ControlContainer, useExisting: FormGroupName}]
 })
 export class DialogQuestionOptionBlock {
   questionNumber: number = 0;
@@ -38,16 +38,22 @@ export class DialogQuestionOptionBlock {
   readonly nextOptionIndex = this.minimumNumberOfOptions;
 
   questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
+  
+  constructor(private controlContainer: ControlContainer) {}
+
+  get currentQuestionGroup(): FormGroup {
+    console.log('currentQuestionGroup:', this.controlContainer.control);
+    return this.controlContainer.control as FormGroup;
+  }
 
   get options(): FormArray<OptionGroup> {
-    return (this.controlContainer.control?.get('options') as FormArray<OptionGroup>);
+    return (this.currentQuestionGroup.get('options') as FormArray<OptionGroup>);
   }
 
   get multipleControl(): FormControl<boolean> {
-    return (this.controlContainer.control?.get('multiple') as FormControl<boolean>);
+    return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
   }
 
-  constructor(private controlContainer: ControlContainer) {}
 
   addOption(): void {
     this.options.push(new FormGroup({
@@ -68,7 +74,7 @@ export class DialogQuestionOptionBlock {
   ngOnInit() {
     this.getNextQuestionNumber();
     this.question.clientId = this.createNewClientId();
-    this.initializeDefaultOptions();
+    // this.initializeDefaultOptions();
   }
 
   /**

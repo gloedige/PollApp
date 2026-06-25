@@ -55,7 +55,7 @@ export class SurveyDialog {
       new FormGroup({
         title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
         multiple: new FormControl(false, { nonNullable: true }),
-        options: new FormArray<OptionGroup>([
+        options: new FormArray([
           new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
           new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
         ]),

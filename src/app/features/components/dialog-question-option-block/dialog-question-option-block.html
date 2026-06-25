@@ -1,3 +1,4 @@
+@if(currentQuestionGroup){
 <div class="dialog-question-option-block-shell">
     <div class="dialog-question-option-block-header">
         <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title">{{questionNumber}}. Question</label>
@@ -28,3 +29,4 @@
         <app-button [buttonType]="'tertiary'" [text]="'Add answer'" [hideIcon]="false" (click)="addOption()"></app-button>
     </div>
 </div>
+}
