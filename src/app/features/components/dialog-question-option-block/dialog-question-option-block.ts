@@ -42,7 +42,6 @@ export class DialogQuestionOptionBlock {
   constructor(private controlContainer: ControlContainer) {}
 
   get currentQuestionGroup(): FormGroup {
-    console.log('currentQuestionGroup:', this.controlContainer.control);
     return this.controlContainer.control as FormGroup;
   }
 

@@ -6,7 +6,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: var(--checkbox-margin, 0 12px 0 4px);
         
         input[type="checkbox"] {
             appearance: none;
@@ -17,7 +16,7 @@
             width: 15px;
             height: 15px;
             box-sizing: border-box;
-            border: 1.5px solid var(--border-color, #{colors.$dark_purple});
+            border: 1.5px solid colors.$white;
             border-radius: 3px;
         }
 
