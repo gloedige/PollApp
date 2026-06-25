@@ -1,6 +1,6 @@
 <div class="dialog-option-shell">
-    <label for="option_{{optionId()}}" class="question-title">{{order_letter()}}.</label>
-    <input id="option_{{optionId()}}" type="text" class="question-input" formControlName="option_{{optionId()}}">
+    <label [attr.for]="'question_' + questionIndex() + '_option_' + optionIndex()" class="question-title">{{order_letter()}}.</label>
+    <input [id]="'question_' + questionIndex() + '_option_' + optionIndex()" type="text" class="question-input" formControlName="text">
     <div class="question-icon-container">
         <img src="/assets/icons/delete-icon-default.png" class="question-icon-container__icon-default" alt="delete icon">
         <img src="/assets/icons/delete-icon-hover.png" class="question-icon-container__icon-hover" alt="delete hover icon">

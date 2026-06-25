@@ -1,9 +1,9 @@
 import { Component, Input, input, output, signal } from '@angular/core';
-import { Checkbox } from '../../../shared/components/checkbox/checkbox';
+import { UiCheckbox } from '../../../shared/components/ui-checkbox/ui-checkbox';
 
 @Component({
   selector: 'app-question-option',
-  imports: [Checkbox],
+  imports: [UiCheckbox],
   templateUrl: './question-option.html',
   styleUrl: './question-option.scss',
 })

@@ -10,13 +10,18 @@
     <div class="dialog-question-option-block-options-header">
         <p class="dialog-question-option-block-options-header__title">Answers</p>
         <div class="dialog-question-option-block-options-header__multiple-options-container">
-             <app-checkbox [formControlName]="'multiple_options'" [isCheckboxForMultipleOptions]="true"></app-checkbox>
+             <app-checkbox [control]="multipleControl" [isCheckboxForMultipleOptions]="true"></app-checkbox>
             <label for="multiple_options_{{question.clientId}}" class="dialog-question-option-block-options-header__multiple-options-container--checkbox-label">Allow multiple answers.</label>
         </div>
     </div>
     <div class="dialog-question-option-block-option-container" formArrayName="options">
-        @for (option of options.controls; track $index; let index = $index) {
-             <app-dialog-question-option [order_letter]="order_letter_array[index]" [optionId]="option.clientId" [formGroupOptionBlock]="formGroupQuestionBlock()"></app-dialog-question-option>
+        @for (option of options.controls; track $index; let j = $index) {
+             <app-dialog-question-option 
+                [order_letter]="order_letter_array[j]" 
+                [formGroupName]="j"
+                [optionIndex]="j"
+                [questionIndex]="questionIndex()">
+            </app-dialog-question-option>
         }
     </div>
     <div class="dialog-question-option-block-add-option-button-container">

@@ -43,6 +43,10 @@ export class DialogQuestionOptionBlock {
     return (this.controlContainer.control?.get('options') as FormArray<OptionGroup>);
   }
 
+  get multipleControl(): FormControl<boolean> {
+    return (this.controlContainer.control?.get('multiple') as FormControl<boolean>);
+  }
+
   constructor(private controlContainer: ControlContainer) {}
 
   addOption(): void {
