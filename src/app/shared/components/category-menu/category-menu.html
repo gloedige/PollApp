@@ -14,5 +14,10 @@
             </li>
         }
     </menu>
-    <p class="menu-container__selected-category">{{selectedCategory()}}</p>
+    @if (categoryControl(); as control) {
+        <input class="menu-container__selected-category" [formControl]="control" aria-label="Selected category" readonly>
+    } @else{
+        <input class="menu-container__selected-category" [value]="selectedCategory()" aria-label="Selected category" readonly>
+
+    }
 </div>

@@ -11,15 +11,15 @@
     <div class="dialog-question-option-block-options-header">
         <p class="dialog-question-option-block-options-header__title">Answers</p>
         <div class="dialog-question-option-block-options-header__multiple-options-container">
-             <app-form-checkbox [control]="multipleControl" [isCheckboxForMultipleOptions]="true"></app-form-checkbox>
+             <app-form-checkbox [checkBoxControl]="formMultiple" [isCheckboxForMultipleOptions]="true"></app-form-checkbox>
             <label for="multiple_options_{{question.clientId}}" class="dialog-question-option-block-options-header__multiple-options-container--checkbox-label">Allow multiple answers.</label>
         </div>
     </div>
     <div class="dialog-question-option-block-option-container" formArrayName="options">
-        @for (option of options.controls; track $index; let j = $index) {
+        @for (option of formOptions.controls; track $index; let j = $index) {
              <app-dialog-question-option 
-                [order_letter]="order_letter_array[j]" 
                 [formGroupName]="j"
+                [order_letter]="order_letter_array[j]" 
                 [optionIndex]="j"
                 [questionIndex]="questionIndex()">
             </app-dialog-question-option>

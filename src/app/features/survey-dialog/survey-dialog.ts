@@ -19,6 +19,7 @@ type SurveyForm = FormGroup<{
   survey_title: FormControl<string>;
   description: FormControl<string>;
   expiry_date: FormControl<string>;
+  category: FormControl<string>;
   questions: FormArray<QuestionGroup>;
 }>;
 
@@ -43,11 +44,19 @@ export class SurveyDialog {
     expiry_date: new FormControl('', {
       nonNullable: true
     }),
+    category: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
     questions: new FormArray<QuestionGroup>([])
   });
 
   get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
+  }
+
+  get formCategory(): FormControl<string> {
+    return this.surveyForm.controls.category;
   }
 
   addQuestion(): void {

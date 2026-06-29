@@ -1,5 +1,5 @@
 import { Component, Input, input} from '@angular/core';
-import { FormGroup, ControlContainer, FormGroupName } from '@angular/forms';
+import { ControlContainer, FormGroupName } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-question-option',
@@ -10,11 +10,9 @@ import { FormGroup, ControlContainer, FormGroupName } from '@angular/forms';
 })
 export class DialogQuestionOption {
   order_letter = input<string>('A');
-  optionText = input<string>('');
-  // control = input.required<FormGroup>();
-
   optionIndex = input.required<number>();
   questionIndex = input.required<number>();
+  // optionText = input<string>('');
 
   constructor(private controlContainer: ControlContainer) {}
 

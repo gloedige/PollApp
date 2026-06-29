@@ -1,19 +1,21 @@
 import { Component, Input, input, signal, inject } from '@angular/core';
 import { SurveyService } from '../../../features/services/survey-service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category-menu',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './category-menu.html',
   styleUrl: './category-menu.scss',
 })
 export class CategoryMenu {
   @Input() isMenuOpen = false;
   readonly text = input<string>('Button');
-  readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
+  readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation', ''];
   selectedCategory = signal<typeof this.categoryTypes[number] | null>(null);
-
   private readonly surveyServiceMenu = inject(SurveyService);
+
+  categoryControl = input<FormControl<string> | null>(null);
 
   ngOnInit() {
     this.selectedCategory.set(this.surveyServiceMenu.selectedCategory());
@@ -36,6 +38,13 @@ export class CategoryMenu {
   selectCategory(category: typeof this.categoryTypes[number]): void {
     this.selectedCategory.set(category);
     this.surveyServiceMenu.selectedCategory.set(category);
+
+    const control = this.categoryControl();
+    if (control) {
+      control.setValue(category);
+      control.markAsDirty();
+      control.markAsTouched();
+    }
     this.isMenuOpen = false;
   }
   

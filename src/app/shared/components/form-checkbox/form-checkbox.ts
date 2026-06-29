@@ -12,7 +12,7 @@ export class FormCheckbox{
   questionId = input<string>('123');
   isCheckboxForMultipleOptions = input<boolean>(false);
 
-  control = input.required<FormControl<boolean>>();
+  checkBoxControl = input.required<FormControl<boolean>>();
 
  
 

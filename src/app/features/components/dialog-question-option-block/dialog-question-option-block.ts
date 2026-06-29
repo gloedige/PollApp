@@ -45,17 +45,17 @@ export class DialogQuestionOptionBlock {
     return this.controlContainer.control as FormGroup;
   }
 
-  get options(): FormArray<OptionGroup> {
+  get formOptions(): FormArray<OptionGroup> {
     return (this.currentQuestionGroup.get('options') as FormArray<OptionGroup>);
   }
 
-  get multipleControl(): FormControl<boolean> {
+  get formMultiple(): FormControl<boolean> {
     return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
   }
 
 
   addOption(): void {
-    this.options.push(new FormGroup({
+    this.formOptions.push(new FormGroup({
       text: new FormControl('', { nonNullable: true })
     }));
   }

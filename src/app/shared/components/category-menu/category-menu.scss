@@ -40,9 +40,11 @@
         margin: 0;
         color: colors.$primary_orange;
         font-family: var(--font-family-text-default);
+        background-color: transparent;
         font-size: 0.875rem;
         padding: 4px 4px 4px 10px;
         min-height: 18px;
+        border: none;
     }
 
     
