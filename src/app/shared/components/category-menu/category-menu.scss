@@ -62,7 +62,8 @@
         cursor: pointer;
 
         &:hover,
-        &--is-open{
+        &--is-open,
+        &--is-selected{
             background-color: colors.$transparent_gray;
         }
 
@@ -92,7 +93,8 @@
             transition: opacity 0.5s;
         }
 
-        &:not(&--is-open):hover &--hover-img{
+        &:not(&--is-open):hover &--hover-img,
+        &--is-selected &--hover-img{
             opacity: 1;
         }
 

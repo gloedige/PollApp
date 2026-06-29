@@ -1,10 +1,10 @@
  <div class="menu-container">
-    <button class="menu-container__button" (click)="toggleStateOfDropdownMenu($event)" [class.menu-container__button--is-open]="isMenuOpen">
+    <button class="menu-container__button" (click)="toggleStateOfDropdownMenu($event)" [class.menu-container__button--is-open]="isMenuOpen" [class.menu-container__button--is-selected]="isCategorySelected">
         {{text()}}
         <div class="menu-container__button--arrow-container">
             <img src="/assets/icons/arrow_drop_down_open_default.png" alt="Arrow Down" class="menu-container__button--default-img">
             <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="menu-container__button--hover-img">
-            <img src="/assets/icons/arrow_drop_down_open_active.png" alt="Arrow Down Active" class="menu-container__button--active-img">
+            <img src="/assets/icons/arrow_drop_down_open_active.png" alt="Arrow Up Active" class="menu-container__button--active-img">
         </div>
     </button>
     <menu class="menu-container__dropdown-content" [class.menu-container__dropdown-content--is-open]="isMenuOpen">

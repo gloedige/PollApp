@@ -53,7 +53,10 @@ export class DialogQuestionOptionBlock {
     return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
   }
 
-
+  /**
+   * This function adds a new option to the formOptions FormArray. It creates a new FormGroup for the option with a text FormControl and 
+   * pushes it to the formOptions array. This allows users to dynamically add options to a question in the survey dialog.
+   */
   addOption(): void {
     this.formOptions.push(new FormGroup({
       text: new FormControl('', { nonNullable: true })

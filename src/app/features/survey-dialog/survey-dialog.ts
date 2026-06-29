@@ -59,6 +59,17 @@ export class SurveyDialog {
     return this.surveyForm.controls.category;
   }
 
+  /**
+   * This function is called when the component is initialized. It adds an initial question to the survey form by calling the addQuestion method.
+   */
+  ngOnInit() {
+    this.addQuestion();
+  }
+
+  /**
+   * This function adds a new question to the questions FormArray. It creates a new FormGroup for the question with title, multiple, 
+   * and options controls, and pushes it to the questions array. This allows users to dynamically add questions to the survey dialog.
+   */
   addQuestion(): void {
     this.questions.push(
       new FormGroup({
@@ -72,6 +83,9 @@ export class SurveyDialog {
     );
   }
 
+  /**
+   * This function is called when the survey form is submitted. It checks if the form is valid and handles the form submission accordingly.
+   */
   formSubmit() {
     if (this.surveyForm.valid) {
       // Handle form submission
