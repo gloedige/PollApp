@@ -10,13 +10,23 @@
         <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
             <div class="form-detail-container">
                 <div class="form-detail-container--title-date-container">
-                    <label for="survey-title" class="dialog-container-form__label">Survey name</label>
+                    <label for="survey-title" class="dialog-container-form__label" [class.invalid_label]="surveyTitleInvalid">Survey name</label>
                     <div class="form-detail-container__input-container">
-                        <input id="survey-title" type="text" class="dialog-container-form__input" formControlName="survey_title" [class.dialog-container-form__input--invalid]="surveyForm.controls.survey_title.invalid && submitted">
+                        <input 
+                            id="survey-title" 
+                            type="text" 
+                            class="dialog-container-form__input" 
+                            formControlName="survey_title" 
+                            [class.invalid_input]="surveyTitleInvalid" 
+                            [attr.aria-invalid]="surveyTitleInvalid" 
+                            [attr.aria-describedby]="surveyTitleInvalid ? 'survey-title-error' : null">
                         <div class="form-detail-container__icon-container">
                             <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                             <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
                         </div>
+                    </div>
+                    <div class="form-detail-container__error-message">
+                        <p id="survey-title-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('survey_title') }}</p>
                     </div>
                     <div class="form-detail-container--date-category-container">
                         <div class="form-detail-container--date-container">

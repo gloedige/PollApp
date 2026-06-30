@@ -60,19 +60,17 @@ export class SurveyDialog {
     options: 'Please enter a valid option text.'
   };
 
-  surveyFormIsValid = {
-    survey_title:  <boolean> false,
-    category: <boolean> false,
-    questions: <boolean> false,
-    options: <boolean> false
-  }
-
   get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
   }
 
   get formCategory(): FormControl<string> {
     return this.surveyForm.controls.category;
+  }
+
+  get surveyTitleInvalid(): boolean {
+    const titleControl = this.surveyForm.controls.survey_title;
+    return titleControl.invalid && (titleControl.touched || this.submitted);
   }
 
   /**
@@ -105,11 +103,25 @@ export class SurveyDialog {
   formSubmit() {
     this.submitted = true;
     this.surveyForm.markAllAsTouched();
-    this.handleFormValidation();
+    console.log('Title Error:', this.surveyForm.controls.survey_title.errors);
     console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
       // Handle form submission
     }
+  }
+
+  getInputErrorMessage(controlName: string): string | null {
+    const control = this.surveyForm.get(controlName);
+    if (control && control.invalid && (control.touched || this.submitted)) {
+      if (control.errors?.['required']) {
+        return `Please enter a valid ${controlName.replace('_', ' ')}.`;
+      }
+      if (control.errors?.['minlength']) {
+        const requiredLength = control.errors['minlength'].requiredLength;
+        return `${controlName.replace('_', ' ')} must be at least ${requiredLength} characters long.`;
+      }
+    }
+    return null;
   }
 
   validateSurveyTitle(surveyForm: SurveyForm): boolean {
@@ -118,14 +130,5 @@ export class SurveyDialog {
 
   validateSurveyDescription(surveyForm: SurveyForm): boolean {
     return (surveyForm.get('description')?.invalid && surveyForm.get('description')?.touched) || false;
-  }
-
-  handleFormValidation(){
-    if (this.validateSurveyTitle(this.surveyForm)) {
-      console.log("is title valid: ", this.surveyFormIsValid.survey_title);
-      // this.surveyForm.controls.survey_title.setValue('Please enter a valid survey title');
-    } else {
-      this.surveyFormIsValid.survey_title = true;
-    }
   }
 }
