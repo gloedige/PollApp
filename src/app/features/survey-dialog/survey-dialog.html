@@ -12,7 +12,7 @@
                 <div class="form-detail-container--title-date-container">
                     <label for="survey-title" class="dialog-container-form__label">Survey name</label>
                     <div class="form-detail-container__input-container">
-                        <input id="survey-title" type="text" class="dialog-container-form__input" formControlName="survey_title">
+                        <input id="survey-title" type="text" class="dialog-container-form__input" formControlName="survey_title" [class.dialog-container-form__input--invalid]="surveyForm.controls.survey_title.invalid && submitted">
                         <div class="form-detail-container__icon-container">
                             <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                             <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
@@ -54,9 +54,9 @@
                     <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false" (click)="addQuestion()"></app-button>
                 </div>
             </div>
+            <footer class="dialog-container-footer">
+                <app-button [buttonType]="'primary'" [text]="'Publish'" [publishNewSurvey]="true" [hideIcon]="false" (click)="formSubmit()" [type]="'submit'"></app-button>
+            </footer>
         </form>
-        <footer class="dialog-container-footer">
-            <app-button [buttonType]="'primary'" [text]="'Publish'" [publishNewSurvey]="true" [hideIcon]="false" [disabled]="!surveyForm.get('survey_title')?.valid" [type]="'submit'"></app-button>
-        </footer>
     </div>
 </div>

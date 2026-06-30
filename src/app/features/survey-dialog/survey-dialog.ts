@@ -51,6 +51,22 @@ export class SurveyDialog {
     questions: new FormArray<QuestionGroup>([])
   });
 
+  submitted = false;
+
+  surveyValidationErrors = {
+    survey_title: 'Please enter a valid survey title.',
+    category: 'Please select a category.',
+    questions: 'Please enter a valid question title.',
+    options: 'Please enter a valid option text.'
+  };
+
+  surveyFormIsValid = {
+    survey_title:  <boolean> false,
+    category: <boolean> false,
+    questions: <boolean> false,
+    options: <boolean> false
+  }
+
   get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
   }
@@ -87,8 +103,29 @@ export class SurveyDialog {
    * This function is called when the survey form is submitted. It checks if the form is valid and handles the form submission accordingly.
    */
   formSubmit() {
+    this.submitted = true;
+    this.surveyForm.markAllAsTouched();
+    this.handleFormValidation();
+    console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
       // Handle form submission
+    }
+  }
+
+  validateSurveyTitle(surveyForm: SurveyForm): boolean {
+    return (surveyForm.get('survey_title')?.invalid || false);
+  }
+
+  validateSurveyDescription(surveyForm: SurveyForm): boolean {
+    return (surveyForm.get('description')?.invalid && surveyForm.get('description')?.touched) || false;
+  }
+
+  handleFormValidation(){
+    if (this.validateSurveyTitle(this.surveyForm)) {
+      console.log("is title valid: ", this.surveyFormIsValid.survey_title);
+      // this.surveyForm.controls.survey_title.setValue('Please enter a valid survey title');
+    } else {
+      this.surveyFormIsValid.survey_title = true;
     }
   }
 }

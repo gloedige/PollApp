@@ -102,6 +102,10 @@
             height: 100%;
             box-sizing: border-box;
         }
+
+        &--invalid{
+            border: 1px solid colors.$red;
+        }
     }
 
     &__question-container{
@@ -199,4 +203,8 @@
 .dialog-container-footer{
     display: flex;
     justify-content: flex-end;
+}
+
+.invalid{
+    border: 1px solid colors.$red;
 }
