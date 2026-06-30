@@ -201,6 +201,12 @@
             width: 100%;
         }
 
+        &--category-container{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         &__error-message{
             margin: 0;
             color: colors.$primary_orange;
@@ -212,6 +218,11 @@
                 color: colors.$primary_orange;
                 font-family: var(--font-family-text-default);
                 font-size: 0.95rem;
+            }
+            &--category{
+                padding-left: 10px;
+                max-width: 180px;
+
             }
         }
     }

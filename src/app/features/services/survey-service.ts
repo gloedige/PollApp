@@ -12,6 +12,7 @@ export class SurveyService {
   surveyList = signal<Survey[]>([]);
   surveyDetail = signal<Survey | null>(null);
   selectedCategory = signal<string | null>(null);
+  submitted = signal<boolean>(false);
   private readonly dbService = inject(SupabaseService);
   surveys = this.dbService.surveys;
 

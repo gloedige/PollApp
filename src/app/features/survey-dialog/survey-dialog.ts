@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import { DialogQuestionOptionBlock } from '../components/dialog-question-option-block/dialog-question-option-block';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import { SurveyService } from '../services/survey-service';
 
 
 type OptionGroup = FormGroup<{
@@ -51,7 +52,8 @@ export class SurveyDialog {
     questions: new FormArray<QuestionGroup>([])
   });
 
-  submitted = false;
+  readonly surveyService = inject(SurveyService);
+  submitted = this.surveyService.submitted;
 
   surveyValidationErrors = {
     survey_title: 'Please enter a valid survey title.',
@@ -70,7 +72,7 @@ export class SurveyDialog {
 
   get surveyTitleInvalid(): boolean {
     const titleControl = this.surveyForm.controls.survey_title;
-    return titleControl.invalid && (titleControl.touched || this.submitted);
+    return titleControl.invalid && (titleControl.touched || this.submitted());
   }
 
   /**
@@ -101,7 +103,7 @@ export class SurveyDialog {
    * This function is called when the survey form is submitted. It checks if the form is valid and handles the form submission accordingly.
    */
   formSubmit() {
-    this.submitted = true;
+    this.submitted.set(true);
     this.surveyForm.markAllAsTouched();
     console.log('Title Error:', this.surveyForm.controls.survey_title.errors);
     console.log('Form submitted:', this.surveyForm.value);
@@ -110,9 +112,16 @@ export class SurveyDialog {
     }
   }
 
+  /**
+   * This function returns an error message for a specific form control based on its validation state. It checks if the control is invalid and 
+   * has been touched or submitted, and then returns an appropriate error message based on the type of validation error (required or minlength).
+   * If the control is valid or has not been touched/submitted, it returns null.
+   * @param controlName The name of the form control for which to get the error message.
+   * @returns The error message string or null if the control is valid.
+   */
   getInputErrorMessage(controlName: string): string | null {
     const control = this.surveyForm.get(controlName);
-    if (control && control.invalid && (control.touched || this.submitted)) {
+    if (control && control.invalid && (control.touched || this.submitted())) {
       if (control.errors?.['required']) {
         return `Please enter a valid ${controlName.replace('_', ' ')}.`;
       }
@@ -124,11 +133,5 @@ export class SurveyDialog {
     return null;
   }
 
-  validateSurveyTitle(surveyForm: SurveyForm): boolean {
-    return (surveyForm.get('survey_title')?.invalid || false);
-  }
 
-  validateSurveyDescription(surveyForm: SurveyForm): boolean {
-    return (surveyForm.get('description')?.invalid && surveyForm.get('description')?.touched) || false;
-  }
 }

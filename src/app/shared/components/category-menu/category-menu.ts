@@ -18,6 +18,11 @@ export class CategoryMenu {
 
   categoryControl = input<FormControl<string> | null>(null);
 
+  get categoryTitleInvalid(): boolean {
+    const categoryControl = this.categoryControl();
+    return categoryControl ? categoryControl.invalid && (categoryControl.touched || this.surveyServiceMenu.submitted()) : false;
+  }
+
   ngOnInit() {
     this.selectedCategory.set(this.surveyServiceMenu.selectedCategory());
   }

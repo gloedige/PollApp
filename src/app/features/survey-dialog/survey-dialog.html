@@ -39,7 +39,12 @@
                                 </div>
                             </div>
                         </div>
-                        <app-category-menu [text]="'Choose category'" [categoryControl]="formCategory"></app-category-menu>
+                        <div class="form-detail-container--category-container">
+                            <app-category-menu [text]="'Choose category'" [categoryControl]="formCategory"></app-category-menu>
+                            <div class="form-detail-container__error-message form-detail-container__error-message--category">
+                                <p id="survey-category-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('category') }}</p>
+                            </div>
+                        </div>
                     </div>   
                 </div>
                  <div class="form-detail-container--description-container">
