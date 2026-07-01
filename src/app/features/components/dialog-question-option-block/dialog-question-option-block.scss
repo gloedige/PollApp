@@ -4,7 +4,7 @@
 .dialog-question-option-block-shell{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     flex-grow: 1;
     margin-bottom: 16px;
     width: 100%;
@@ -16,6 +16,7 @@
     gap: 8px;
     justify-content: space-between;
     align-items: center;
+    margin: 0 0 8px 0;
 
     &__question-title{
         font-family: var(--font-family-text-bold);
@@ -57,7 +58,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin: 16px 0 8px 0;
+    margin: 0 0 8px 0;
 
     &__title{
         font-family: var(--font-family-text-bold);
@@ -90,7 +91,7 @@
 .dialog-question-option-block-option-container{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     width: 100%;
 }
 
@@ -98,7 +99,7 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    padding: 8px 12px 8px 30px;
+    padding: 0 12px 0 34px;
     box-sizing: border-box;
 }
 
