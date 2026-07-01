@@ -1,4 +1,5 @@
 @use '../../../styles/abstract/color_variables' as colors;
+@use '../../../styles/vendor/mixin' as mixins;
 
 .menu-container{
     position: relative;
@@ -115,6 +116,22 @@
 
         &--is-open &--active-img{
             opacity: 1;
+        }
+    }
+
+    &__error-message{
+        @include mixins.error-message(colors.$primary_orange);
+
+        &--text{
+            @include mixins.error-message-text(
+                colors.$primary_orange, 
+                var(--font-family-text-default)
+            );
+        }
+        &--category{
+            padding-left: 10px;
+            max-width: 180px;
+            height: 100%;
         }
     }
 }

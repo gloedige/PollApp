@@ -1,6 +1,7 @@
 import { Component, Input, input, signal, inject } from '@angular/core';
 import { SurveyService } from '../../../features/services/survey-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { getValidationMessage } from '../../utils/validation-messages.util';
 
 @Component({
   selector: 'app-category-menu',
@@ -53,6 +54,14 @@ export class CategoryMenu {
       control.markAsTouched();
     }
     this.isMenuOpen = false;
+  }
+
+  getInputErrorMessage(controlName: string): string | null {
+      const control = this.categoryControl();
+      const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
+      if (!shouldShow) return null;
+  
+      return getValidationMessage(control, controlName);
   }
   
 }
