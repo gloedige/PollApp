@@ -4,7 +4,7 @@ import { CategoryMenu } from '../../shared/components/category-menu/category-men
 import { DialogQuestionOptionBlock } from '../components/dialog-question-option-block/dialog-question-option-block';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import { SurveyService } from '../services/survey-service';
-
+import { getValidationMessage } from '../../shared/utils/validation-messages.util';
 
 type OptionGroup = FormGroup<{
   text: FormControl<string>
@@ -55,12 +55,12 @@ export class SurveyDialog {
   readonly surveyService = inject(SurveyService);
   submitted = this.surveyService.submitted;
 
-  surveyValidationErrors = {
-    survey_title: 'Please enter a valid survey title.',
-    category: 'Please select a category.',
-    questions: 'Please enter a valid question title.',
-    options: 'Please enter a valid option text.'
-  };
+  // surveyValidationErrors = {
+  //   survey_title: 'Please enter a valid survey title.',
+  //   category: 'Please select a category.',
+  //   questions: 'Please enter a valid question title.',
+  //   options: 'Please enter a valid option text.'
+  // };
 
   get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
@@ -121,16 +121,10 @@ export class SurveyDialog {
    */
   getInputErrorMessage(controlName: string): string | null {
     const control = this.surveyForm.get(controlName);
-    if (control && control.invalid && (control.touched || this.submitted())) {
-      if (control.errors?.['required']) {
-        return `Please enter a valid ${controlName.replace('_', ' ')}.`;
-      }
-      if (control.errors?.['minlength']) {
-        const requiredLength = control.errors['minlength'].requiredLength;
-        return `${controlName.replace('_', ' ')} must be at least ${requiredLength} characters long.`;
-      }
-    }
-    return null;
+    const shouldShow = !!control && (control.touched || this.submitted());
+    if (!shouldShow) return null;
+
+    return getValidationMessage(control, controlName);
   }
 
 
