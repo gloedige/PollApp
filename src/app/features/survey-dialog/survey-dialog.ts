@@ -55,21 +55,29 @@ export class SurveyDialog {
   readonly surveyService = inject(SurveyService);
   submitted = this.surveyService.submitted;
 
-  // surveyValidationErrors = {
-  //   survey_title: 'Please enter a valid survey title.',
-  //   category: 'Please select a category.',
-  //   questions: 'Please enter a valid question title.',
-  //   options: 'Please enter a valid option text.'
-  // };
-
+  /**
+   * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
+   * for the survey dialog.
+   * @returns The questions FormArray from the surveyForm.
+   */
   get questions(): FormArray<QuestionGroup> {
     return this.surveyForm.controls.questions;
   }
 
+  /**
+   * This getter retrieves the form control for the category field of the survey form. It allows access to the value and validation state
+   * of the category field.
+   * @returns The form control for the category field as a FormControl.
+   */
   get formCategory(): FormControl<string> {
     return this.surveyForm.controls.category;
   }
 
+  /**
+   * This getter checks if the survey title is invalid. It retrieves the 'survey_title' form control from the survey form,
+   * and checks its validity based on whether it has been touched or if the survey has been submitted.
+   * @returns A boolean indicating whether the survey title is invalid.
+   */
   get surveyTitleInvalid(): boolean {
     const titleControl = this.surveyForm.controls.survey_title;
     return titleControl.invalid && (titleControl.touched || this.submitted());

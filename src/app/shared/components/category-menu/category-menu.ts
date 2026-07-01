@@ -56,6 +56,12 @@ export class CategoryMenu {
     this.isMenuOpen = false;
   }
 
+  /**
+   * This function retrieves the validation error message for the category control. It checks if the control is invalid and has been touched 
+   * or if the survey has been submitted. If so, it returns the appropriate validation message using the getValidationMessage utility function.
+   * @param controlName The name of the control for which to retrieve the error message.
+   * @returns The validation error message, or null if the control is valid or has not been touched.
+   */
   getInputErrorMessage(controlName: string): string | null {
       const control = this.categoryControl();
       const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
