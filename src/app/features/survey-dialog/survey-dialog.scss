@@ -207,23 +207,20 @@
             gap: 4px;
         }
 
-        &__error-message{
-            margin: 0;
-            color: colors.$primary_orange;
-            height: 20px;
-            padding-left: 4px;
+    &__error-message{
+        @include mixins.error-message(colors.$primary_orange);
 
-            &--text{
-                margin: 0;
-                color: colors.$primary_orange;
-                font-family: var(--font-family-text-default);
-                font-size: 0.95rem;
-            }
-            &--category{
-                padding-left: 10px;
-                max-width: 180px;
+        &--text{
+            @include mixins.error-message-text(
+                colors.$primary_orange, 
+                var(--font-family-text-default)
+            );
+        }
+        &--category{
+            padding-left: 10px;
+            max-width: 180px;
 
-            }
+        }
         }
     }
 
