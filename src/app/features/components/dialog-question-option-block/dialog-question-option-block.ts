@@ -1,8 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
 import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupName } from '@angular/forms';
+import { SurveyService } from '../../services/survey-service';
+import { getValidationMessage } from '../../../shared/utils/validation-messages.util';
 
 type QuestionDraft = {
   clientId: string;
@@ -36,6 +38,7 @@ export class DialogQuestionOptionBlock {
   order_letter_array: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   readonly minimumNumberOfOptions = 2;
   readonly nextOptionIndex = this.minimumNumberOfOptions;
+  private readonly surveyServiceProvider = inject(SurveyService);
 
   questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
   
@@ -51,6 +54,12 @@ export class DialogQuestionOptionBlock {
 
   get formMultiple(): FormControl<boolean> {
     return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
+  }
+
+   get questionTitleInvalid(): boolean {
+    const questionControl = this.currentQuestionGroup.get('title') as FormControl<string>;
+    console.log('questionControl:', questionControl);
+    return questionControl ? questionControl.invalid && (questionControl.touched || this.surveyServiceProvider.submitted()) : false;
   }
 
   /**
@@ -113,4 +122,14 @@ export class DialogQuestionOptionBlock {
     this.questionNumber++;
     return this.questionNumber;
   }
+
+  getInputErrorMessage(controlName: string): string | null {
+  const control = this.currentQuestionGroup.get(controlName);
+  console.log('controlName:', controlName);
+  console.log('control:', control);
+  const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
+  if (!shouldShow) return null;
+
+  return getValidationMessage(control, controlName);
+}
 }

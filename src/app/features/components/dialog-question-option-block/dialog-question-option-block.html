@@ -1,13 +1,22 @@
 @if(currentQuestionGroup){
 <div class="dialog-question-option-block-shell">
     <div class="dialog-question-option-block-header">
-        <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title">{{questionNumber}}. Question</label>
+        <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title" [class.invalid_label]="questionTitleInvalid">{{questionNumber}}. Question</label>
         <div class="dialog-question-option-block-header__icon-container">
             <img src="/assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__icon-container--icon-default" alt="delete icon">
             <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__icon-container--icon-hover" alt="delete hover icon">
         </div>
     </div>
-    <input id="question_title_{{question.clientId}}" type="text" name="question" class="dialog-question-option-block-input" formControlName="title">
+    <input 
+        id="question_title_{{question.clientId}}" 
+        type="text" 
+        name="question" 
+        class="dialog-question-option-block-input" 
+        formControlName="title"
+        [class.invalid_input]="questionTitleInvalid" >
+    <div class="dialog-question-option-block__error-message">
+        <p id="survey-category-error" class="dialog-question-option-block__error-message--text">{{ getInputErrorMessage('title') }}</p>
+    </div>
     <div class="dialog-question-option-block-options-header">
         <p class="dialog-question-option-block-options-header__title">Answers</p>
         <div class="dialog-question-option-block-options-header__multiple-options-container">
