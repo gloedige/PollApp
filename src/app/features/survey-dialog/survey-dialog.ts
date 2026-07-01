@@ -54,6 +54,7 @@ export class SurveyDialog {
 
   readonly surveyService = inject(SurveyService);
   submitted = this.surveyService.submitted;
+  minDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -113,7 +114,6 @@ export class SurveyDialog {
   formSubmit() {
     this.submitted.set(true);
     this.surveyForm.markAllAsTouched();
-    console.log('Title Error:', this.surveyForm.controls.survey_title.errors);
     console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
       // Handle form submission
