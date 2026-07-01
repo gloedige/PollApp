@@ -44,18 +44,38 @@ export class DialogQuestionOptionBlock {
   
   constructor(private controlContainer: ControlContainer) {}
 
+  /**
+   * This getter retrieves the current question group from the control container. It casts the control to a FormGroup, allowing access to 
+   * the form controls and their values for the current question.
+   * @returns The current question group as a FormGroup.
+   */
   get currentQuestionGroup(): FormGroup {
     return this.controlContainer.control as FormGroup;
   }
 
+  /**
+   * This getter retrieves the form controls for the options of the current question. It casts the 'options' control to a FormArray, allowing
+   * access to the individual option controls and their values for the current question.
+   * @returns The form controls for the options of the current question as a FormArray.
+   */
   get formOptions(): FormArray<OptionGroup> {
     return (this.currentQuestionGroup.get('options') as FormArray<OptionGroup>);
   }
 
+  /**
+   * This getter retrieves the form control for the 'multiple' field of the current question. It casts the 'multiple' control to a FormControl,
+   * allowing access to its value and validation state for the current question.
+   * @returns The form control for the 'multiple' field of the current question as a FormControl.
+   */
   get formMultiple(): FormControl<boolean> {
     return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
   }
 
+   /**
+   * This getter checks if the question title is invalid. It retrieves the 'title' form control from the current question group,
+   * and checks its validity based on whether it has been touched or if the survey has been submitted.
+   * @returns A boolean indicating whether the question title is invalid.
+   */
    get questionTitleInvalid(): boolean {
     const questionControl = this.currentQuestionGroup.get('title') as FormControl<string>;
     console.log('questionControl:', questionControl);
@@ -123,13 +143,18 @@ export class DialogQuestionOptionBlock {
     return this.questionNumber;
   }
 
+  /**
+   * This function retrieves the validation error message for a specific control within the current question group. It checks if the control 
+   * is invalid and has been touched or if the survey has been submitted. If so, it returns the appropriate validation message using the 
+   * getValidationMessage utility function.
+   * @param controlName The name of the control for which to retrieve the error message.
+   * @returns The validation error message, or null if the control is valid or has not been touched.
+   */
   getInputErrorMessage(controlName: string): string | null {
-  const control = this.currentQuestionGroup.get(controlName);
-  console.log('controlName:', controlName);
-  console.log('control:', control);
-  const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
-  if (!shouldShow) return null;
+    const control = this.currentQuestionGroup.get(controlName);
+    const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
+    if (!shouldShow) return null;
 
-  return getValidationMessage(control, controlName);
-}
+    return getValidationMessage(control, controlName);
+  }
 }
