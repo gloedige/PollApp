@@ -46,3 +46,22 @@
         opacity: 1;
     }
 }
+
+.dialog-option-error-message{
+        @include mixins.error-message(colors.$primary_orange);
+
+        &__text{
+            @include mixins.error-message-text(
+                colors.$primary_orange, 
+                var(--font-family-text-default)
+            );
+            padding: 2px 0 0 30px;
+        }
+    }
+
+.invalid_input{
+    border: 3px solid colors.$primary_orange;
+}
+.invalid_label{
+    color: colors.$primary_orange;
+}

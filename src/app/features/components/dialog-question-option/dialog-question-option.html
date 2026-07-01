@@ -1,8 +1,17 @@
 <div class="dialog-option-shell">
-    <label [attr.for]="'question_' + questionIndex() + '_option_' + optionIndex()" class="question-title">{{order_letter()}}.</label>
-    <input [id]="'question_' + questionIndex() + '_option_' + optionIndex()" type="text" class="question-input" formControlName="text">
+    <label [attr.for]="'question_' + questionIndex() + '_option_' + optionIndex()" class="question-title" [class.invalid_label]="optionTextInvalid">{{order_letter()}}.</label>
+    <input 
+        [id]="'question_' + questionIndex() + '_option_' + optionIndex()" 
+        type="text" 
+        class="question-input" 
+        formControlName="text"
+        [class.invalid_input]="optionTextInvalid" >
     <div class="question-icon-container">
         <img src="/assets/icons/delete-icon-default.png" class="question-icon-container__icon-default" alt="delete icon">
         <img src="/assets/icons/delete-icon-hover.png" class="question-icon-container__icon-hover" alt="delete hover icon">
     </div>
+</div>
+
+<div class="dialog-option-error-message">
+    <p id="survey-option-error" class="dialog-option-error-message__text">{{ getInputErrorMessage('text') }}</p>
 </div>
