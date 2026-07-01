@@ -14,17 +14,17 @@ export class CategoryMenu {
   readonly text = input<string>('Button');
   readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation', ''];
   selectedCategory = signal<typeof this.categoryTypes[number] | null>(null);
-  private readonly surveyServiceMenu = inject(SurveyService);
+  private readonly surveyServiceProvider = inject(SurveyService);
 
   categoryControl = input<FormControl<string> | null>(null);
 
   get categoryTitleInvalid(): boolean {
     const categoryControl = this.categoryControl();
-    return categoryControl ? categoryControl.invalid && (categoryControl.touched || this.surveyServiceMenu.submitted()) : false;
+    return categoryControl ? categoryControl.invalid && (categoryControl.touched || this.surveyServiceProvider.submitted()) : false;
   }
 
   ngOnInit() {
-    this.selectedCategory.set(this.surveyServiceMenu.selectedCategory());
+    this.selectedCategory.set(this.surveyServiceProvider.selectedCategory());
   }
 
   /**
@@ -43,7 +43,7 @@ export class CategoryMenu {
    */
   selectCategory(category: typeof this.categoryTypes[number]): void {
     this.selectedCategory.set(category);
-    this.surveyServiceMenu.selectedCategory.set(category);
+    this.surveyServiceProvider.selectedCategory.set(category);
     this.isCategorySelected = true;
 
     const control = this.categoryControl();
