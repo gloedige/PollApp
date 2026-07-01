@@ -2,7 +2,7 @@ import { Component, input, inject } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
-import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupName } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContainer, FormGroupName, Validators } from '@angular/forms';
 import { SurveyService } from '../../services/survey-service';
 import { getValidationMessage } from '../../../shared/utils/validation-messages.util';
 
@@ -71,14 +71,13 @@ export class DialogQuestionOptionBlock {
     return (this.currentQuestionGroup.get('multiple') as FormControl<boolean>);
   }
 
-   /**
+  /**
    * This getter checks if the question title is invalid. It retrieves the 'title' form control from the current question group,
    * and checks its validity based on whether it has been touched or if the survey has been submitted.
    * @returns A boolean indicating whether the question title is invalid.
    */
-   get questionTitleInvalid(): boolean {
+  get questionTitleInvalid(): boolean {
     const questionControl = this.currentQuestionGroup.get('title') as FormControl<string>;
-    console.log('questionControl:', questionControl);
     return questionControl ? questionControl.invalid && (questionControl.touched || this.surveyServiceProvider.submitted()) : false;
   }
 
@@ -87,9 +86,11 @@ export class DialogQuestionOptionBlock {
    * pushes it to the formOptions array. This allows users to dynamically add options to a question in the survey dialog.
    */
   addOption(): void {
-    this.formOptions.push(new FormGroup({
-      text: new FormControl('', { nonNullable: true })
-    }));
+    this.formOptions.push(
+      new FormGroup({
+        text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+      })
+    );
   }
 
   question: QuestionDraft = {
