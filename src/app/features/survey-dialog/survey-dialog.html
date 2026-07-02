@@ -8,67 +8,75 @@
             </div>
         </header>
         <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
-            <div class="form-detail-container">
-                <div class="form-detail-container--title-date-container">
-                    <label for="survey-title" class="dialog-container-form__label" [class.invalid_label]="surveyTitleInvalid">Survey name</label>
-                    <div class="form-detail-container__input-container">
-                        <input 
-                            id="survey-title" 
-                            type="text" 
-                            class="dialog-container-form__input" 
-                            formControlName="survey_title" 
-                            [class.invalid_input]="surveyTitleInvalid" 
-                            [attr.aria-invalid]="surveyTitleInvalid" 
-                            [attr.aria-describedby]="surveyTitleInvalid ? 'survey-title-error' : null">
-                        <div class="form-detail-container__icon-container">
-                            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                        </div>
-                    </div>
-                    <div class="form-detail-container__error-message">
-                        <p id="survey-title-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('survey_title') }}</p>
-                    </div>
-                    <div class="form-detail-container--date-category-container">
-                        <div class="form-detail-container--date-container">
-                            <label for="survey-expiry-date" class="dialog-container-form__label">Set end date <span class="dialog-container-form__label--optional">(optional)</span></label>
-                            <div class="form-detail-container__input-container">
-                                <input id="survey-expiry-date" type="date" min="{{ minDate }}" class="dialog-container-form__input" formControlName="expiry_date">
-                                <div class="form-detail-container__icon-container">
-                                    <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                                    <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                                </div>
+            <div class="dialog-container-form__shell">
+                <div class="form-detail-container">
+                    <div class="form-detail-container--title-date-container">
+                        <label for="survey-title" class="dialog-container-form__label" [class.invalid_label]="surveyTitleInvalid">Survey name</label>
+                        <div class="form-detail-container__input-container">
+                            <input 
+                                id="survey-title" 
+                                type="text" 
+                                class="dialog-container-form__input" 
+                                formControlName="survey_title" 
+                                [class.invalid_input]="surveyTitleInvalid" 
+                                [attr.aria-invalid]="surveyTitleInvalid" 
+                                [attr.aria-describedby]="surveyTitleInvalid ? 'survey-title-error' : null">
+                            <div class="form-detail-container__icon-container">
+                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
                             </div>
-                            <div class="form-detail-container__dummy"></div>
                         </div>
-                        <div class="form-detail-container--category-container">
-                            <app-category-menu [text]="'Choose category'" [categoryControl]="formCategory"></app-category-menu>
+                        <div class="form-detail-container__error-message">
+                            <p id="survey-title-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('survey_title') }}</p>
                         </div>
-                    </div>   
+                        <div class="form-detail-container--date-category-container">
+                            <div class="form-detail-container--date-container">
+                                <label for="survey-expiry-date" class="dialog-container-form__label">Set end date <span class="dialog-container-form__label--optional">(optional)</span></label>
+                                <div class="form-detail-container__input-container">
+                                    <input id="survey-expiry-date" type="date" min="{{ minDate }}" class="dialog-container-form__input" formControlName="expiry_date">
+                                    <div class="form-detail-container__icon-container">
+                                        <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                                        <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
+                                    </div>
+                                </div>
+                                <div class="form-detail-container__dummy"></div>
+                            </div>
+                            <div class="form-detail-container--category-container">
+                                <app-category-menu [text]="'Choose category'" [categoryControl]="formCategory"></app-category-menu>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="form-detail-container--description-container">
+                        <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
+                        <div class="form-detail-container__input-container form-detail-container__input-container--description">
+                            <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea" formControlName="description"></textarea>
+                            <div class="form-detail-container__icon-container">
+                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
+                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                 <div class="form-detail-container--description-container">
-                     <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
-                     <div class="form-detail-container__input-container form-detail-container__input-container--description">
-                         <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea" formControlName="description"></textarea>
-                         <div class="form-detail-container__icon-container">
-                            <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                            <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                        </div>
-                     </div>
-                </div>
-            </div>
-            <div class="dialog-container-form__question-container" formArrayName="questions">
-                @for (questionGroup of questions.controls; track $index; let i = $index) {
-                    <app-dialog-question-option-block 
-                        [formGroupName]="i"
-                        [questionIndex] = "i + 1">
-                    </app-dialog-question-option-block>
-                }
-                <div class="dialog-container-form__add-question-button-container">
-                    <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false" (click)="addQuestion()"></app-button>
+                <div class="dialog-container-form__question-container" formArrayName="questions">
+                    @for (questionGroup of questions.controls; track $index; let i = $index) {
+                        <app-dialog-question-option-block 
+                            [formGroupName]="i"
+                            [questionIndex] = "i + 1">
+                        </app-dialog-question-option-block>
+                    }
+                    <div class="dialog-container-form__add-question-button-container">
+                        <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false" (click)="addQuestion()"></app-button>
+                    </div>
                 </div>
             </div>
             <footer class="dialog-container-footer">
-                <app-button [buttonType]="'primary'" [text]="'Publish'" [publishNewSurvey]="true" [hideIcon]="false" [type]="'submit'"></app-button>
+                <app-button 
+                    [buttonType]="'primary'" 
+                    [text]="'Publish'" 
+                    [publishNewSurvey]="true" 
+                    [hideIcon]="false" 
+                    [type]="'submit'">
+                </app-button>
             </footer>
         </form>
     </div>
