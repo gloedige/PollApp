@@ -20,7 +20,8 @@
         }
     </menu>
     @if (categoryControl(); as control) {
-        <input class="menu-container__selected-category" [formControl]="control" aria-label="Selected category" readonly>
+        <div class="menu-container__selected-category">{{selectedCategory()}}</div>
+        <input type="hidden" [formControl]="control" aria-label="Selected category" readonly>
         <div class="menu-container__error-message menu-container__error-message--category">
             <p id="survey-category-error" class="menu-container__error-message--text">{{ getInputErrorMessage('category') }}</p>
         </div>
