@@ -20,8 +20,10 @@
 } 
 @if (buttonType() === 'tertiary') {
      <button class="button button__tertiary">
-        {{text()}}
-        <img src="/assets/icons/add_circle_icon_white_small.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon()">
+        <div class="button__tertiary--inner-fram">
+            {{text()}}
+            <img src="/assets/icons/add_circle_icon_white_small.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon()">
+        </div>
     </button>
 } 
 @if (buttonType() === 'filter') {

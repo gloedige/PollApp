@@ -60,7 +60,7 @@
         align-items: center;
         gap: 10px;
         transition: background-color 0.3s ease;
-
+        
         &--icon{
             width: 24px;
             height: 24px;
@@ -68,31 +68,41 @@
             transition: filter 0.3s ease;
         }
     }
-
+    
     &__secondary:hover{
         background-color: colors.$light_orange_transparent_2;
     }
-
+    
     &__tertiary{
         background-color: transparent;
         color: colors.$light_purple_3;
         line-height: 100%;
+        box-sizing: border-box;
         border: none;
-        border-bottom: 1px solid colors.$light_purple_3;
-        padding: 0;
+        padding: 8px 12px;
+        margin-top: 4px;
         font-size: 1rem;
         display: inline-flex;
         align-items: center;
         gap: 4px;
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         
-
+        
         &--icon{
             width: 24px;
             height: 24px;
             object-fit: contain;
             transition: filter 0.3s ease;
         }
+        &--inner-fram{
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid colors.$light_purple_3;
+            gap: 4px;
+        }
+    }
+    &__tertiary:hover{
+        background-color: colors.$light_purple_1_transparent;
     }
 
     &__filter{
