@@ -1,15 +1,17 @@
+@let optionId = 'question_' + questionIndex() + '_option_' + optionIndex();
+
 <div class="dialog-option-shell">
-    <label [attr.for]="'question_' + questionIndex() + '_option_' + optionIndex()" class="question-title" [class.invalid_label]="optionTextInvalid">{{order_letter()}}.</label>
+    <label [attr.for]="optionId" class="question-title" [class.invalid_label]="optionTextInvalid">{{order_letter()}}.</label>
     <input 
-        [id]="'question_' + questionIndex() + '_option_' + optionIndex()" 
+        [id]="optionId" 
         type="text" 
         class="question-input" 
         formControlName="text"
         [class.invalid_input]="optionTextInvalid" >
-    <div class="question-icon-container">
-        <img src="/assets/icons/delete-icon-default.png" class="question-icon-container__icon-default" alt="delete icon">
-        <img src="/assets/icons/delete-icon-hover.png" class="question-icon-container__icon-hover" alt="delete hover icon">
-    </div>
+    <button class="question__delete-button" type="button" aria-label="Clear answer text" (click)="surveyServiceProvider.clearSurveyFormInputField('text', optionId)">
+        <img src="/assets/icons/delete-icon-default.png" class="question__delete-button--icon-default" alt="Trash bin icon for deleting survey answer option">
+        <img src="/assets/icons/delete-icon-hover.png" class="question__delete-button--icon-hover" alt="Trash bin icon highlighted for deleting survey answer option">
+    </button>
 </div>
 
 <div class="dialog-option-error-message">

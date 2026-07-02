@@ -14,7 +14,7 @@ export class DialogQuestionOption {
   order_letter = input<string>('A');
   optionIndex = input.required<number>();
   questionIndex = input.required<number>();
-  private readonly surveyServiceProvider = inject(SurveyService);
+  readonly surveyServiceProvider = inject(SurveyService);
 
   constructor(private controlContainer: ControlContainer) {}
 

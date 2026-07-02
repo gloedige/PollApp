@@ -38,7 +38,7 @@ export class DialogQuestionOptionBlock {
   order_letter_array: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   readonly minimumNumberOfOptions = 2;
   readonly nextOptionIndex = this.minimumNumberOfOptions;
-  private readonly surveyServiceProvider = inject(SurveyService);
+  readonly surveyServiceProvider = inject(SurveyService);
 
   questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
   

@@ -196,11 +196,12 @@ export class SurveyService {
    * corresponding input element in the DOM, and sets its value to an empty string.
    * @param controlName - The name of the control/input field to clear.
    */
-  clearSurveyFormInputField(controlName: string) {
+  clearSurveyFormInputField(controlName: string, id?: string) {
     const surveyDialogRef = document.querySelector('app-survey-dialog') as any;
-    console.log('controlName:', controlName);
-    const controlElement = surveyDialogRef?.querySelector(`[formControlName="${controlName}"]`);
-    console.log('controlname:', controlElement);
+    const controlElement = id 
+      ? surveyDialogRef?.querySelector(`#${id}`) 
+      : surveyDialogRef?.querySelector(`[formControlName="${controlName}"]`);
+
     if (controlElement) {
       (controlElement as HTMLInputElement).value = '';
     }

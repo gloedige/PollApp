@@ -2,10 +2,10 @@
 <div class="dialog-question-option-block-shell">
     <div class="dialog-question-option-block-header">
         <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title" [class.invalid_label]="questionTitleInvalid">{{questionNumber}}. Question</label>
-        <div class="dialog-question-option-block-header__icon-container">
-            <img src="/assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__icon-container--icon-default" alt="delete icon">
-            <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__icon-container--icon-hover" alt="delete hover icon">
-        </div>
+        <button class="dialog-question-option-block-header__delete-button" (click)="surveyServiceProvider.clearSurveyFormInputField('title')">
+            <img src="/assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__delete-button--icon-default" alt="delete icon">
+            <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__delete-button--icon-hover" alt="delete hover icon">
+        </button>
     </div>
     <input 
         id="question_title_{{question.clientId}}" 
