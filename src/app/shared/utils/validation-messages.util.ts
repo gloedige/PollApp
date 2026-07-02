@@ -12,7 +12,7 @@ export function getValidationMessage( control: AbstractControl | null, label: st
 
   if (errors['minlength']) {
     const requiredLength = errors['minlength'].requiredLength;
-    return `${label.replace('_', ' ')} must be at least ${requiredLength} characters long.`;
+    return `${label.replace('_', ' ').charAt(0).toUpperCase() + label.replace('_', ' ').slice(1)} must be at least ${requiredLength} characters long.`;
   }
 
   return null;

@@ -20,7 +20,7 @@
   padding-left: $padding-left;
 }
 
-@mixin error-message-text($color, $font-family, $font-size: 0.95rem) {
+@mixin error-message-text($color, $font-family, $font-size: 0.75rem) {
   margin: 0;
   color: $color;
   font-family: $font-family;

@@ -4,7 +4,6 @@
 .dialog-question-option-block-shell{
     display: flex;
     flex-direction: column;
-    gap: 4px;
     flex-grow: 1;
     margin-bottom: 16px;
     width: 100%;
@@ -111,6 +110,7 @@
                 colors.$primary_orange, 
                 var(--font-family-text-default)
             );
+            padding: 4px 0 0 0;
         }
 }
 
