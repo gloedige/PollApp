@@ -24,6 +24,11 @@ export class CategoryMenu {
     return categoryControl ? categoryControl.invalid && (categoryControl.touched || this.surveyServiceProvider.submitted()) : false;
   }
 
+  /**
+   * This lifecycle hook initializes the component by setting the selected category from the SurveyService. It ensures that the selected category 
+   * is synchronized with the service's state when the component is initialized. It is called once after the component's inputs have been initialized.
+   * @returns void
+   */
   ngOnInit() {
     this.selectedCategory.set(this.surveyServiceProvider.selectedCategory());
   }

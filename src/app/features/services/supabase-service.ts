@@ -92,6 +92,12 @@ export class SupabaseService {
     }
   }
 
+  /**
+   * This function adds new votes to the Supabase database. It takes an array of votes as input and inserts them into the 'votes' table.
+   * If the insertion is successful, it logs the added votes and refreshes the votes by calling getAllVotes(). If there's an error, it 
+   * logs the error.
+   * @param votes - An array of votes to be added to the database.
+   */
   async addNewVotes(votes: Vote[]) {
     const { data, error } = await this.supabase
       .from('votes')
