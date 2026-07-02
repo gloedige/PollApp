@@ -312,6 +312,26 @@ test.describe('Survey Dialog – delete function for all input fields', () => {
     await expect(dialog.locator('#survey-expiry-date')).toHaveValue('');
     await expect(dialog.locator('#survey-description')).toHaveValue('');
   });
+
+  test('fills option A and B then clears them with delete icons', async ({ page }) => {
+    const dialog = await openSurveyDialog(page);
+
+    // Fill both option fields
+    const optionA = dialog.locator('.question-input').first();
+    const optionB = dialog.locator('.question-input').nth(1);
+    await optionA.fill('Option A text');
+    await optionB.fill('Option B text');
+    await expect(optionA).toHaveValue('Option A text');
+    await expect(optionB).toHaveValue('Option B text');
+
+    // Click the delete icon for each option (first visible delete icon in each .question-icon-container)
+    await dialog.locator('.question-icon-container').nth(0).click();
+    await dialog.locator('.question-icon-container').nth(1).click();
+
+    // Both option fields should be empty
+    await expect(optionA).toHaveValue('');
+    await expect(optionB).toHaveValue('');
+  });
 });
 
 // ─── Complete valid form ─────────────────────────────────────────────────────
