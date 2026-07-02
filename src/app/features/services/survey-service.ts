@@ -1,9 +1,7 @@
 import { Injectable, signal, inject, computed } from '@angular/core';
 import { SupabaseService } from './supabase-service';
 import { Survey } from '../interfaces/survey';
-import { Question } from '../interfaces/question';
 import { Vote } from '../interfaces/vote';
-import { Option } from '../interfaces/option';
 
 @Injectable({
   providedIn: 'root',
@@ -169,6 +167,28 @@ export class SurveyService {
 
     return [...votes, ...newVotes];
   }
-   
+  
+/**
+ * This function opens the survey dialog by selecting the 'app-survey-dialog' element from the DOM and setting its display style to 'block'.
+ * It allows users to create a new survey by displaying the survey dialog.
+ */
+  openSurveyDialog() {
+    const surveyDialog = document.querySelector('app-survey-dialog') as HTMLElement;
+    if (surveyDialog) {
+      surveyDialog.style.display = 'block';
+    }
+  }
+
+  /**
+   * This function closes the survey dialog by selecting the 'app-survey-dialog' element from the DOM and setting its display style to 'none'.
+   * It allows users to exit the survey dialog without creating a new survey.
+   * @returns - void
+   */
+  closeSurveyDialog() {
+    const surveyDialog = document.querySelector('app-survey-dialog') as HTMLElement;
+    if (surveyDialog) {
+      surveyDialog.style.display = 'none';
+    }
+  }
 
 }

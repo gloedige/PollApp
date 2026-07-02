@@ -19,8 +19,8 @@ export class SurveyDashboard {
   @Input() isMenuOpen = false;
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
-  private readonly surveyService = inject(SurveyService);
   private readonly dbService = inject(SupabaseService);
+  readonly surveyService = inject(SurveyService);
   
   readonly surveys = this.surveyService.surveys;
   readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;

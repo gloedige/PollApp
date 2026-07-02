@@ -4,7 +4,7 @@
             <p class="dialog-container-header__state">Draft</p>
             <div class="dialog-container-header__headline-cancel-button-container">
                 <h2 class="dialog-container-header__title">Create a new survey</h2>
-                <app-button [buttonType]="'secondary'" [cancelNewSurvey]="true" [text]="'Cancel'" [hideIcon]="false"></app-button>
+                <app-button [buttonType]="'secondary'" [cancelNewSurvey]="true" [text]="'Cancel'" [hideIcon]="false" (click)="surveyService.closeSurveyDialog()"></app-button>
             </div>
         </header>
         <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
