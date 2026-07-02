@@ -191,4 +191,19 @@ export class SurveyService {
     }
   }
 
+  /**
+   * This function clears the value of a specific input field in the survey form. It takes the control name as an argument, finds the 
+   * corresponding input element in the DOM, and sets its value to an empty string.
+   * @param controlName - The name of the control/input field to clear.
+   */
+  clearSurveyFormInputField(controlName: string) {
+    const surveyDialogRef = document.querySelector('app-survey-dialog') as any;
+    console.log('controlName:', controlName);
+    const controlElement = surveyDialogRef?.querySelector(`[formControlName="${controlName}"]`);
+    console.log('controlname:', controlElement);
+    if (controlElement) {
+      (controlElement as HTMLInputElement).value = '';
+    }
+  }
+
 }

@@ -21,10 +21,10 @@
                                 [class.invalid_input]="surveyTitleInvalid" 
                                 [attr.aria-invalid]="surveyTitleInvalid" 
                                 [attr.aria-describedby]="surveyTitleInvalid ? 'survey-title-error' : null">
-                            <div class="form-detail-container__icon-container">
-                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                            </div>
+                            <button class="form-detail-container__delete-button" (click)="surveyService.clearSurveyFormInputField('survey_title')" type="button" aria-label="Clear survey title">
+                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__delete-button--icon-default" alt="delete icon">
+                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__delete-button--icon-hover" alt="delete hover icon">
+                            </button>
                         </div>
                         <div class="form-detail-container__error-message">
                             <p id="survey-title-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('survey_title') }}</p>
@@ -34,10 +34,10 @@
                                 <label for="survey-expiry-date" class="dialog-container-form__label">Set end date <span class="dialog-container-form__label--optional">(optional)</span></label>
                                 <div class="form-detail-container__input-container">
                                     <input id="survey-expiry-date" type="date" min="{{ minDate }}" class="dialog-container-form__input" formControlName="expiry_date">
-                                    <div class="form-detail-container__icon-container">
-                                        <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                                        <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                                    </div>
+                                    <button class="form-detail-container__delete-button" (click)="surveyService.clearSurveyFormInputField('expiry_date')" type="button" aria-label="Clear survey expiry date">
+                                        <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__delete-button--icon-default" alt="delete icon">
+                                        <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__delete-button--icon-hover" alt="delete hover icon">
+                                    </button>
                                 </div>
                                 <div class="form-detail-container__dummy"></div>
                             </div>
@@ -57,10 +57,10 @@
                                 [attr.aria-invalid]="surveyDescriptionInvalid"
                                 [attr.aria-describedby]="surveyDescriptionInvalid ? 'survey-description-error' : null">
                             </textarea>
-                            <div class="form-detail-container__icon-container">
-                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
-                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
-                            </div>
+                            <button class="form-detail-container__delete-button" (click)="surveyService.clearSurveyFormInputField('description')" type="button" aria-label="Clear survey description">
+                                <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__delete-button--icon-default" alt="delete icon">
+                                <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__delete-button--icon-hover" alt="delete hover icon">
+                            </button>
                         </div>
                         <div class="form-detail-container__error-message">
                             <p id="survey-description-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('description') }}</p>

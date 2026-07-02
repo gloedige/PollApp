@@ -134,7 +134,7 @@
     flex-direction: row;
     gap: 64px;
 
-    &__icon-container{
+    &__delete-button{
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -142,6 +142,8 @@
         position: relative;
         width: 24px;
         height: 24px;
+        background-color: transparent;
+        border: none;
 
         &--icon-default{
             opacity: 1;

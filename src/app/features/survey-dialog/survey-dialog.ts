@@ -148,5 +148,10 @@ export class SurveyDialog {
     return getValidationMessage(control, controlName);
   }
 
+  clearSurveyTitle() {
+    this.surveyForm.controls.survey_title.setValue('');
+    this.surveyForm.controls.survey_title.markAsUntouched();
+  }
+
 
 }
