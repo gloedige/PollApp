@@ -40,7 +40,10 @@ export class SurveyDialog {
     }),
     description: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.minLength(10)]
+      validators: [
+          Validators.minLength(10), 
+          Validators.maxLength(500), 
+          Validators.pattern(/^[^<>]*$/)] 
     }),
     expiry_date: new FormControl('', {
       nonNullable: true
@@ -54,7 +57,7 @@ export class SurveyDialog {
 
   readonly surveyService = inject(SurveyService);
   submitted = this.surveyService.submitted;
-  minDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  minDate = new Date().toISOString().split('T')[0];
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -82,6 +85,16 @@ export class SurveyDialog {
   get surveyTitleInvalid(): boolean {
     const titleControl = this.surveyForm.controls.survey_title;
     return titleControl.invalid && (titleControl.touched || this.submitted());
+  }
+
+  /**
+   * This getter checks if the survey description is invalid. It retrieves the 'description' form control from the survey form,
+   * and checks its validity based on whether it has been touched or if the survey has been submitted.
+   * @returns A boolean indicating whether the survey description is invalid.
+   */
+  get surveyDescriptionInvalid(): boolean {
+    const descriptionControl = this.surveyForm.controls.description;
+    return descriptionControl.invalid && (descriptionControl.touched || this.submitted());
   }
 
   /**

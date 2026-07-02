@@ -15,7 +15,7 @@
                         <div class="form-detail-container__input-container">
                             <input 
                                 id="survey-title" 
-                                type="text" 
+                                type="text"
                                 class="dialog-container-form__input" 
                                 formControlName="survey_title" 
                                 [class.invalid_input]="surveyTitleInvalid" 
@@ -47,13 +47,23 @@
                         </div>   
                     </div>
                     <div class="form-detail-container--description-container">
-                        <label for="survey-description" class="dialog-container-form__label">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
+                        <label for="survey-description" class="dialog-container-form__label" [class.invalid_label]="surveyDescriptionInvalid">Describing text <span class="dialog-container-form__label--optional">(optional)</span></label>
                         <div class="form-detail-container__input-container form-detail-container__input-container--description">
-                            <textarea id="survey-description" class="dialog-container-form__input dialog-container-form__input--textarea" formControlName="description"></textarea>
+                            <textarea 
+                                id="survey-description" 
+                                class="dialog-container-form__input dialog-container-form__input--textarea" 
+                                formControlName="description"
+                                [class.invalid_input]="surveyDescriptionInvalid"
+                                [attr.aria-invalid]="surveyDescriptionInvalid"
+                                [attr.aria-describedby]="surveyDescriptionInvalid ? 'survey-description-error' : null">
+                            </textarea>
                             <div class="form-detail-container__icon-container">
                                 <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__icon-container--icon-default" alt="delete icon">
                                 <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__icon-container--icon-hover" alt="delete hover icon">
                             </div>
+                        </div>
+                        <div class="form-detail-container__error-message">
+                            <p id="survey-description-error" class="form-detail-container__error-message--text">{{ getInputErrorMessage('description') }}</p>
                         </div>
                     </div>
                 </div>
