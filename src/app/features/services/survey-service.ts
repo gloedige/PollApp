@@ -1,4 +1,4 @@
-import { Injectable, signal, inject, computed } from '@angular/core';
+import { Injectable, signal, inject, computed, Renderer2 } from '@angular/core';
 import { SupabaseService } from './supabase-service';
 import { Survey } from '../interfaces/survey';
 import { Vote } from '../interfaces/vote';
@@ -11,6 +11,7 @@ export class SurveyService {
   surveyDetail = signal<Survey | null>(null);
   selectedCategory = signal<string | null>(null);
   submitted = signal<boolean>(false);
+  isSurveyDialogOpen = signal<boolean>(false);
   private readonly dbService = inject(SupabaseService);
   surveys = this.dbService.surveys;
 
@@ -176,6 +177,7 @@ export class SurveyService {
     const surveyDialog = document.querySelector('app-survey-dialog') as HTMLElement;
     if (surveyDialog) {
       surveyDialog.style.display = 'block';
+      this.isSurveyDialogOpen.set(true);
     }
   }
 
@@ -188,6 +190,7 @@ export class SurveyService {
     const surveyDialog = document.querySelector('app-survey-dialog') as HTMLElement;
     if (surveyDialog) {
       surveyDialog.style.display = 'none';
+      this.isSurveyDialogOpen.set(false);
     }
   }
 

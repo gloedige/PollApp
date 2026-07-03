@@ -17,8 +17,8 @@ import { CategoryMenu } from '../../shared/components/category-menu/category-men
 })
 export class SurveyDashboard {
   @Input() isMenuOpen = false;
-  private readonly renderer = inject(Renderer2);
-  private readonly document = inject(DOCUMENT);
+  readonly renderer = inject(Renderer2);
+  readonly document = inject(DOCUMENT);
   private readonly dbService = inject(SupabaseService);
   readonly surveyService = inject(SurveyService);
   
@@ -54,6 +54,7 @@ export class SurveyDashboard {
    */
   ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'dashboard-page');
+    this.renderer.removeClass(this.document.body, 'noscroll');
   }
 
   /**
@@ -81,6 +82,15 @@ export class SurveyDashboard {
   showPastSurveys() {
     this.surveyService.surveyState.set('past');
     this.buttonIsActive = false;
+  }
+
+  /**
+   * This function is called when the user wants to open the survey dialog to create a new survey. It calls the openSurveyDialog()
+   * method from the SurveyService to display the survey dialog and adds a CSS class to the body element to prevent scrolling.
+   */
+  openDialog() {
+    this.surveyService.openSurveyDialog();
+    this.renderer.addClass(this.document.body, 'noscroll');
   }
 
 }

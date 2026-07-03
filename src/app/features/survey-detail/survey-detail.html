@@ -7,7 +7,7 @@
             [buttonType]="'primary'" 
             [text]="'Create survey'"
             [type]="'button'"
-            (click)="surveyService.openSurveyDialog()"></app-button>
+            (click)="this.openDialog()"></app-button>
     </header>
     <div class="survey-detail-shell">
         @if (survey(); as survey) {

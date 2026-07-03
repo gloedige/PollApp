@@ -1,4 +1,5 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import { DialogQuestionOptionBlock } from '../components/dialog-question-option-block/dialog-question-option-block';
@@ -57,6 +58,8 @@ export class SurveyDialog {
   readonly surveyService = inject(SurveyService);
   submitted = this.surveyService.submitted;
   minDate = new Date().toISOString().split('T')[0];
+  private readonly renderer = inject(Renderer2);
+  private readonly document = inject(DOCUMENT);
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -167,5 +170,6 @@ export class SurveyDialog {
     this.submitted.set(false);
     this.questions.clear();
     this.addQuestion();
+    this.renderer.removeClass(this.document.body, 'noscroll');
   }
 }

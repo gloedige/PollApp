@@ -23,3 +23,7 @@ body.dashboard-page {
 body.detail-page {
   background-color: colors.$light_purple_3;
 }
+
+.noscroll{
+    overflow: hidden;
+}

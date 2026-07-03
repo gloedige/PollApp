@@ -1,4 +1,4 @@
-import { Component, inject, Renderer2, signal, computed} from '@angular/core';
+import { Component, inject, Renderer2, signal} from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import {DOCUMENT} from "@angular/common";
 import {Router} from "@angular/router";
@@ -56,6 +56,7 @@ export class SurveyDetail {
    */
   ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'detail-page');
+    this.renderer.removeClass(this.document.body, 'noscroll');
   }
 
  
@@ -101,6 +102,15 @@ export class SurveyDetail {
       await this.dbService.addNewVotes(this.votesOfActiveSurvey());
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  /**
+   * This function is called when the user wants to open the survey dialog to create a new survey. It calls the openSurveyDialog()
+   * method from the SurveyService to display the survey dialog and adds a CSS class to the body element to prevent scrolling.
+   */
+  openDialog() {
+    this.surveyService.openSurveyDialog();
+    this.renderer.addClass(this.document.body, 'noscroll');
   }
 
 }
