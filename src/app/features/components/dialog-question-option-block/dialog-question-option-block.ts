@@ -173,6 +173,13 @@ export class DialogQuestionOptionBlock {
     return getValidationMessage(control, controlName);
   }
 
+  /**
+   * This function removes a question from the questions FormArray based on the provided question index. If the question index is 0, it clears
+   * the title of the first question instead of removing it. For other question indices, it removes the corresponding question group from 
+   * the FormArray.
+   * @param questionIndex - The index of the question to be removed from the questions FormArray.
+   * @returns void
+   */
   removeQuestion(questionIndex: number): void {
     const questions = (this.controlContainer as any).formDirective.form.get('questions') as FormArray;
     const questionGroup = questions.at(questionIndex) as FormGroup | null;

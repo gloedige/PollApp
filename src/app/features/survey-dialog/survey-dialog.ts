@@ -165,5 +165,7 @@ export class SurveyDialog {
     this.surveyService.closeSurveyDialog();
     this.surveyForm.reset();
     this.submitted.set(false);
+    this.questions.clear();
+    this.addQuestion();
   }
 }
