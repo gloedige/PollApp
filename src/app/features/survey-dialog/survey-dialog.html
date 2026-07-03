@@ -97,7 +97,8 @@
                     [text]="'Publish'" 
                     [publishNewSurvey]="true" 
                     [hideIcon]="false" 
-                    [type]="'submit'">
+                    [type]="'submit'"
+                    [disabled]="surveyForm.invalid || questions.length === 0">
                 </app-button>
             </footer>
         </form>
