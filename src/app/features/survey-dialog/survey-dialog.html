@@ -4,7 +4,13 @@
             <p class="dialog-container-header__state">Draft</p>
             <div class="dialog-container-header__headline-cancel-button-container">
                 <h2 class="dialog-container-header__title">Create a new survey</h2>
-                <app-button [buttonType]="'secondary'" [cancelNewSurvey]="true" [text]="'Cancel'" [hideIcon]="false" (click)="surveyService.closeSurveyDialog()"></app-button>
+                <app-button 
+                    [buttonType]="'secondary'" 
+                    [cancelNewSurvey]="true" 
+                    [text]="'Cancel'" 
+                    [hideIcon]="false"
+                    [type]="'reset'" 
+                    (click)="cancelSurveyCreation()"></app-button>
             </div>
         </header>
         <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
@@ -21,7 +27,7 @@
                                 [class.invalid_input]="surveyTitleInvalid" 
                                 [attr.aria-invalid]="surveyTitleInvalid" 
                                 [attr.aria-describedby]="surveyTitleInvalid ? 'survey-title-error' : null">
-                            <button class="form-detail-container__delete-button" (click)="surveyService.clearSurveyFormInputField('survey_title')" type="button" aria-label="Clear survey title">
+                            <button class="form-detail-container__delete-button" type="button" (click)="surveyService.clearSurveyFormInputField('survey_title')" aria-label="Clear survey title">
                                 <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__delete-button--icon-default" alt="delete icon">
                                 <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__delete-button--icon-hover" alt="delete hover icon">
                             </button>
@@ -75,7 +81,13 @@
                         </app-dialog-question-option-block>
                     }
                     <div class="dialog-container-form__add-question-button-container">
-                        <app-button [buttonType]="'secondary'" [text]="'Add next question'" [cancelNewSurvey]="false" [hideIcon]="false" (click)="addQuestion()"></app-button>
+                        <app-button 
+                            [buttonType]="'secondary'" 
+                            [text]="'Add next question'" 
+                            [cancelNewSurvey]="false" 
+                            [hideIcon]="false"
+                            [type]="'button'" 
+                            (click)="addQuestion()"></app-button>
                     </div>
                 </div>
             </div>

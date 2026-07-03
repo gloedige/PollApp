@@ -6,7 +6,12 @@
         <div class="headline-container">
             <h1 class="h1__hero">Collect Feedback,<br>Unlock Ideas</h1>
             <p class="headline-container__hero-description">Create and share surveys in minutes – from team events to workplace culture. Collect opinions, engage your audience, and turn feedback into action.</p>
-            <app-button data-testid="New Survey" [publishNewSurvey]="false" [text]="'New survey'" (click)="surveyService.openSurveyDialog()"></app-button>
+            <app-button 
+                data-testid="New Survey" 
+                [publishNewSurvey]="false" 
+                [text]="'New survey'"
+                [type]="'button'"
+                (click)="surveyService.openSurveyDialog()"></app-button>
         </div>
         <div class="hero-img-container">
             <img src="/assets/images/hero_img_default.png" alt="hero image" class="hero-img-container__default-img">
@@ -28,8 +33,8 @@
     <section class="all-surveys-section">
         <nav class="nav-bar">
             <div class="nav-bar__button-container">
-                <app-button [buttonType]="'filter'" [text]="'Active surveys'" [isActive]="buttonIsActive" (click)="showActiveSurveys()"></app-button>
-                <app-button [buttonType]="'filter'" [text]="'Past surveys'" [isActive]="!buttonIsActive" (click)="showPastSurveys()"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Active surveys'" [isActive]="buttonIsActive" [type]="'button'" (click)="showActiveSurveys()"></app-button>
+                <app-button [buttonType]="'filter'" [text]="'Past surveys'" [isActive]="!buttonIsActive" [type]="'button'" (click)="showPastSurveys()"></app-button>
             </div>
             <app-category-menu [text]="'Select category'"></app-category-menu>
         </nav>

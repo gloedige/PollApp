@@ -3,7 +3,11 @@
         <a href="/dashboard">
             <img src="/assets/images/logo_purple_dark.png" alt="Logo">
         </a>
-        <app-button [buttonType]="'primary'" [text]="'Create survey'" (click)="surveyService.openSurveyDialog()"></app-button>
+        <app-button 
+            [buttonType]="'primary'" 
+            [text]="'Create survey'"
+            [type]="'button'"
+            (click)="surveyService.openSurveyDialog()"></app-button>
     </header>
     <div class="survey-detail-shell">
         @if (survey(); as survey) {
@@ -27,7 +31,12 @@
                 </div>
             </div>
             <div class="survey-detail-footer">
-                <app-button [buttonType]="'primary'" [text]="'Complete survey'" [hideIcon]="true" (click)="completeSurvey()"></app-button>
+                <app-button 
+                    [buttonType]="'primary'" 
+                    [text]="'Complete survey'" 
+                    [hideIcon]="true" 
+                    [type]="'button'" 
+                    (click)="completeSurvey()"></app-button>
             </div>
         </section>
         } @else {

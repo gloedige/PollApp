@@ -2,7 +2,7 @@
 <div class="dialog-question-option-block-shell">
     <div class="dialog-question-option-block-header">
         <label for="question_title_{{question.clientId}}" class="dialog-question-option-block-header__question-title" [class.invalid_label]="questionTitleInvalid">{{questionNumber}}. Question</label>
-        <button class="dialog-question-option-block-header__delete-button" (click)="surveyServiceProvider.clearSurveyFormInputField('title')">
+        <button class="dialog-question-option-block-header__delete-button" type="button" (click)="surveyServiceProvider.clearSurveyFormInputField('title')">
             <img src="/assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__delete-button--icon-default" alt="delete icon">
             <img src="/assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__delete-button--icon-hover" alt="delete hover icon">
         </button>
@@ -35,7 +35,12 @@
         }
     </div>
     <div class="dialog-question-option-block-add-option-button-container">
-        <app-button [buttonType]="'tertiary'" [text]="'Add answer'" [hideIcon]="false" (click)="addOption()"></app-button>
+        <app-button 
+            [buttonType]="'tertiary'" 
+            [text]="'Add answer'" 
+            [hideIcon]="false" 
+            [type]="'button'"
+            (click)="addOption()"></app-button>
     </div>
 </div>
 }
