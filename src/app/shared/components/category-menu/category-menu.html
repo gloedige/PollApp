@@ -27,7 +27,7 @@
             <p id="survey-category-error" class="menu-container__error-message--text">{{ getInputErrorMessage('category') }}</p>
         </div>
     } @else{
-        <input class="menu-container__selected-category" [value]="selectedCategory()" aria-label="Selected category" readonly>
+        <div class="menu-container__selected-category" readonly>{{selectedCategory()}}</div>
 
     }
 </div>
