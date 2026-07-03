@@ -13,8 +13,11 @@ export function getValidationMessage( control: AbstractControl | null, label: st
   const errors: ValidationErrors | null = control.errors;
   if (!errors) return null;
 
-  if (errors['required'] || errors['pattern']) {
+  if (errors['required']) {
     return `Please enter a valid ${label.replace('_', ' ')}.`;
+  }
+  if (errors['pattern']) {
+    return `Please do not use special characters like <, >, &, etc.`;
   }
 
   if (errors['minlength']) {

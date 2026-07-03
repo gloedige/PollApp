@@ -24,7 +24,6 @@ type SurveyForm = FormGroup<{
   questions: FormArray<QuestionGroup>;
 }>;
 
-//TODO: create tests for user interaction with the dialog.
 @Component({
   selector: 'app-survey-dialog',
   imports: [Button, CategoryMenu, DialogQuestionOptionBlock, ReactiveFormsModule],
@@ -43,7 +42,7 @@ export class SurveyDialog {
       validators: [
           Validators.minLength(10), 
           Validators.maxLength(500), 
-          Validators.pattern(/^[^<>]*$/)] 
+          Validators.pattern('[a-zA-Z0-9äöüÄÖÜ .,!?]*')] 
     }),
     expiry_date: new FormControl('', {
       nonNullable: true
@@ -148,10 +147,23 @@ export class SurveyDialog {
     return getValidationMessage(control, controlName);
   }
 
+  /**
+   * This function clears the value of the survey title input field in the survey form. It sets the value of the 'survey_title' control to an 
+   * empty string and marks it as untouched, effectively resetting the input field for the survey title. 
+   * It is useful for clearing the survey title when needed, such as when resetting the form or preparing for a new survey entry.
+   */
   clearSurveyTitle() {
     this.surveyForm.controls.survey_title.setValue('');
     this.surveyForm.controls.survey_title.markAsUntouched();
   }
 
-
+  /**
+   * This function cancels the survey creation process. It closes the survey dialog, resets the survey form to its initial state, and sets the
+   * submitted signal to false. This allows users to exit the survey creation process without saving any changes.
+   */
+  cancelSurveyCreation() {
+    this.surveyService.closeSurveyDialog();
+    this.surveyForm.reset();
+    this.submitted.set(false);
+  }
 }
