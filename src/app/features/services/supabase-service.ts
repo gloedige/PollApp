@@ -180,33 +180,60 @@ export class SupabaseService {
 
 //TODO: Refactor the following methods to use DTOs for better data handling and validation.
   async storeAllNewSurveyDetails(surveyForm: SurveyFormValue) {
-    const surveyDto = this.buildSurveyCreateDto(surveyForm);
+      const surveyDto = this.buildSurveyCreateDto(surveyForm);
 
-    const newSurvey = ({
+  const { data: insertedSurvey, error: surveyError } = await this.supabase
+    .from('surveys')
+    .insert({
       title: surveyDto.title,
       description: surveyDto.description,
       expiry_date: surveyDto.expiry_date,
       category: surveyDto.category
-    } as Survey);
+    })
+    .select('id')
+    .single();
 
-    const questionArray: Question[] = surveyDto.questions.map((question) => ({
-      question: question.question,
-      multiple_options: question.multiple_options,
-      survey_id: 0
-    } as Question));
-
-    const optionArray: Option[] = surveyDto.questions.flatMap((question) =>
-      question.options.map((option) => ({
-        question_id: 0,
-        option_text: option.option_text,
-        option_selected: option.option_selected
-      } as Option))
-    );
-
-    await this.addNewSurvey(newSurvey);
-    await this.addNewQuestions(questionArray);
-    await this.addNewOptions(optionArray);
+  if (surveyError || !insertedSurvey) {
+    console.error('Error storing new survey:', surveyError);
+    return;
   }
+
+  const surveyId = insertedSurvey.id;
+
+  for (const question of surveyDto.questions) {
+    const { data: insertedQuestion, error: questionError } = await this.supabase
+      .from('questions')
+      .insert({
+        question: question.question,
+        multiple_options: question.multiple_options,
+        survey_id: surveyId
+      })
+      .select('id')
+      .single();
+
+    if (questionError || !insertedQuestion) {
+      console.error('Error adding new question:', questionError);
+      return;
+    }
+
+    const questionId = insertedQuestion.id;
+
+    const options = question.options.map(option => ({
+      question_id: questionId,
+      option_text: option.option_text,
+      option_selected: option.option_selected
+    }));
+
+    const { error: optionError } = await this.supabase
+      .from('options')
+      .insert(options);
+
+    if (optionError) {
+      console.error('Error adding new options:', optionError);
+      return;
+    }
+  }
+}
 
   private buildSurveyCreateDto(surveyForm: SurveyFormValue): SurveyCreateDto {
     return {
@@ -228,23 +255,30 @@ export class SupabaseService {
   async addNewSurvey(survey: Survey) {
     const { data, error } = await this.supabase
       .from('surveys')
-      .insert(survey);
+      .insert(survey)
+      .select('id')
+      .single();
     if (error) {
       console.error('Error storing new survey:', error);
     } else {
       console.log('New survey stored:', data);
     }
+    return data?.id;
   }
 
-  async addNewQuestions(questions: Question[]) {
+  async addNewQuestion(question: Question) {
     const { data, error } = await this.supabase
       .from('questions')
-      .insert(questions);
+      .insert(question)
+      .select('id')
+      .single();
     if (error) {
-      console.error('Error adding new questions:', error);
+      console.error('Error adding new question:', error);
     } else {
-      console.log('New questions added:', data);
+      console.log('New question added:', data);
     }
+
+    return data?.id;
   }
 
   async addNewOptions(options: Option[]) {
