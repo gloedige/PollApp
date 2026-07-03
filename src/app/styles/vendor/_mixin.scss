@@ -26,3 +26,24 @@
   font-family: $font-family;
   font-size: $font-size;
 }
+
+@mixin scrollbar ($size, $track-color, $thumb-color, $thumb-hover-color) {
+    &::-webkit-scrollbar {
+        #{$size}: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: $track-color;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb-color;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $thumb-hover-color;
+    }
+}

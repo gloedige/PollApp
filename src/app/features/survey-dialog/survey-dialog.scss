@@ -83,6 +83,10 @@
         border-radius: 5px;
         border-top-right-radius: 80px;
         gap: 24px;
+        max-height: 640px;
+        overflow-y: auto;
+
+        @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
     }
 
     &__label{
@@ -207,7 +211,6 @@
             justify-content: space-between;
             gap: 4px;
             width: 100%;
-            // flex-grow: 1; // aus input-container
         }
 
         &--category-container{
