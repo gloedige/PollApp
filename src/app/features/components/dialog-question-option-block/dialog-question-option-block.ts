@@ -40,7 +40,7 @@ export class DialogQuestionOptionBlock {
   readonly nextOptionIndex = this.minimumNumberOfOptions;
   readonly surveyServiceProvider = inject(SurveyService);
 
-  questionIndex = input<number>(1); // TODO: wird aktuell über questionNumber gesetzt
+  questionIndex = input<number>(0); // TODO: wird aktuell über questionNumber gesetzt
   
   constructor(private controlContainer: ControlContainer) {}
 
@@ -79,6 +79,20 @@ export class DialogQuestionOptionBlock {
   get questionTitleInvalid(): boolean {
     const questionControl = this.currentQuestionGroup.get('title') as FormControl<string>;
     return questionControl ? questionControl.invalid && (questionControl.touched || this.surveyServiceProvider.submitted()) : false;
+  }
+
+  /**
+   * This getter retrieves the index of the current question within the questions FormArray. It finds the index of the current question group
+   * based on its client ID and returns the index. If the question control is not found, it returns -1.
+   * @returns The index of the current question within the questions FormArray, or -1 if not found.
+   */
+  get indexOfCurrentQuestion(): number {
+    const questionControl = this.controlContainer.control as FormGroup;
+    if (questionControl) {
+      const questionIndex = (this.controlContainer as any).formDirective.form.getRawValue().questions.findIndex((q: any) => q.clientId === this.currentQuestionGroup.value.clientId);
+      return questionIndex;
+    }
+    return -1; // Return -1 if the question control is not found
   }
 
   /**
@@ -157,5 +171,18 @@ export class DialogQuestionOptionBlock {
     if (!shouldShow) return null;
 
     return getValidationMessage(control, controlName);
+  }
+
+  removeQuestion(questionIndex: number): void {
+    const questions = (this.controlContainer as any).formDirective.form.get('questions') as FormArray;
+    const questionGroup = questions.at(questionIndex) as FormGroup | null;
+
+    if (questionIndex == 0) {
+      questionGroup?.get('title')?.setValue('');
+      questionGroup?.get('title')?.markAsUntouched();
+      return;
+    }
+
+    questions.removeAt(questionIndex);
   }
 }
