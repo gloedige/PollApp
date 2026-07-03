@@ -5,6 +5,8 @@ import { Survey } from '../interfaces/survey';
 import { Question } from '../interfaces/question';
 import { Vote} from '../interfaces/vote';
 import { Option } from '../interfaces/option';
+import { SurveyFormValue } from '../interfaces/survey-form';
+import { OptionCreateDto, QuestionCreateDto, SurveyCreateDto } from '../interfaces/survey-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +31,28 @@ export class SupabaseService {
 
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
+  newSurvey = signal<SurveyCreateDto>(
+    {
+      title: '',
+      description: '',
+      expiry_date: '',
+      category: '',
+      questions: []
+    }
+  );
+  newQuestion = signal<QuestionCreateDto>(
+    {
+      question: '',
+      multiple_options: false,
+      options: []
+    }
+  );
+  newOption = signal<OptionCreateDto>(
+    {
+      option_text: '',
+      option_selected: false
+    }
+  );
 
   /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
@@ -153,5 +177,86 @@ export class SupabaseService {
       this.supabase.removeChannel(this.channels);
     }
   }
+
+//TODO: Refactor the following methods to use DTOs for better data handling and validation.
+  async storeAllNewSurveyDetails(surveyForm: SurveyFormValue) {
+    const surveyDto = this.buildSurveyCreateDto(surveyForm);
+
+    const newSurvey = ({
+      title: surveyDto.title,
+      description: surveyDto.description,
+      expiry_date: surveyDto.expiry_date,
+      category: surveyDto.category
+    } as Survey);
+
+    const questionArray: Question[] = surveyDto.questions.map((question) => ({
+      question: question.question,
+      multiple_options: question.multiple_options,
+      survey_id: 0
+    } as Question));
+
+    const optionArray: Option[] = surveyDto.questions.flatMap((question) =>
+      question.options.map((option) => ({
+        question_id: 0,
+        option_text: option.option_text,
+        option_selected: option.option_selected
+      } as Option))
+    );
+
+    await this.addNewSurvey(newSurvey);
+    await this.addNewQuestions(questionArray);
+    await this.addNewOptions(optionArray);
+  }
+
+  private buildSurveyCreateDto(surveyForm: SurveyFormValue): SurveyCreateDto {
+    return {
+      title: surveyForm.survey_title,
+      description: surveyForm.description,
+      expiry_date: surveyForm.expiry_date ?? '',
+      category: surveyForm.category,
+      questions: surveyForm.questions.map((question) => ({
+        question: question.title,
+        multiple_options: question.multiple,
+        options: question.options.map((option) => ({
+          option_text: option.text,
+          option_selected: false,
+        })),
+      })),
+    };
+  }
+
+  async addNewSurvey(survey: Survey) {
+    const { data, error } = await this.supabase
+      .from('surveys')
+      .insert(survey);
+    if (error) {
+      console.error('Error storing new survey:', error);
+    } else {
+      console.log('New survey stored:', data);
+    }
+  }
+
+  async addNewQuestions(questions: Question[]) {
+    const { data, error } = await this.supabase
+      .from('questions')
+      .insert(questions);
+    if (error) {
+      console.error('Error adding new questions:', error);
+    } else {
+      console.log('New questions added:', data);
+    }
+  }
+
+  async addNewOptions(options: Option[]) {
+    const { data, error } = await this.supabase
+      .from('options')
+      .insert(options);
+    if (error) {
+      console.error('Error adding new options:', error);
+    } else {
+      console.log('New options added:', data);
+    }
+  }
+
 
 }

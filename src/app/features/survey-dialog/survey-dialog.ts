@@ -1,4 +1,5 @@
 import { Component, signal, inject, Renderer2 } from '@angular/core';
+import { SupabaseService } from '../services/supabase-service';
 import { DOCUMENT } from '@angular/common';
 import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
@@ -56,6 +57,7 @@ export class SurveyDialog {
   });
 
   readonly surveyService = inject(SurveyService);
+  readonly dbService = inject(SupabaseService);
   submitted = this.surveyService.submitted;
   minDate = new Date().toISOString().split('T')[0];
   private readonly renderer = inject(Renderer2);
@@ -131,7 +133,13 @@ export class SurveyDialog {
     this.surveyForm.markAllAsTouched();
     console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
-      // Handle form submission
+      this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
+      this.surveyForm.reset();
+      this.questions.clear();
+      this.addQuestion();
+      this.submitted.set(false);
+      this.surveyService.closeSurveyDialog();
+      this.renderer.removeClass(this.document.body, 'noscroll');
     }
   }
 
