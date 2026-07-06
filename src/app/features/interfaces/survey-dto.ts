@@ -1,6 +1,5 @@
 export interface OptionCreateDto {
   option_text: string;
-  option_selected: boolean;
 }
 
 export interface QuestionCreateDto {

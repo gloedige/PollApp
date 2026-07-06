@@ -6,7 +6,7 @@ import { Question } from '../interfaces/question';
 import { Vote} from '../interfaces/vote';
 import { Option } from '../interfaces/option';
 import { SurveyFormValue } from '../interfaces/survey-form';
-import { OptionCreateDto, QuestionCreateDto, SurveyCreateDto } from '../interfaces/survey-dto';
+import { OptionCreateDto, SurveyCreateDto } from '../interfaces/survey-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +25,6 @@ export class SupabaseService {
     this.getAllVotes();
   }
 
-  getTodos() {
-    return this.supabase.from('todos').select('*');
-  }
-
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
 
@@ -38,7 +34,7 @@ export class SupabaseService {
    * @returns - A promise that resolves when the surveys are fetched and the subscription is set up.
    */
   async getAllSurveys() {
-    let { data: surveys, error } = await this.supabase
+    let { data: surveys } = await this.supabase
     .from('surveys')
     .select('*');
     if (!surveys) return;
@@ -192,8 +188,7 @@ export class SupabaseService {
         question: question.title,
         multiple_options: question.multiple,
         options: question.options.map((option) => ({
-          option_text: option.text,
-          option_selected: false,
+          option_text: option.text
         })),
       })),
     };
@@ -206,11 +201,10 @@ export class SupabaseService {
    * @param questionId - The ID of the question to which the options belong.
    * @returns - An array of OptionCreateDto objects containing the mapped option data.
    */
-  private mapSurveyFormOptions(question: { options: { option_text: string; option_selected?: boolean }[] }, questionId: number) {
+  private mapSurveyFormOptions(question: { options: { option_text: string }[] }, questionId: number) {
     return question.options.map(option => ({
       question_id: questionId,
-      option_text: option.option_text,
-      option_selected: option.option_selected || false
+      option_text: option.option_text
     }));
   }
 
