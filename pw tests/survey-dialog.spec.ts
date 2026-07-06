@@ -349,18 +349,28 @@ test.describe('Survey Dialog – complete valid form', () => {
     await dialog.locator('#survey-description').fill('Please help us plan the next team event.');
 
     // Expiry date (optional)
-    await dialog.locator('#survey-expiry-date').fill('2027-12-31');
+    await dialog.locator('#survey-expiry-date').fill('2027-07-31');
 
     // Category (required)
     await dialog.locator('app-category-menu').getByRole('button').click();
     await dialog.getByRole('list').getByText('Team Activities').click();
 
-    // Question title (required, min 3 chars)
+    // Question title 1 (required, min 3 chars)
     await dialog.locator('.dialog-question-option-block-input').first().fill('Which venue do you prefer?');
 
     // Answer options A & B (required)
     await dialog.locator('.question-input').nth(0).fill('City park');
     await dialog.locator('.question-input').nth(1).fill('Indoor hall');
+
+    // Add a second question
+    await dialog.locator('button[aria-label="Add next question"]').click({timeout: 2000});
+
+    // Question title 2 (required, min 3 chars)
+    await dialog.locator('.dialog-question-option-block-input').nth(1).fill('Where do you like to take the event place?')
+
+    // Answer options A & B (required)
+    await dialog.locator('.question-input').nth(2).fill('Beach');
+    await dialog.locator('.question-input').nth(3).fill('Mountain');
 
     // Submit
     await clickPublish(dialog);

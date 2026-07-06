@@ -28,7 +28,7 @@
     border-radius: 5px;
     border-top-right-radius: 100px;
     z-index: 101;
-
+   
 }
 .dialog-container-header{
     display: flex;
@@ -246,4 +246,13 @@
 }
 .invalid_label{
     color: colors.$primary_orange;
+}
+
+@media (max-height: 950px) {
+    .dialog-container {
+        max-height: 700px;
+        overflow-y: auto;
+
+        @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
+    }
 }

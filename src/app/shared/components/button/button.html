@@ -1,5 +1,5 @@
 @if (buttonType() === 'primary') {
-    <button class="button button__primary" [disabled]="disabled()" type="{{type()}}">
+    <button class="button button__primary" [disabled]="disabled()" type="{{type()}}" aria-label="{{text()}}">
         {{text()}}
         @if (publishNewSurvey()) {
             <img src="/assets/icons/check_icon.png" alt="check icon" class="button__primary--icon" [class.hidden]="hideIcon()">
@@ -9,7 +9,7 @@
     </button>
 }
 @if (buttonType() === 'secondary') {
-     <button class="button button__secondary" type="{{type()}}">
+     <button class="button button__secondary" type="{{type()}}" aria-label="{{text()}}">
         {{text()}}
         @if (cancelNewSurvey()) {
             <img src="/assets/icons/close_icon_white.png" alt="cancel icon" class="button__secondary--icon" [class.hidden]="hideIcon()">
@@ -19,7 +19,7 @@
     </button>
 } 
 @if (buttonType() === 'tertiary') {
-     <button class="button button__tertiary" type="{{type()}}">
+     <button class="button button__tertiary" type="{{type()}}" aria-label="{{text()}}">
         <div class="button__tertiary--inner-fram">
             {{text()}}
             <img src="/assets/icons/add_circle_icon_white_small.png" alt="add circle icon" class="button__tertiary--icon" [class.hidden]="hideIcon()">
