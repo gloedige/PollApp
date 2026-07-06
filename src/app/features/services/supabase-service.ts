@@ -31,28 +31,6 @@ export class SupabaseService {
 
   channels:  RealtimeChannel | undefined;
   surveys = signal<Survey[]>([]);
-  newSurvey = signal<SurveyCreateDto>(
-    {
-      title: '',
-      description: '',
-      expiry_date: '',
-      category: '',
-      questions: []
-    }
-  );
-  newQuestion = signal<QuestionCreateDto>(
-    {
-      question: '',
-      multiple_options: false,
-      options: []
-    }
-  );
-  newOption = signal<OptionCreateDto>(
-    {
-      option_text: '',
-      option_selected: false
-    }
-  );
 
   /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
@@ -178,64 +156,33 @@ export class SupabaseService {
     }
   }
 
-//TODO: Refactor the following methods to use DTOs for better data handling and validation.
+  /**
+   * This function stores all new survey details in the Supabase database. It takes a SurveyFormValue object as input, maps it to a SurveyCreateDto,
+   * and then adds the survey, questions, and options to the database. It handles errors during the process and logs relevant information.
+   * @param surveyForm - The SurveyFormValue object containing the survey details and questions to be stored in the database.
+   * @returns - A promise that resolves when all survey details are stored in the database.
+   */
   async storeAllNewSurveyDetails(surveyForm: SurveyFormValue) {
-      const surveyDto = this.buildSurveyCreateDto(surveyForm);
+    const surveyDto = this.mapSurveyFormToCreateDto(surveyForm);
 
-  const { data: insertedSurvey, error: surveyError } = await this.supabase
-    .from('surveys')
-    .insert({
-      title: surveyDto.title,
-      description: surveyDto.description,
-      expiry_date: surveyDto.expiry_date,
-      category: surveyDto.category
-    })
-    .select('id')
-    .single();
+    const { id: surveyId, error: surveyError } = await this.addNewSurvey({ title: surveyDto.title, description: surveyDto.description, expiry_date: surveyDto.expiry_date, category: surveyDto.category });
+    if (surveyError) return;
 
-  if (surveyError || !insertedSurvey) {
-    console.error('Error storing new survey:', surveyError);
-    return;
-  }
+    for (const question of surveyDto.questions) {      
+      const questionId = await this.addNewQuestion({ question: question.question, multiple_options: question.multiple_options, survey_id: surveyId });
+      const options = this.mapSurveyFormOptions(question, questionId);
 
-  const surveyId = insertedSurvey.id;
-
-  for (const question of surveyDto.questions) {
-    const { data: insertedQuestion, error: questionError } = await this.supabase
-      .from('questions')
-      .insert({
-        question: question.question,
-        multiple_options: question.multiple_options,
-        survey_id: surveyId
-      })
-      .select('id')
-      .single();
-
-    if (questionError || !insertedQuestion) {
-      console.error('Error adding new question:', questionError);
-      return;
-    }
-
-    const questionId = insertedQuestion.id;
-
-    const options = question.options.map(option => ({
-      question_id: questionId,
-      option_text: option.option_text,
-      option_selected: option.option_selected
-    }));
-
-    const { error: optionError } = await this.supabase
-      .from('options')
-      .insert(options);
-
-    if (optionError) {
-      console.error('Error adding new options:', optionError);
-      return;
+      await this.addNewOptions(options);
     }
   }
-}
 
-  private buildSurveyCreateDto(surveyForm: SurveyFormValue): SurveyCreateDto {
+  /**
+   * This function maps the survey form data to a SurveyCreateDto object. It takes the survey form value as input and constructs a DTO that can 
+   * be used for creating a new survey in the database.
+   * @param surveyForm - The survey form value containing the survey details and questions.
+   * @returns - A SurveyCreateDto object containing the mapped survey data.
+   */
+  private mapSurveyFormToCreateDto(surveyForm: SurveyFormValue): SurveyCreateDto {
     return {
       title: surveyForm.survey_title,
       description: surveyForm.description,
@@ -252,43 +199,73 @@ export class SupabaseService {
     };
   }
 
-  async addNewSurvey(survey: Survey) {
-    const { data, error } = await this.supabase
+  /**
+   * This furnction maps the options from the survey form to an array of OptionCreateDto objects. It takes a question object and its corresponding
+   * question ID as input and constructs an array of DTOs that can be used for creating new options in the database.
+   * @param question - The question object containing the options to be mapped.
+   * @param questionId - The ID of the question to which the options belong.
+   * @returns - An array of OptionCreateDto objects containing the mapped option data.
+   */
+  private mapSurveyFormOptions(question: { options: { option_text: string; option_selected?: boolean }[] }, questionId: number) {
+    return question.options.map(option => ({
+      question_id: questionId,
+      option_text: option.option_text,
+      option_selected: option.option_selected || false
+    }));
+  }
+
+  /**
+   * This function adds a new survey to the Supabase database. It takes a survey object containing the title, description, expiry date, and category,
+   * and inserts it into the 'surveys' table. If the insertion is successful, it logs the new survey's ID; otherwise, it logs an error.
+   * @param survey - An object containing the survey details (title, description, expiry date, and category) to be added to the database.
+   * @returns - A promise that resolves to an object containing the new survey's ID and any error that occurred during the insertion.
+   */
+  async addNewSurvey(survey: { title: string; description?: string; expiry_date?: string; category: string }) {
+    const { data: insertedSurvey, error: surveyError } = await this.supabase
       .from('surveys')
       .insert(survey)
       .select('id')
       .single();
-    if (error) {
-      console.error('Error storing new survey:', error);
+    if (surveyError || !insertedSurvey) {
+      console.error('Error storing new survey:', surveyError);
     } else {
-      console.log('New survey stored:', data);
+      console.log('New survey stored:', insertedSurvey);
     }
-    return data?.id;
+    return { id: insertedSurvey?.id, error: surveyError };
   }
 
-  async addNewQuestion(question: Question) {
-    const { data, error } = await this.supabase
+  /**
+   * This function adds a new question to the Supabase database. It takes a question object containing the question text, multiple options flag,
+   * and survey ID, and inserts it into the 'questions' table. If the insertion is successful, it logs the new question's ID; otherwise, it logs an error.
+   * @param questionObj - An object containing the question details (question text, multiple options flag, and survey ID) to be added to the database.
+   * @returns - A promise that resolves to the new question's ID if the insertion is successful, or undefined if there was an error.
+   */
+  async addNewQuestion(questionObj: { question: string; multiple_options: boolean; survey_id: number }) {
+    const { data: insertedQuestion, error } = await this.supabase
       .from('questions')
-      .insert(question)
+      .insert(questionObj)
       .select('id')
       .single();
     if (error) {
       console.error('Error adding new question:', error);
     } else {
-      console.log('New question added:', data);
+      console.log('New question added:', insertedQuestion);
     }
 
-    return data?.id;
+    return insertedQuestion?.id;
   }
 
-  async addNewOptions(options: Option[]) {
-    const { data, error } = await this.supabase
+  /**
+   * This function adds new options to the Supabase database. It takes an array of OptionCreateDto objects and inserts them into the 'options' table.
+   * If the insertion is successful, it logs the added options; otherwise, it logs an error.
+   * @param options - An array of OptionCreateDto objects containing the options to be added to the database.
+   */
+  async addNewOptions(options: OptionCreateDto[]) {
+    const { error: optionError } = await this.supabase
       .from('options')
       .insert(options);
-    if (error) {
-      console.error('Error adding new options:', error);
-    } else {
-      console.log('New options added:', data);
+    if (optionError) {
+      console.error('Error adding new options:', optionError);
     }
   }
 
