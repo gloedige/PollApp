@@ -1,4 +1,4 @@
-import { Component, signal, inject, Renderer2 } from '@angular/core';
+import { Component, inject, Renderer2 } from '@angular/core';
 import { SupabaseService } from '../services/supabase-service';
 import { DOCUMENT } from '@angular/common';
 import { Button } from '../../shared/components/button/button';
@@ -7,24 +7,7 @@ import { DialogQuestionOptionBlock } from '../components/dialog-question-option-
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import { SurveyService } from '../services/survey-service';
 import { getValidationMessage } from '../../shared/utils/validation-messages.util';
-
-type OptionGroup = FormGroup<{
-  text: FormControl<string>
-}>;
-
-type QuestionGroup = FormGroup<{
-  title: FormControl<string>;
-  multiple: FormControl<boolean>;
-  options: FormArray<OptionGroup>;
-}>;
-
-type SurveyForm = FormGroup<{
-  survey_title: FormControl<string>;
-  description: FormControl<string>;
-  expiry_date: FormControl<string>;
-  category: FormControl<string>;
-  questions: FormArray<QuestionGroup>;
-}>;
+import { SurveyForm, QuestionGroup } from '../interfaces/survey-form';
 
 @Component({
   selector: 'app-survey-dialog',
