@@ -30,9 +30,8 @@ export class SurveyDetail {
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
 
   /**
-   * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific 
-   * styles for the survey detail page. It also retrieves the active survey ID using the getActiveSurveyId() method and 
-   * logs it to the console for debugging purposes.
+   * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
+   * It also fetches all questions and options related to the active survey from the database.
    * @returns - void
    */
   async ngOnInit(): Promise<void> {

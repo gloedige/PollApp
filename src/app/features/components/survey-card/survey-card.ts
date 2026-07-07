@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal, inject } from '@angular/core';
+import { Component, Input, signal, inject, input } from '@angular/core';
 import { Survey } from '../../interfaces/survey';
 import {RouterLink} from "@angular/router";
 import { SurveyService } from '../../services/survey-service';
@@ -11,9 +11,8 @@ import { SurveyService } from '../../services/survey-service';
   styleUrl: './survey-card.scss',
 })
 export class SurveyCard {
-  @Input({required: true}) survey!: Survey;
-  @Input() showsEndingSoonCard = false;
-  readonly activeSurveyId = signal<number | null>(null);
+  readonly survey = input.required<Survey>();
+  readonly showsEndingSoonCard = input<boolean>(false);
   surveyService = inject(SurveyService);
 
   /**
@@ -21,12 +20,12 @@ export class SurveyCard {
    * @returns - The number of days until the survey expires, or null if there is no expiry date.
    */
   private getDaysUntilExpiry(): number | null {
-    if (!this.survey.expiry_date) {
+    if (!this.survey().expiry_date) {
       return null;
     }
     const today = new Date();
-    const expiryDate = new Date(this.survey.expiry_date);
-    const timeDiff = expiryDate.getTime() - today.getTime();
+    const expiryDate = this.survey().expiry_date ? new Date(this.survey().expiry_date!) : null;
+    const timeDiff = expiryDate ? expiryDate.getTime() - today.getTime() : 0;
     return Math.ceil(timeDiff / (1000 * 3600 * 24));
   }
 
@@ -79,10 +78,19 @@ export class SurveyCard {
     return daysUntilExpiry !== null && daysUntilExpiry < 0;
   }
 
-  // TODO: probably the id has to be passed as routing link parameter to the survey detail page, so that the survey detail component can fetch the corresponding survey data based on the id
-  onSurveyClick(surveyId: number) {
-    console.log(`Survey with ID ${surveyId} clicked.`);
-    this.surveyService.surveyDetail.set(this.survey);
-    // this.activeSurveyId.set(surveyId);
+  /**
+   * This getter returns a boolean indicating whether the survey detail page can be opened. It checks if the survey is not in the list of past surveys.
+   * @returns - True if the survey detail page can be opened, false otherwise.
+   */
+  get canOpenDetail(): boolean {
+    return this.surveyService.pastSurveys().find(survey => survey.id === this.survey().id) === undefined;
+  }
+
+  /**
+   * This function is called when the survey card is clicked. It sets the survey detail in the SurveyService to the current survey, allowing the survey detail 
+   * page to display the correct survey information.
+   */
+  onSurveyClick() {
+    this.surveyService.surveyDetail.set(this.survey());
   }
 }
