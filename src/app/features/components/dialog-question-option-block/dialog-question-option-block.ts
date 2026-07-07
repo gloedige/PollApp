@@ -1,4 +1,4 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, output } from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
@@ -25,6 +25,7 @@ export class DialogQuestionOptionBlock {
   questionIndex = input<number>(0);
   initialOptionCount = input<number>(0);
   optionCount: number = 0;
+  maxOptionCountReached = output<boolean>();
   
   constructor(private controlContainer: ControlContainer) {}
 
@@ -80,8 +81,10 @@ export class DialogQuestionOptionBlock {
   }
 
   /**
-   * This function adds a new option to the formOptions FormArray. It creates a new FormGroup for the option with a text FormControl and 
-   * pushes it to the formOptions array. This allows users to dynamically add options to a question in the survey dialog.
+   * This function adds a new option to the options FormArray of the current question. It checks if the current option count is less than the 
+   * maximum number of options allowed. If so, it increments the option count and pushes a new FormGroup for the option to the options array.
+   * If the option count reaches the maximum number of options, it emits an event indicating that the maximum option count has been reached.
+   * @returns void
    */
   addOption(): void {
     if (this.optionCount < this.maximumNumberOfOptions) {
@@ -91,6 +94,9 @@ export class DialogQuestionOptionBlock {
           text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
         })
       );
+    }
+    if (this.optionCount === this.maximumNumberOfOptions) {
+      this.maxOptionCountReached.emit(true);
     }
   }
 

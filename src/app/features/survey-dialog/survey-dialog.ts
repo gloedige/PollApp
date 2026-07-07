@@ -46,6 +46,10 @@ export class SurveyDialog {
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   readonly optionCountDialog = signal<number>(0);
+  showOverlay = signal<boolean>(false);
+  private pendingPublishCleanup = false;
+  overlayMessage = signal<string>('');
+  overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -119,12 +123,8 @@ export class SurveyDialog {
     console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
-      this.surveyForm.reset();
-      this.questions.clear();
-      this.addQuestion();
-      this.submitted.set(false);
-      this.surveyService.closeSurveyDialog();
-      this.renderer.removeClass(this.document.body, 'noscroll');
+      this.pendingPublishCleanup = true;
+      this.openOverlay(0);
     }
   }
 
@@ -164,5 +164,35 @@ export class SurveyDialog {
     this.questions.clear();
     this.addQuestion();
     this.renderer.removeClass(this.document.body, 'noscroll');
+  }
+
+  /**
+   * This function opens an overlay message based on the provided message index. It checks if the index is valid and sets the overlay message
+   * accordingly. It also sets the showOverlay signal to true, making the overlay visible to the user.
+   * @param messageIndex - The index of the message to be displayed in the overlay. It should correspond to an entry in the overlayMessageText array.
+   */
+  openOverlay(messageIndex: number) {
+    if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
+      this.overlayMessage.set(this.overlayMessageText[messageIndex]);
+      this.showOverlay.set(true);
+    }
+  }
+
+  /**
+   * This function closes the overlay message by setting the showOverlay signal to false, making the overlay invisible to the user.
+   * It is typically called when the user interacts with the overlay's close button or when the overlay needs to be dismissed programmatically.
+   */
+  closeOverlay() {
+    this.showOverlay.set(false);
+
+    if (this.pendingPublishCleanup) {
+      this.pendingPublishCleanup = false;
+      this.surveyForm.reset();
+      this.questions.clear();
+      this.addQuestion();
+      this.submitted.set(false);
+      this.surveyService.closeSurveyDialog();
+      this.renderer.removeClass(this.document.body, 'noscroll');
+    }
   }
 }

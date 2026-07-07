@@ -78,7 +78,8 @@
                         <app-dialog-question-option-block 
                             [formGroupName]="i"
                             [questionIndex] = "i"
-                            [initialOptionCount]="optionCountDialog()">
+                            [initialOptionCount]="optionCountDialog()"
+                            (maxOptionCountReached)="openOverlay(1)">
                         </app-dialog-question-option-block>
                     }
                     <div class="dialog-container-form__add-question-button-container">
@@ -103,5 +104,11 @@
                 </app-button>
             </footer>
         </form>
+    </div>
+    <div class="dialog-overlay" [class.dialog-overlay--visible]="showOverlay()">
+        <span>{{ overlayMessage() }}</span>
+        <button aria-label="Close overlay" (click)="closeOverlay()">
+            <img src="/assets/icons/close_icon_purple.png" alt="Close overlay">
+        </button>
     </div>
 </div>

@@ -248,6 +248,51 @@
     color: colors.$primary_orange;
 }
 
+.dialog-overlay{
+    position: fixed;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    background-color: colors.$light_pastel;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 102;
+    padding: 14px 26px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-top-right-radius: 50px;
+    gap: 15px;
+    max-width: 300px;
+    transform: translateY(50vh);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    opacity: 0;
+
+    &--visible{
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);   
+    }
+
+    span{
+        color: colors.$dark_purple;
+        font-family: var(--font-family-headlines);
+        font-size: 1.5rem;
+    }
+
+    button{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 5px 0;
+
+        img{
+            width: 24px;
+            height: 24px;
+        }
+    }
+}
+
 @media (max-height: 950px) {
     .dialog-container {
         max-height: 700px;
