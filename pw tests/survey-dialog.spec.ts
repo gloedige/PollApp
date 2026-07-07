@@ -398,5 +398,8 @@ test.describe('Survey Dialog – complete valid form', () => {
 
     // Close the overlay
     await clickCloseOverlay(dialog);
+
+    // Assert dialog is closed after overlay is closed
+    await expect(dialog).toHaveAttribute('style', /display:\s*none/);
   });
 });
