@@ -36,10 +36,36 @@ export class SurveyService {
     const todayStart = this.getStartOfDayTimestamp(new Date());
     const threeDaysLaterStart = this.getStartOfDayTimestamp(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000));
 
-    return this.surveys().filter(survey => {
+    const endingSurveys =  this.surveys().filter(survey => {
       if (!survey.expiry_date) return false;
       const expiryStart = this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date));
       return expiryStart >= todayStart && expiryStart <= threeDaysLaterStart;
+    });
+    const orderedSurveys = this.orderSurveysByExpiryDate(endingSurveys);
+    return orderedSurveys;
+  }
+  
+  /**
+   * This function takes a Date object and returns the timestamp for the start of that day (at 00:00:00). It is used to normalize 
+   * dates for comparison purposes.
+   * @param date - The Date object for which to get the start of day timestamp.
+   * @returns The timestamp representing the start of the given day.
+   */
+  private getStartOfDayTimestamp(date: Date): number {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  }
+
+  /**
+   * This function orders an array of surveys by their expiry date. It handles both date-only strings (in the format "YYYY-MM-DD")
+   * and full date strings.
+   * @param surveys - The array of surveys to order.
+   * @returns An array of surveys ordered by their expiry date.
+   */
+  private orderSurveysByExpiryDate(surveys: Survey[]): Survey[] {
+    return surveys.sort((a, b) => {
+      const dateA = a.expiry_date ? this.parseSurveyDate(a.expiry_date).getTime() : 0;
+      const dateB = b.expiry_date ? this.parseSurveyDate(b.expiry_date).getTime() : 0;
+      return dateA - dateB;
     });
   }
 
@@ -61,22 +87,12 @@ export class SurveyService {
    * before the current date.
    * @returns An array of surveys that have already expired.
    */
-  filterPastSurveys() {
+  private filterPastSurveys() {
     const todayStart = this.getStartOfDayTimestamp(new Date());
     return this.surveys().filter(survey => {
       if (!survey.expiry_date) return false;
       return this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) < todayStart;
     });
-  }
-
-  /**
-   * This function takes a Date object and returns the timestamp for the start of that day (at 00:00:00). It is used to normalize 
-   * dates for comparison purposes.
-   * @param date - The Date object for which to get the start of day timestamp.
-   * @returns The timestamp representing the start of the given day.
-   */
-  private getStartOfDayTimestamp(date: Date): number {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
   }
 
   /**
