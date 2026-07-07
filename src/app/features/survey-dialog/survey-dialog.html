@@ -77,7 +77,8 @@
                     @for (questionGroup of questions.controls; track $index; let i = $index) {
                         <app-dialog-question-option-block 
                             [formGroupName]="i"
-                            [questionIndex] = "i">
+                            [questionIndex] = "i"
+                            [initialOptionCount]="optionCountDialog()">
                         </app-dialog-question-option-block>
                     }
                     <div class="dialog-container-form__add-question-button-container">

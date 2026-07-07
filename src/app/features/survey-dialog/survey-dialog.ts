@@ -1,4 +1,4 @@
-import { Component, inject, Renderer2 } from '@angular/core';
+import { Component, inject, Renderer2, signal } from '@angular/core';
 import { SupabaseService } from '../services/supabase-service';
 import { DOCUMENT } from '@angular/common';
 import { Button } from '../../shared/components/button/button';
@@ -45,6 +45,7 @@ export class SurveyDialog {
   minDate = new Date().toISOString().split('T')[0];
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
+  readonly optionCountDialog = signal<number>(0);
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -89,6 +90,7 @@ export class SurveyDialog {
    */
   ngOnInit() {
     this.addQuestion();
+    this.optionCountDialog.set(this.questions.at(0).get('options')?.value.length || 0);
   }
 
   /**

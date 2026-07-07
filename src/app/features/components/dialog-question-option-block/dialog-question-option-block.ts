@@ -6,24 +6,7 @@ import { FormArray, FormGroup, FormControl, ReactiveFormsModule, ControlContaine
 import { SurveyService } from '../../services/survey-service';
 import { getValidationMessage } from '../../../shared/utils/validation-messages.util';
 
-type QuestionDraft = {
-  clientId: string;
-  id?: string;
-  text: string;
-  options: OptionDraft[];
-};
-
-type OptionDraft = {
-  clientId: string;
-  id?: string;
-  questionClientId: string;
-  questionId?: string;
-  text: string;
-};
-
 type OptionGroup = FormGroup<{ text: FormControl<string> }>;
-
-
 
 @Component({
   selector: 'app-dialog-question-option-block',
@@ -36,11 +19,12 @@ export class DialogQuestionOptionBlock {
   questionNumber: number = 0;
   questionTitle: string = '';
   order_letter_array: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  readonly minimumNumberOfOptions = 2;
-  readonly nextOptionIndex = this.minimumNumberOfOptions;
+  readonly maximumNumberOfOptions = 6;
   readonly surveyServiceProvider = inject(SurveyService);
 
-  questionIndex = input<number>(0); // TODO: wird aktuell über questionNumber gesetzt
+  questionIndex = input<number>(0);
+  initialOptionCount = input<number>(0);
+  optionCount: number = 0;
   
   constructor(private controlContainer: ControlContainer) {}
 
@@ -100,62 +84,22 @@ export class DialogQuestionOptionBlock {
    * pushes it to the formOptions array. This allows users to dynamically add options to a question in the survey dialog.
    */
   addOption(): void {
-    this.formOptions.push(
-      new FormGroup({
-        text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
-      })
-    );
+    if (this.optionCount < this.maximumNumberOfOptions) {
+      this.optionCount = this.optionCount + 1;
+      this.formOptions.push(
+        new FormGroup({
+          text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+        })
+      );
+    }
   }
-
-  question: QuestionDraft = {
-    clientId: '',
-    text: '',
-    options: []
-  };
 
   /**
    * This function is called when the component is initialized. It retrieves the next question number, creates a new client ID for 
    * the question, and initializes the default options for the question.
    */
   ngOnInit() {
-    this.getNextQuestionNumber();
-    this.question.clientId = this.createNewClientId();
-    // this.initializeDefaultOptions();
-  }
-
-  /**
-   * This function generates a new client ID using the crypto.randomUUID() method, which creates a unique identifier for the question. 
-   * This ID is used to uniquely identify each question within the survey.
-   * @returns A unique client ID for the question.
-   */
-  createNewClientId() {
-    return crypto.randomUUID();
-  }
-
-  /**
-   * This function initializes the default options for a question. It creates a specified number of options (defined by minimumNumberOfOptions)
-   * and adds them to the question's options array. Each option is assigned a unique client ID and is associated with the question's client ID.
-   * The text for each option is initialized as an empty string.
-    * @returns - void
-   */
-  initializeDefaultOptions() {
-    for (let index = 0; index < this.minimumNumberOfOptions; index++) {
-      const newOption: OptionDraft = {
-        clientId: this.createNewClientId(),
-        questionClientId: this.question.clientId,
-        text: ''
-      };
-      this.question.options.push(newOption);
-    }
-  }
-
-  /**
-   * This function increments the question number and returns the next question number.
-   * @returns The next question number.
-   */
-  getNextQuestionNumber() {
-    this.questionNumber++;
-    return this.questionNumber;
+    this.optionCount = this.initialOptionCount();
   }
 
   /**
