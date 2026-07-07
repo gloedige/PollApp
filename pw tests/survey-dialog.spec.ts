@@ -18,6 +18,12 @@ async function clickPublish(dialog: ReturnType<Page['locator']>) {
   await dialog.locator('button.button__primary').click();
 }
 
+async function clickCloseOverlay(dialog: ReturnType<Page['locator']>) {
+  const overlayCloseButton = dialog.locator('.dialog-overlay button[aria-label="Close overlay"]');
+  await overlayCloseButton.click();
+  await expect(dialog.locator('.dialog-overlay')).not.toHaveClass(/dialog-overlay--visible/);
+}
+
 // ─── Validation on empty submit ──────────────────────────────────────────────
 
 test.describe('Survey Dialog – validation on empty form submit', () => {
@@ -386,5 +392,11 @@ test.describe('Survey Dialog – complete valid form', () => {
     ).toHaveText('');
     await expect(dialog.locator('.dialog-option-error-message__text').nth(0)).toHaveText('');
     await expect(dialog.locator('.dialog-option-error-message__text').nth(1)).toHaveText('');
+
+    // Assert the overlay is visible after submission
+    await expect(dialog.locator('.dialog-overlay')).toHaveClass(/dialog-overlay--visible/);
+
+    // Close the overlay
+    await clickCloseOverlay(dialog);
   });
 });
