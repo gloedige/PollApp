@@ -1,8 +1,7 @@
 <a 
-    class="survey-card" 
-    [routerLink]="canOpenDetail ? ['/detail', survey().id] : null" 
+    class="survey-card"  
     [class.survey-card--ending-soon]="showsEndingSoonCard()" 
-    (click)="canOpenDetail ? onSurveyClick() : $event.preventDefault()"
+    (click)="canOpenDetail ? onSurveyClick($event) : $event.preventDefault()"
     [attr.aria-disabled]="!canOpenDetail"
     [attr.tabindex]="canOpenDetail ? 0 : -1">
     <div class="survey-card__header">

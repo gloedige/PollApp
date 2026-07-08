@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal, inject, input } from '@angular/core';
 import { Survey } from '../../interfaces/survey';
-import {RouterLink} from "@angular/router";
+import {Router} from "@angular/router";
 import { SurveyService } from '../../services/survey-service';
 
 @Component({
   selector: 'app-survey-card',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './survey-card.html',
   styleUrl: './survey-card.scss',
 })
@@ -14,6 +14,7 @@ export class SurveyCard {
   readonly survey = input.required<Survey>();
   readonly showsEndingSoonCard = input<boolean>(false);
   surveyService = inject(SurveyService);
+  private router = inject(Router);
 
   /**
    * This function calculates the number of days until the survey expires based on the current date and the survey's expiry date.
@@ -90,7 +91,13 @@ export class SurveyCard {
    * This function is called when the survey card is clicked. It sets the survey detail in the SurveyService to the current survey, allowing the survey detail 
    * page to display the correct survey information.
    */
-  onSurveyClick() {
+  onSurveyClick(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (!this.canOpenDetail) {
+      return;
+    }
     this.surveyService.surveyDetail.set(this.survey());
+    this.router.navigate(['/detail', this.survey().id]);
   }
 }

@@ -7,14 +7,21 @@
             [buttonType]="'primary'" 
             [text]="'Create survey'"
             [type]="'button'"
-            (click)="this.openDialog()"></app-button>
+            (click)="this.openDialog()"
+            class="survey-detail-header__create-survey-button">
+        </app-button>
     </header>
     <div class="survey-detail-shell">
         @if (survey(); as survey) {
         <section class="survey-detail-container">
             <div class="survey-detail-container__wrapper">
                 <div class="survey-detail-header">
-                    <p class="survey-detail-header__state">Draft</p>
+                    <div class="survey-detail-header__state-close-icon-container">
+                        <p class="survey-detail-header__state">Draft</p>
+                        <a href="/dashboard" class="survey-detail-header__close-icon">
+                            <img src="/assets/icons/close_icon_purple.png" alt="close icon">
+                        </a>
+                    </div>
                     <div class="survey-detail-header__expiry-date-category-container">
                         <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date}}</p>
                         <p class="survey-detail-header__category">Category: {{survey.category}}</p>

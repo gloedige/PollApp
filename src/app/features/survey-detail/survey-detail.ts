@@ -7,6 +7,7 @@ import { QuestionResultBlock } from '../components/question-result-block/questio
 import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SurveyService } from '../services/survey-service';
 import { SupabaseService } from '../services/supabase-service';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-survey-detail',
@@ -16,6 +17,7 @@ import { SupabaseService } from '../services/supabase-service';
 })
 export class SurveyDetail {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   readonly loadingDone = signal(false);
@@ -28,6 +30,11 @@ export class SurveyDetail {
   dbService = inject(SupabaseService);
   readonly questions = this.dbService.questions;
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
+  surveyId: number | null = null;
+
+  constructor() {
+    this.surveyId = Number(this.route.snapshot.paramMap.get('id'));
+  }
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
