@@ -8,7 +8,7 @@
         class="question-input" 
         formControlName="text"
         [class.invalid_input]="optionTextInvalid" >
-    <button class="question__delete-button" type="button" aria-label="Clear answer text" (click)="surveyServiceProvider.clearSurveyFormInputField('text', optionId)">
+    <button class="question__delete-button" type="button" aria-label="Clear answer text" (click)="removeOption(optionIndex(), questionIndex())">
         <img src="/assets/icons/delete-icon-default.png" class="question__delete-button--icon-default" alt="Trash bin icon for deleting survey answer option">
         <img src="/assets/icons/delete-icon-hover.png" class="question__delete-button--icon-hover" alt="Trash bin icon highlighted for deleting survey answer option">
     </button>

@@ -1,5 +1,5 @@
 import { Component, inject, input} from '@angular/core';
-import { ControlContainer, FormGroupName, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ControlContainer, FormGroupName, FormGroup, FormControl, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { getValidationMessage } from '../../../shared/utils/validation-messages.util';
 import { SurveyService } from '../../services/survey-service';
 
@@ -15,6 +15,7 @@ export class DialogQuestionOption {
   optionIndex = input.required<number>();
   questionIndex = input.required<number>();
   readonly surveyServiceProvider = inject(SurveyService);
+  optionMinimumIndex = 1;
 
   constructor(private controlContainer: ControlContainer) {}
 
@@ -49,5 +50,25 @@ export class DialogQuestionOption {
     const shouldShow = !!control && (control.touched || this.surveyServiceProvider.submitted());
     if (!shouldShow) return null;
     return getValidationMessage(control, controlName);
+  }
+
+  /**
+   * This function removes an option from the options FormArray of the current question. It takes the option index and question index as parameters,
+   * retrieves the corresponding question group and options array, and removes the option at the specified index. If the option index is less than or equal to 
+   * the minimum index, it marks the option text control as untouched and clears its value instead of removing it.
+   * @param optionIndex - The index of the option to be removed from the options FormArray.
+   * @param questionIndex - The index of the question group containing the options FormArray from which the option will be removed.
+   */
+  removeOption(optionIndex: number, questionIndex: number): void {
+    const questions = (this.controlContainer as any).formDirective.form.get('questions') as FormArray;
+    const questionGroup = questions.at(questionIndex) as FormGroup | null;
+    const optionsArray = questionGroup?.get('options') as FormArray<FormGroup>;
+    const optionGroup = optionsArray.at(optionIndex) as FormGroup;
+    if (optionIndex <= this.optionMinimumIndex) {
+      optionGroup?.get('text')?.markAsUntouched();
+      optionGroup?.get('text')?.setValue('');
+      return;
+    }
+    optionsArray.removeAt(optionIndex);
   }
 }
