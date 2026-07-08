@@ -13,7 +13,7 @@ h1, h2, h3{
 }
 
 h1{
-    font-size: 6.25rem;
+    font-size: clamp(3.875rem, 2.991rem + 4.417vw, 6.25rem);;
     line-height: 89px;
     font-weight: 400;
     margin: 0;
@@ -62,6 +62,10 @@ h1{
         transition: opacity 0.5s;
         opacity: 0;
         pointer-events: none;
+
+    &--mobile{
+        display: none;
+    }
     }
 }
 
@@ -78,6 +82,13 @@ h1{
         font-size: 1.5rem;
         padding: 24px 46px 40px 0;
         margin: 0;
+    }
+
+    &__button-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
     }
 }
 
@@ -180,5 +191,42 @@ h1{
         justify-content: center;
         align-items: flex-start;
         gap: 24px;
+    }
+}
+
+@media (max-width: 1220px) {
+    .hero-section{
+        // flex-direction: column;
+        // justify-content: center;
+        // align-items: flex-start;
+    }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    h1{
+        line-height: 50px;
+    }
+
+    .hero-section{
+        margin: 32px auto 0 auto;
+    }
+    .hero-img-container{
+       display: none;
+    }
+    .headline-container{
+        &__hero-description{
+            padding: 0 0 54px 0;
+        }
+        &__button-container{
+            justify-content: center;
+        }
+    }
+    .hero-img-container__hover-img--mobile{
+        display: block;
+        max-width: 100%;
+        transition: opacity 0.5s;
+        opacity: 1;
+        pointer-events: none;
+        margin: 24px auto;
     }
 }

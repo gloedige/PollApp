@@ -133,3 +133,20 @@
 .isActive{
     background-color: colors.$light_orange;
 }
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .button{
+        &__primary{
+            background-color: var(--button-primary-hover-bg, #{colors.$light_orange});
+            
+            &--icon{
+                width: 20px;
+                opacity: 1;
+                margin-left: 12px;
+                transform: translateX(0);
+                object-fit: contain;
+            }
+        }
+    }
+
+}
