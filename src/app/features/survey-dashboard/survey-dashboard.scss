@@ -106,7 +106,7 @@ h1{
     &__title{
         color: colors.$light_orange;
         font-family: var(--font-family-headlines);
-        font-size: 4.5rem;
+        font-size: clamp(3.375rem, 2.956rem + 2.093vw, 4.5rem);
         font-weight: 400;
         line-height: 100%;
         margin: 0 auto;
@@ -122,7 +122,7 @@ h1{
     &__surveys{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        // justify-content: flex-start;
         gap: 32px;
         width: 100%;
         overflow-x: auto;
@@ -151,11 +151,10 @@ h1{
     }
 
     &__surveys-scroll {
-        width: calc(100% + 24px);
-        margin-right: -24px;
+        width: calc(100% + 20px);
         max-height: 455px;
         overflow-y: auto;
-        padding-right: 16px;
+        padding-right: 12px;
         box-sizing: border-box;
     }
 
@@ -202,7 +201,7 @@ h1{
     }
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 1023px) and (orientation: portrait) {
     h1{
         line-height: 50px;
     }
@@ -229,4 +228,54 @@ h1{
         pointer-events: none;
         margin: 24px auto;
     }
+
+    .ending-soon-section{
+        margin: 80px auto 0 auto;
+
+        &__description{
+            margin: 48px 0 16px 0;
+        }
+
+        &__surveys{
+            gap: 16px;
+            justify-content: flex-start;
+        }
+    }
+
+    .all-surveys-section{
+         &__surveys-scroll{
+            max-height: 100%;
+            width: 100%;
+            margin-right: 0;
+            padding-right: 0;
+        }
+
+    }
+
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+    .nav-bar{
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 48px;
+    
+        &__button-container{
+            gap: 16px;
+        }
+    }
+
+    .all-surveys-section{
+        margin: 40px auto 48px auto;
+        gap: 16px;
+
+        &__surveys{
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+       
+    }
+    
 }

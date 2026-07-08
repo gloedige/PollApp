@@ -7,7 +7,6 @@ import { Vote } from '../interfaces/vote';
   providedIn: 'root',
 })
 export class SurveyService {
-  surveyList = signal<Survey[]>([]);
   surveyDetail = signal<Survey | null>(null);
   selectedCategory = signal<string | null>(null);
   submitted = signal<boolean>(false);

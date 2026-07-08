@@ -1,5 +1,5 @@
 import { SurveyCard } from '../components/survey-card/survey-card';
-import { ChangeDetectionStrategy, Component, computed, signal, Input, inject, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, Renderer2 } from '@angular/core';
 import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
 import {DOCUMENT} from "@angular/common";

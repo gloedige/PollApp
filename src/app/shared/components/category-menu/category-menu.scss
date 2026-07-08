@@ -142,3 +142,11 @@
 .invalid_label{
     color: colors.$primary_orange;
 }
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .menu-container{
+        &__button{
+            padding: 0;
+        }
+    }
+}

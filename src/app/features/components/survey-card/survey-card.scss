@@ -77,3 +77,20 @@
         }
     }
 }
+
+@media (max-width: 767px) and (orientation: portrait) {
+    .survey-card{
+        &--ending-soon{
+            height: 233px;
+            width: 250px;
+            padding: 24px 16px;
+        }
+
+        &__title{
+            &--ending-soon{
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+}
