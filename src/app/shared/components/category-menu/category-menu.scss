@@ -78,14 +78,16 @@
             align-items: center;
             position: relative;
             width: 24px;
-            height: 24px;
+            height: 24px;            
         }
 
         &--default-img{
             position: absolute;
             max-width: 100%;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
-
+        
         &:not(&--is-open):hover &--default-img{
             opacity: 0;
         }
@@ -94,28 +96,24 @@
             position: absolute;
             max-width: 100%;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         &:not(&--is-open):hover &--hover-img,
         &--is-selected &--hover-img{
             opacity: 1;
         }
-
-        &--active-img{
-            position: absolute;
-            max-width: 100%;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
+        
         &--is-open &--default-img,
-        &--is-open &--hover-img{
+        &--is-open &--hover-img,
+        &--is-selected &--default-img{
             opacity: 0;
         }
-
-        &--is-open &--active-img{
+        
+        &--is-open &--hover-img,
+        &--is-selected &--hover-img{
             opacity: 1;
+            transform: rotate(180deg);
         }
     }
 
