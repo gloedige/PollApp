@@ -8,6 +8,7 @@ import { SurveyDialog } from '../survey-dialog/survey-dialog';
 import { SurveyService } from '../services/survey-service';
 import { SupabaseService } from '../services/supabase-service';
 import {ActivatedRoute} from "@angular/router";
+import { Survey } from '../interfaces/survey';
 
 @Component({
   selector: 'app-survey-detail',
@@ -26,7 +27,7 @@ export class SurveyDetail {
   numberOfQuestion: number = 0;
   order_letter: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   surveyService = inject(SurveyService);
-  survey = this.surveyService.surveyDetail;
+  survey = signal<Survey | null>(null);
   dbService = inject(SupabaseService);
   readonly questions = this.dbService.questions;
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
@@ -44,13 +45,14 @@ export class SurveyDetail {
   async ngOnInit(): Promise<void> {
     this.loadingDone.set(false);
     this.renderer.addClass(this.document.body, 'detail-page');
-    const surveyId = this.survey()?.id;
-    if (!surveyId) {
+    if (!this.surveyId) {
       this.loadingDone.set(true);
       return;
     }
-
-    await this.dbService.getAllQuestionsBySurveyId(surveyId);
+    await this.dbService.getSurveyById(this.surveyId).then(singleSurvey => {
+      this.survey.set(singleSurvey);
+    });
+    await this.dbService.getAllQuestionsBySurveyId(this.surveyId);
     await this.dbService.getAllOptions();
     this.loadingDone.set(true);
   }

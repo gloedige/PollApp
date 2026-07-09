@@ -29,6 +29,25 @@ export class SupabaseService {
   surveys = signal<Survey[]>([]);
 
   /**
+   * This function retrieves a survey by its ID from the Supabase database. It queries the 'surveys' table for a survey with 
+   * the specified ID and returns it. If there is an error during the fetch, it logs the error and returns null.
+   * @param surveyId - The ID of the survey to fetch.
+   * @returns - A promise that resolves to the survey object if found, or null if an error occurs.
+   */
+  async getSurveyById(surveyId: number): Promise<Survey | null> {
+    const { data: singleSurvey, error: ResponseError } = await this.supabase
+      .from('surveys')
+      .select('*')
+      .eq('id', surveyId)
+      .single();
+    if (ResponseError) {
+      console.error(`Error fetching survey with ID ${surveyId}:`, ResponseError);
+      return null;
+    }
+    return singleSurvey as Survey;
+  }
+
+  /**
    * This function retrieves all surveys from the Supabase database and updates the surveys signal with the fetched data.
    * It also subscribes to real-time changes for the surveys table.
    * @returns - A promise that resolves when the surveys are fetched and the subscription is set up.
