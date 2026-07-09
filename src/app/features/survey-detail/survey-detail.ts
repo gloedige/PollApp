@@ -1,6 +1,6 @@
 import { Component, inject, Renderer2, signal} from '@angular/core';
 import { Button } from "../../shared/components/button/button";
-import {DOCUMENT} from "@angular/common";
+import { DOCUMENT } from "@angular/common";
 import {Router} from "@angular/router";
 import { QuestionOptionBlock } from '../components/question-option-block/question-option-block';
 import { QuestionResultBlock } from '../components/question-result-block/question-result-block';
@@ -22,6 +22,7 @@ export class SurveyDetail {
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   readonly loadingDone = signal(false);
+  readonly showResults = signal(true);
   
   multipleOptions: boolean = false;
   numberOfQuestion: number = 0;
@@ -66,8 +67,6 @@ export class SurveyDetail {
     this.renderer.removeClass(this.document.body, 'detail-page');
     this.renderer.removeClass(this.document.body, 'noscroll');
   }
-
- 
 
   /**
    * This function checks if a question has multiple options based on the provided question ID. It updates the multipleOptions property
@@ -119,6 +118,14 @@ export class SurveyDetail {
   openDialog() {
     this.surveyService.openSurveyDialog();
     this.renderer.addClass(this.document.body, 'noscroll');
+  }
+
+  /**
+   * This function is called when the user wants to see the results of the survey. It toggles the showResults signal to either show 
+   * or hide the survey results.
+   */
+  toggleResults() {
+    this.showResults.set(!this.showResults());
   }
 
 }

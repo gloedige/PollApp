@@ -12,6 +12,8 @@ export class SurveyService {
   submitted = signal<boolean>(false);
   isSurveyDialogOpen = signal<boolean>(false);
   private readonly dbService = inject(SupabaseService);
+  readonly isMobile = signal<boolean>(false);
+  readonly mql = window.matchMedia('(max-width: 767px)');
   surveys = this.dbService.surveys;
 
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
@@ -23,10 +25,10 @@ export class SurveyService {
   readonly votesOfActiveSurvey = signal<Vote[]>([]);
 
   constructor() {
-    
+    this.isMobile.set(this.mql.matches);
   }
 
-    /**
+  /**
    * This function filters the surveys to find those that are ending soon. It checks if the expiry date of each survey 
    * is within the next three days.
    * @returns - An array of surveys that are ending soon.

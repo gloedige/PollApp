@@ -40,7 +40,7 @@ export class CategoryMenu {
    */
     toggleStateOfDropdownMenu(event: Event): void {
       this.isMenuOpen = !this.isMenuOpen;
-    event.preventDefault();
+      event.preventDefault();
   }
 
   /**
