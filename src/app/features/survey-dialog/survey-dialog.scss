@@ -61,7 +61,7 @@
 
     &__title{
         font-family: var(--font-family-headlines);
-        font-size: 3.375rem;
+        font-size: 3.5rem;
         line-height: 100%;
         font-weight: 400;
         margin: 0;
@@ -250,9 +250,6 @@
 
 .dialog-overlay{
     position: fixed;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
     background-color: colors.$light_pastel;
     display: flex;
     justify-content: center;
@@ -299,5 +296,39 @@
         overflow-y: auto;
 
         @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
+    }
+}
+
+@media (max-width: 767px) {
+    .form-detail-container{
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .dialog-container-form{
+        &__question-container{
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+    }
+
+    .dialog-container {
+        padding: 18px;
+        max-width: 100%;
+    }
+
+    .dialog-container-header__title {
+        font-size: 2rem;
+    }
+
+    .dialog-container-form__shell {
+        padding: 20px;
+    }
+
+    .form-detail-container__input-container--title-date-container,
+    .form-detail-container__input-container--description-container,
+    .form-detail-container__input-container--date-category-container {
+        flex-direction: column;
+        gap: 8px;
     }
 }

@@ -306,6 +306,10 @@
 
 @media (max-width: 767px){
     .survey-detail-header{
+        h1{
+            font-size: 3rem;
+            line-height: 42px;
+        }
         &__create-survey-button{
             display: none;
         }
