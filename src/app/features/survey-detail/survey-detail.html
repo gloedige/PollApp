@@ -23,7 +23,7 @@
                         </a>
                     </div>
                     <div class="survey-detail-header__expiry-date-category-container">
-                        <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date}}</p>
+                        <p class="survey-detail-header__expiry-date">Ends on {{survey.expiry_date | date:'shortDate':'+0200':localeId}}</p>
                         <p class="survey-detail-header__category">Category: {{survey.category}}</p>
                     </div>
                     <h1 class="survey-detail-header__title">{{survey.title}}</h1>

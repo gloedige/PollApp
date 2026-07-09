@@ -1,4 +1,4 @@
-import { Component, inject, Renderer2, signal} from '@angular/core';
+import { Component, inject, Renderer2, signal, LOCALE_ID } from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import { DOCUMENT } from "@angular/common";
 import {Router} from "@angular/router";
@@ -9,10 +9,11 @@ import { SurveyService } from '../services/survey-service';
 import { SupabaseService } from '../services/supabase-service';
 import {ActivatedRoute} from "@angular/router";
 import { Survey } from '../interfaces/survey';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-survey-detail',
-  imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog],
+  imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog, DatePipe],
   templateUrl: './survey-detail.html',
   styleUrl: './survey-detail.scss',
 })
@@ -23,6 +24,7 @@ export class SurveyDetail {
   private readonly document = inject(DOCUMENT);
   readonly loadingDone = signal(false);
   readonly showResults = signal(true);
+  readonly localeId = inject(LOCALE_ID);
   
   multipleOptions: boolean = false;
   numberOfQuestion: number = 0;
