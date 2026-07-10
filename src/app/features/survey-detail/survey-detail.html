@@ -1,7 +1,7 @@
 <div class="main_content_wrapper align-start body-color">
     <header>
         <a href="/dashboard">
-            <img src="/assets/images/logo_purple_dark.png" alt="Logo">
+            <img src="assets/images/logo_purple_dark.png" alt="Logo">
         </a>
         <app-button 
             [buttonType]="'primary'" 
@@ -19,7 +19,7 @@
                     <div class="survey-detail-header__state-close-icon-container">
                         <p class="survey-detail-header__state">Draft</p>
                         <a href="/dashboard" class="survey-detail-header__close-icon">
-                            <img src="/assets/icons/close_icon_purple.png" alt="close icon">
+                            <img src="assets/icons/close_icon_purple.png" alt="close icon">
                         </a>
                     </div>
                     <div class="survey-detail-header__expiry-date-category-container">
@@ -61,8 +61,8 @@
                 type="button">
                 {{showResults() ? 'Close results' : 'See results' }}
                 <div class="survey-results-container__button--arrow-container">
-                    <img src="/assets/icons/arrow_drop_down_open_default_purple.png" alt="Arrow Down" class="survey-results-container__button--default-img">
-                    <img src="/assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="survey-results-container__button--hover-img">
+                    <img src="assets/icons/arrow_drop_down_open_default_purple.png" alt="Arrow Down" class="survey-results-container__button--default-img">
+                    <img src="assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="survey-results-container__button--hover-img">
                 </div>
             </button>
             <section class="survey-results-container" [class.survey-results-container--collapsed]="surveyService.isMobile() ? !showResults() : false">
