@@ -107,6 +107,10 @@
         border-radius: 10px;
         background-color: colors.$secondary_orange;
     }
+
+    &__logo{
+        cursor: pointer;
+    }
 }
 
 .survey-detail-body{

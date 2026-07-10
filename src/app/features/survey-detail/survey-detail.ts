@@ -18,7 +18,7 @@ import {DatePipe} from "@angular/common";
   styleUrl: './survey-detail.scss',
 })
 export class SurveyDetail {
-  private readonly router = inject(Router);
+  readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);

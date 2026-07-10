@@ -1,6 +1,6 @@
 <div class="main_content_wrapper align-start body-color">
     <header>
-        <a href="/dashboard">
+        <a (click)="router.navigate(['/dashboard'])" class="survey-detail-header__logo">
             <img src="assets/images/logo_purple_dark.png" alt="Logo">
         </a>
         <app-button 
@@ -18,7 +18,7 @@
                 <div class="survey-detail-header">
                     <div class="survey-detail-header__state-close-icon-container">
                         <p class="survey-detail-header__state">Draft</p>
-                        <a href="/dashboard" class="survey-detail-header__close-icon">
+                        <a routerLink="/dashboard" class="survey-detail-header__close-icon">
                             <img src="assets/icons/close_icon_purple.png" alt="close icon">
                         </a>
                     </div>
