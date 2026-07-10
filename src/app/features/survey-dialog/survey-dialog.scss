@@ -8,12 +8,16 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100dvh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 24px 0;
+    overflow-y: auto;
     z-index: 100;
+
+    @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
 }
 
 .dialog-container{
@@ -32,9 +36,15 @@
 }
 .dialog-container-header{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
     padding: 0;
+
+    app-button{
+        --button-primary-bg: #{colors.$light_orange_transparent_1};
+        --button-primary-hover-bg: #{colors.$light_orange_transparent_2};
+        --button-primary-color: #{colors.$light_purple_3};
+    }
 
     &__state{
         color: colors.$gothic_purple;
@@ -47,16 +57,16 @@
         width: fit-content;
     }
 
-    &__headline-cancel-button-container{
+    &__headline-container{
         display: flex;
         justify-content: space-between;
-        align-items: end;
-
-        app-button{
-            --button-primary-bg: #{colors.$light_orange_transparent_1};
-            --button-primary-hover-bg: #{colors.$light_orange_transparent_2};
-            --button-primary-color: #{colors.$light_purple_3};
-        }
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    &__cancel-button{
+        display: flex;
+        align-items: flex-end;
     }
 
     &__title{
@@ -83,8 +93,6 @@
         border-radius: 5px;
         border-top-right-radius: 80px;
         gap: 24px;
-        max-height: 640px;
-        overflow-y: auto;
 
         @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
     }
@@ -174,13 +182,14 @@
     &__input-container{
         display: flex;
         flex-direction: row;
-        gap: 8px;
         align-items: center;
         flex-grow: 1;
+        gap: 8px;
 
         &--description{
             align-items: flex-start;
             max-height: 130px;
+            margin-top: 4px;
         }
         
     }
@@ -194,7 +203,6 @@
         &--description-container{
             display: flex;
             flex-direction: column;
-            gap: 4px;
             width: 100%;
         }
 
@@ -261,14 +269,14 @@
     border-top-right-radius: 50px;
     gap: 15px;
     max-width: 300px;
-    transform: translateY(50vh);
+    transform: translateY(100vh);
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     opacity: 0;
 
     &--visible{
         display: flex;
         opacity: 1;
-        transform: translateY(0);   
+        transform: translateY(50vh);   
     }
 
     span{
@@ -290,19 +298,10 @@
     }
 }
 
-@media (max-height: 950px) {
-    .dialog-container {
-        max-height: 700px;
-        overflow-y: auto;
-
-        @include mixins.scrollbar(width, colors.$dark_purple, colors.$light_orange, colors.$secondary_orange);
-    }
-}
-
 @media (max-width: 767px) {
     .form-detail-container{
         flex-direction: column;
-        gap: 24px;
+        gap: 4px;
 
         &__input-container{
             position: relative;
@@ -311,7 +310,7 @@
         &--description-container{
             width: 100%;
             position: relative;
-            gap: 8px;
+            gap: 0;
         }
 
         &__delete-button{
@@ -328,6 +327,9 @@
             flex-direction: column-reverse;
             gap: 8px;
         }
+        &__dummy{
+            min-height: 0;
+        }
     }
 
     .dialog-container-form{
@@ -335,19 +337,19 @@
             grid-template-columns: 1fr;
             gap: 24px;
         }
+        &__add-question-button-container{
+            justify-content: center;
+            margin: 0 0 40px 0;
+        }
     }
 
     .dialog-container {
-        padding: 18px;
+        padding: 40px 18px;
         max-width: 100%;
     }
 
-    .dialog-container-header__title {
-        font-size: 2rem;
-    }
-
     .dialog-container-form__shell {
-        padding: 20px;
+        padding: 10px;
     }
 
     .form-detail-container__input-container--title-date-container,
@@ -355,5 +357,13 @@
     .form-detail-container__input-container--date-category-container {
         flex-direction: column;
         gap: 8px;
+    }
+
+    .dialog-container-header{
+        padding: 0 7px;
+
+        &__cancel-button{
+            align-items: flex-start;
+        }
     }
 }

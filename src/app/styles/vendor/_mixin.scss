@@ -18,9 +18,11 @@
   color: $color;
   height: $height;
   padding-left: $padding-left;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-@mixin error-message-text($color, $font-family, $font-size: 0.75rem) {
+@mixin error-message-text($color, $font-family, $font-size: 1rem) {
   margin: 0;
   color: $color;
   font-family: $font-family;

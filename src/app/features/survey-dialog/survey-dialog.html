@@ -1,17 +1,19 @@
 <div class="dialog-background">
     <div class="dialog-container">
         <header class="dialog-container-header">
-            <p class="dialog-container-header__state">Draft</p>
-            <div class="dialog-container-header__headline-cancel-button-container">
-                <h2 class="dialog-container-header__title">Create a new survey</h2>
-                <app-button 
-                    [buttonType]="'secondary'" 
-                    [cancelNewSurvey]="true" 
-                    [text]="'Cancel'" 
-                    [hideIcon]="false"
-                    [type]="'reset'" 
-                    (click)="cancelSurveyCreation()"></app-button>
+            <div class="dialog-container-header__headline-container">
+                <p class="dialog-container-header__state">Draft</p>
+                <h2 class="dialog-container-header__title">Create new survey</h2>
             </div>
+            <app-button 
+                [buttonType]="'secondary'" 
+                [cancelNewSurvey]="true" 
+                [text]="surveyService.isMobile() ? '' : 'Cancel'" 
+                [hideIcon]="false"
+                [type]="'reset'" 
+                (click)="cancelSurveyCreation()"
+                class="dialog-container-header__cancel-button">
+            </app-button>
         </header>
         <form class="dialog-container-form" [formGroup]="surveyForm" (ngSubmit)="formSubmit()">
             <div class="dialog-container-form__shell">
@@ -39,7 +41,13 @@
                             <div class="form-detail-container--date-container">
                                 <label for="survey-expiry-date" class="dialog-container-form__label">Set end date <span class="dialog-container-form__label--optional">(optional)</span></label>
                                 <div class="form-detail-container__input-container">
-                                    <input id="survey-expiry-date" type="date" min="{{ minDate }}" class="dialog-container-form__input" formControlName="expiry_date">
+                                    <input 
+                                        id="survey-expiry-date" 
+                                        type="date" 
+                                        min="{{ minDate }}" 
+                                        class="dialog-container-form__input" 
+                                        formControlName="expiry_date"
+                                        onkeydown="return false">
                                     <button class="form-detail-container__delete-button" (click)="surveyService.clearSurveyFormInputField('expiry_date')" type="button" aria-label="Clear survey expiry date">
                                         <img src="/assets/icons/delete-icon-default.png" class="form-detail-container__delete-button--icon-default" alt="delete icon">
                                         <img src="/assets/icons/delete-icon-hover.png" class="form-detail-container__delete-button--icon-hover" alt="delete hover icon">

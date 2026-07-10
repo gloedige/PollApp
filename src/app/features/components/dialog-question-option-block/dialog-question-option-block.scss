@@ -112,7 +112,6 @@
                 colors.$primary_orange, 
                 var(--font-family-text-default)
             );
-            padding: 4px 0 0 0;
         }
 }
 
@@ -129,11 +128,14 @@
 
     .dialog-question-option-block-header{
         position: relative;
-        
+
         &__delete-button{
             position: absolute;
             top: -2px;
             right: 10px;
         }
+    }
+    .dialog-question-option-block-add-option-button-container{
+        padding: 0;
     }
 }
