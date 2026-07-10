@@ -303,6 +303,31 @@
     .form-detail-container{
         flex-direction: column;
         gap: 24px;
+
+        &__input-container{
+            position: relative;
+        }
+
+        &--description-container{
+            width: 100%;
+            position: relative;
+            gap: 8px;
+        }
+
+        &__delete-button{
+            position: absolute;
+            top: -30px;
+            right: 10px;
+        }
+
+        &--date-container{
+            width: 100%;
+        }
+
+        &--date-category-container{
+            flex-direction: column-reverse;
+            gap: 8px;
+        }
     }
 
     .dialog-container-form{

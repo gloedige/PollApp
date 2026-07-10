@@ -1,14 +1,22 @@
 @let optionId = 'question_' + questionIndex() + '_option_' + optionIndex();
 
 <div class="dialog-option-shell">
-    <label [attr.for]="optionId" class="question-title" [class.invalid_label]="optionTextInvalid">{{order_letter()}}.</label>
-    <input 
+    <label
+        [attr.for]="optionId" 
+        class="question-title" 
+        [class.invalid_label]="optionTextInvalid">{{order_letter()}}.
+    </label>
+    <input
         [id]="optionId" 
         type="text" 
         class="question-input" 
         formControlName="text"
         [class.invalid_input]="optionTextInvalid" >
-    <button class="question__delete-button" type="button" aria-label="Clear answer text" (click)="removeOption(optionIndex(), questionIndex())">
+    <button
+        class="question__delete-button" 
+        type="button" 
+        aria-label="Clear answer text" 
+        (click)="removeOption(optionIndex(), questionIndex())">
         <img src="/assets/icons/delete-icon-default.png" class="question__delete-button--icon-default" alt="Trash bin icon for deleting survey answer option">
         <img src="/assets/icons/delete-icon-hover.png" class="question__delete-button--icon-hover" alt="Trash bin icon highlighted for deleting survey answer option">
     </button>

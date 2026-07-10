@@ -69,3 +69,23 @@
 .invalid_label{
     color: colors.$primary_orange;
 }
+
+@media (max-width: 768px){
+    .dialog-option-shell{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        position: relative;
+    }
+    .question-title{
+        width: 100%;
+    }
+    .question-input{
+        width: 100%;
+    }
+    .question__delete-button{
+        position: absolute;
+        top: -2px;
+        right: 10px;
+    }
+}

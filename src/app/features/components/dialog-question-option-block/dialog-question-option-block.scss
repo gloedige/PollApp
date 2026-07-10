@@ -122,3 +122,18 @@
 .invalid_label{
     color: colors.$primary_orange;
 }
+@media (max-width: 768px){
+    .dialog-question-option-block-shell{
+        margin-bottom: 8px;
+    }
+
+    .dialog-question-option-block-header{
+        position: relative;
+        
+        &__delete-button{
+            position: absolute;
+            top: -2px;
+            right: 10px;
+        }
+    }
+}
