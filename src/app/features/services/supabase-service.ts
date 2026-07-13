@@ -16,7 +16,6 @@ export class SupabaseService {
   questions = signal<Question[]>([]);
   options = signal<Option[]>([]);
   votes = signal<Vote[]>([]);
-  private readonly alternativeExpiryDate = '2049-12-31';
 
   constructor() {
     this.supabase = createClient(
@@ -201,7 +200,7 @@ export class SupabaseService {
     return {
       title: surveyForm.survey_title,
       description: surveyForm.description,
-      expiry_date: surveyForm.expiry_date ? surveyForm.expiry_date : this.alternativeExpiryDate,
+      expiry_date: surveyForm.expiry_date ? surveyForm.expiry_date : null,
       category: surveyForm.category,
       questions: surveyForm.questions.map((question) => ({
         question: question.title,
@@ -233,7 +232,7 @@ export class SupabaseService {
    * @param survey - An object containing the survey details (title, description, expiry date, and category) to be added to the database.
    * @returns - A promise that resolves to an object containing the new survey's ID and any error that occurred during the insertion.
    */
-  async addNewSurvey(survey: { title: string; description?: string; expiry_date?: string; category: string }) {
+  async addNewSurvey(survey: { title: string; description?: string; expiry_date?: string | null; category: string }) {
     const { data: insertedSurvey, error: surveyError } = await this.supabase
       .from('surveys')
       .insert(survey)

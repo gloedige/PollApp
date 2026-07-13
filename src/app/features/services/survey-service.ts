@@ -18,10 +18,9 @@ export class SurveyService {
 
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
   surveyState = signal<'active' | 'past'>('active');
-  activeSurveys = computed(() => this.filterActiveSurveys());
   pastSurveys = computed(() => this.filterPastSurveys());
 
-  readonly visibleSurveys = computed(this.getFilterdSurveysByStateOrCategory.bind(this));
+  readonly visibleSurveys = computed(this.getFilteredSurveysByStateOrCategory.bind(this));
   readonly votesOfActiveSurvey = signal<Vote[]>([]);
 
   constructor() {
@@ -71,19 +70,6 @@ export class SurveyService {
   }
 
   /**
-   * This function filters the surveys to find those that are still active. It checks if the expiry date of each survey is 
-   * on or after the current date.
-   * @returns An array of surveys that are still active.
-   */
-  filterActiveSurveys() {
-    const todayStart = this.getStartOfDayTimestamp(new Date());
-    return this.surveys().filter(survey => {
-      if (!survey.expiry_date) return false;
-      return this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date)) >= todayStart;
-    });
-  }
-
-  /**
    * This function filters the surveys to find those that have already expired. It checks if the expiry date of each survey is 
    * before the current date.
    * @returns An array of surveys that have already expired.
@@ -119,19 +105,19 @@ export class SurveyService {
    * fetched surveys to the console for debugging purposes.
    * @returns An array of surveys filtered by the selected state and category.
    */
-  getFilterdSurveysByStateOrCategory() {
+  getFilteredSurveysByStateOrCategory() {
     const category = this.selectedCategory();
     const state = this.surveyState();
     const todayStart = this.getStartOfDayTimestamp(new Date());
 
     const byState = this.surveys().filter((survey) => {
-      if (!survey.expiry_date) return false;
+      if (survey.expiry_date == null) return state === 'active';
       const expiryStart = this.getStartOfDayTimestamp(
         this.parseSurveyDate(survey.expiry_date)
       );
-      return state === 'active'
-        ? expiryStart >= todayStart
-        : expiryStart < todayStart;
+      if (expiryStart >= todayStart) return state === 'active';
+      else if (expiryStart < todayStart) return state === 'past';
+      else return false;
     });
 
     if (!category) return byState;

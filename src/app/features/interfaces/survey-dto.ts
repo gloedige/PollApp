@@ -11,7 +11,7 @@ export interface QuestionCreateDto {
 export interface SurveyCreateDto {
   title: string;
   description: string;
-  expiry_date: string;
+  expiry_date: string | null;
   category: string;
   questions: QuestionCreateDto[];
 }
