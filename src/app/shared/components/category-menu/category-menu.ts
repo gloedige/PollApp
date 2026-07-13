@@ -1,7 +1,9 @@
-import { Component, Input, input, signal, inject, computed } from '@angular/core';
+import { Component, input, signal, inject, computed } from '@angular/core';
 import { SurveyService } from '../../../features/services/survey-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { getValidationMessage } from '../../utils/validation-messages.util';
+import { CategoryTypes } from '../../../features/interfaces/category-types';
+
 
 @Component({
   selector: 'app-category-menu',
@@ -10,14 +12,20 @@ import { getValidationMessage } from '../../utils/validation-messages.util';
   styleUrl: './category-menu.scss',
 })
 export class CategoryMenu {
-  @Input() isMenuOpen = false;
-  @Input() isCategorySelected = false;
+  isMenuOpen = signal<boolean>(false);
+  isCategorySelected = signal<boolean>(false);
   readonly text = input<string>('Button');
-  readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation', ''];
-  selectedCategory = signal<typeof this.categoryTypes[number] | null>(null);
-  private readonly surveyServiceProvider = inject(SurveyService);
-  categoryControl = input<FormControl<string> | null>(null);
 
+  // selectedCategory = signal<CategoryTypes[number] | null>(null);
+  readonly surveyServiceProvider = inject(SurveyService);
+  categoryControl = input<FormControl<string> | null>(null);
+  categoryTypesArray = computed(() => this.getArrayOfCategoryTypes());
+
+  /**
+   * This getter checks if the category title is invalid. It retrieves the 'categoryControl' input and checks if it is invalid and has been touched 
+   * or if the survey has been submitted.
+   * @returns A boolean indicating whether the category title is invalid.
+   */
   get categoryTitleInvalid(): boolean {
     const categoryControl = this.categoryControl();
     return categoryControl ? categoryControl.invalid && (categoryControl.touched || this.surveyServiceProvider.submitted()) : false;
@@ -29,27 +37,45 @@ export class CategoryMenu {
    * @returns void
    */
   ngOnInit() {
-    this.selectedCategory.set(this.surveyServiceProvider.selectedCategory());
+    // this.selectedCategory.set(this.surveyServiceProvider.selectedCategory());
+    this.surveyServiceProvider.selectedCategory.set(this.categoryTypesArray()[6]);
   }
+
+  /**
+   * This function returns an array of predefined category types. It is used to populate the category menu with available options for selection.
+   * @returns - An array of category types defined in the CategoryTypes type.
+   */
+  getArrayOfCategoryTypes(): CategoryTypes {
+    return [
+      'Team Activities',
+      'Health & Wellness',
+      'Gaming & Entertainment',
+      'Education & Learning',
+      'Lifestyle & Preferences',
+      'Technology & Innovation',
+      ''
+    ] as CategoryTypes;
+  }
+
 
   /**
    * This function toggles the state of the dropdown menu. It updates the isMenuOpen property to show or 
    * hide the menu and prevents the default action of the event.
    * @param event The event that triggered the toggle action.
    */
-    toggleStateOfDropdownMenu(event: Event): void {
-      this.isMenuOpen = !this.isMenuOpen;
-      event.preventDefault();
+  toggleStateOfDropdownMenu(event: Event): void {
+    this.isMenuOpen.set(!this.isMenuOpen());
+    event.preventDefault();
   }
 
   /**
    * This function sets the selected category. It updates the selectedCategory signal with the chosen category.
    * @param category The category to be selected.
    */
-  selectCategory(category: typeof this.categoryTypes[number]): void {
-    this.selectedCategory.set(category);
+  selectCategory(category: CategoryTypes[number]): void {
+    // this.selectedCategory.set(category);
     this.surveyServiceProvider.selectedCategory.set(category);
-    this.isCategorySelected = true;
+    this.isCategorySelected.set(true);
 
     const control = this.categoryControl();
     if (control) {
@@ -57,13 +83,18 @@ export class CategoryMenu {
       control.markAsDirty();
       control.markAsTouched();
     }
-    this.isMenuOpen = false;
+    this.isMenuOpen.set(false);
   }
 
+  /**
+   * This function resets the selected category. It clears the selectedCategory signal, resets the SurveyService's selectedCategory,
+   * and updates the category control to an empty value. It also marks the control as dirty and touched, and closes the dropdown menu.
+   * @returns void
+   */
   resetCategorySelection(): void {
-    this.selectedCategory.set(null);
+    // this.selectedCategory.set(null);
     this.surveyServiceProvider.selectedCategory.set(null);
-    this.isCategorySelected = false;
+    this.isCategorySelected.set(false);
 
     const control = this.categoryControl();
     if (control) {
@@ -71,7 +102,7 @@ export class CategoryMenu {
       control.markAsDirty();
       control.markAsTouched();
     }
-    this.isMenuOpen = false;
+    this.isMenuOpen.set(false);
   }
 
   /**

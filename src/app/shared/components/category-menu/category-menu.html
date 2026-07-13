@@ -2,8 +2,8 @@
     <button 
         class="menu-container__button" 
         (click)="toggleStateOfDropdownMenu($event)" 
-        [class.menu-container__button--is-open]="isMenuOpen" 
-        [class.menu-container__button--is-selected]="isCategorySelected"
+        [class.menu-container__button--is-open]="isMenuOpen()" 
+        [class.menu-container__button--is-selected]="isCategorySelected()"
         [class.invalid_label]="categoryTitleInvalid"
         type="button">
         {{text()}}
@@ -12,8 +12,8 @@
             <img src="assets/icons/arrow_drop_down_open_hover.png" alt="Arrow Down Hover" class="menu-container__button--hover-img">
         </div>
     </button>
-    <menu class="menu-container__dropdown-content" [class.menu-container__dropdown-content--is-open]="isMenuOpen">
-        @for (categoryType of categoryTypes; track categoryType) {
+    <menu class="menu-container__dropdown-content" [class.menu-container__dropdown-content--is-open]="isMenuOpen()">
+        @for (categoryType of categoryTypesArray(); track categoryType) {
             <li>
                 <a class="menu-container__dropdown-content__item" (click)="selectCategory(categoryType)">{{categoryType}}</a>
             </li>
@@ -23,13 +23,13 @@
         </li>
     </menu>
     @if (categoryControl(); as control) {
-        <div class="menu-container__selected-category">{{selectedCategory()}}</div>
+        <div class="menu-container__selected-category">{{this.surveyServiceProvider.selectedCategory()}}</div>
         <input type="hidden" [formControl]="control" aria-label="Selected category" readonly>
         <div class="menu-container__error-message menu-container__error-message--category">
             <p id="survey-category-error" class="menu-container__error-message--text">{{ getInputErrorMessage('category') }}</p>
         </div>
     } @else{
-        <div class="menu-container__selected-category" readonly>{{selectedCategory()}}</div>
+        <div class="menu-container__selected-category" readonly>{{this.surveyServiceProvider.selectedCategory()}}</div>
 
     }
 </div>

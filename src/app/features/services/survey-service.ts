@@ -2,13 +2,14 @@ import { Injectable, signal, inject, computed, Renderer2 } from '@angular/core';
 import { SupabaseService } from './supabase-service';
 import { Survey } from '../interfaces/survey';
 import { Vote } from '../interfaces/vote';
+import { CategoryTypes } from '../interfaces/category-types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SurveyService {
   surveyDetail = signal<Survey | null>(null);
-  selectedCategory = signal<string | null>(null);
+  selectedCategory = signal<CategoryTypes[number] | null>(null);
   submitted = signal<boolean>(false);
   isSurveyDialogOpen = signal<boolean>(false);
   private readonly dbService = inject(SupabaseService);

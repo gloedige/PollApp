@@ -18,7 +18,34 @@ import { Router } from '@angular/router';
 })
 
 export class SurveyDialog {
-  surveyForm: SurveyForm = new FormGroup({
+  surveyForm: SurveyForm;
+  readonly surveyService = inject(SurveyService);
+  readonly dbService = inject(SupabaseService);
+  submitted = this.surveyService.submitted;
+  minDate = new Date().toISOString().split('T')[0];
+  private readonly renderer = inject(Renderer2);
+  private readonly document = inject(DOCUMENT);
+  readonly optionCountDialog = signal<number>(0);
+  showOverlay = signal<boolean>(false);
+  private pendingPublishCleanup = false;
+  overlayMessage = signal<string>('');
+  overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
+  readonly router = inject(Router);
+  readonly TIME_SHOW_OVERLAY_TOTAL = 2000;
+  readonly TIME_SHOW_OVERLAY_FADE = 300;
+
+  constructor() {
+    this.surveyForm = this.createSurveyForm();
+  }
+
+  /**
+   * This function creates a new survey form with the necessary form controls and validators. It initializes the form with controls for 
+   * survey title, description, expiry date, category, and an array of questions. Each control has appropriate validators to ensure that 
+   * the input meets the required criteria.
+   * @returns The created survey form as a SurveyForm instance.
+   */
+  private createSurveyForm(): SurveyForm {
+    return new FormGroup({
     survey_title: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3)]
@@ -38,23 +65,8 @@ export class SurveyDialog {
       validators: [Validators.required]
     }),
     questions: new FormArray<QuestionGroup>([])
-  });
-
-  readonly surveyService = inject(SurveyService);
-  readonly dbService = inject(SupabaseService);
-  submitted = this.surveyService.submitted;
-  minDate = new Date().toISOString().split('T')[0];
-  private readonly renderer = inject(Renderer2);
-  private readonly document = inject(DOCUMENT);
-  readonly optionCountDialog = signal<number>(0);
-  showOverlay = signal<boolean>(false);
-  private pendingPublishCleanup = false;
-  overlayMessage = signal<string>('');
-  overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
-  readonly router = inject(Router);
-  readonly TIME_SHOW_OVERLAY_TOTAL = 2000;
-  readonly TIME_SHOW_OVERLAY_FADE = 300;
-
+    });
+  }
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
    * for the survey dialog.
@@ -124,6 +136,7 @@ export class SurveyDialog {
   formSubmit() {
     this.submitted.set(true);
     this.surveyForm.markAllAsTouched();
+    console.log('Survey Form Submitted:', this.surveyForm.getRawValue());
     if (this.surveyForm.valid) {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
       this.pendingPublishCleanup = true;
@@ -150,25 +163,12 @@ export class SurveyDialog {
   }
 
   /**
-   * This function clears the value of the survey title input field in the survey form. It sets the value of the 'survey_title' control to an 
-   * empty string and marks it as untouched, effectively resetting the input field for the survey title. 
-   * It is useful for clearing the survey title when needed, such as when resetting the form or preparing for a new survey entry.
-   */
-  clearSurveyTitle() {
-    this.surveyForm.controls.survey_title.setValue('');
-    this.surveyForm.controls.survey_title.markAsUntouched();
-  }
-
-  /**
    * This function cancels the survey creation process. It closes the survey dialog, resets the survey form to its initial state, and sets the
    * submitted signal to false. This allows users to exit the survey creation process without saving any changes.
    */
   cancelSurveyCreation() {
+    this.deepResetDialogState();
     this.surveyService.closeSurveyDialog();
-    this.surveyForm.reset();
-    this.submitted.set(false);
-    this.questions.clear();
-    this.addQuestion();
     this.renderer.removeClass(this.document.body, 'noscroll');
   }
   
@@ -188,20 +188,34 @@ export class SurveyDialog {
    * This function closes the overlay message by setting the showOverlay signal to false, making the overlay invisible to the user.
    * It is typically called when the user interacts with the overlay's close button or when the overlay needs to be dismissed programmatically.
   */
- closeOverlay() {
-   this.showOverlay.set(false);
-   
-   setTimeout(() => {
-     if (this.pendingPublishCleanup) {
-       this.pendingPublishCleanup = false;
-       this.surveyForm.reset();
-       this.questions.clear();
-       this.addQuestion();
-       this.submitted.set(false);
-       this.surveyService.closeSurveyDialog();
-       this.renderer.removeClass(this.document.body, 'noscroll');
-       this.router.navigate(['/dashboard']);
+  closeOverlay() {
+    this.showOverlay.set(false); 
+    setTimeout(() => {
+      if (this.pendingPublishCleanup) {
+        this.deepResetDialogState();
+        this.surveyService.closeSurveyDialog();
+        this.renderer.removeClass(this.document.body, 'noscroll');
+        this.router.navigate(['/dashboard']);
       }
     }, this.TIME_SHOW_OVERLAY_FADE);
+  }
+
+  /**
+   * This function performs a deep reset of the survey dialog state. It resets the survey form to its initial state, adds a new question,
+   * sets the submitted signal to false, resets the option count, and clears any overlay messages. It also marks the form as pristine and untouched,
+   * ensuring that all form controls are reset to their default values and validation states.
+   */
+  private deepResetDialogState() {
+    this.surveyForm = this.createSurveyForm();
+    this.addQuestion();
+    this.submitted.set(false);
+    this.optionCountDialog.set(2);
+    this.pendingPublishCleanup = false;
+    this.showOverlay.set(false);
+    this.overlayMessage.set('');
+    this.surveyForm.markAsPristine();
+    this.surveyForm.markAsUntouched();
+    this.surveyForm.updateValueAndValidity({emitEvent: false});
+    this.surveyService.selectedCategory.set(null);
   }
 }
