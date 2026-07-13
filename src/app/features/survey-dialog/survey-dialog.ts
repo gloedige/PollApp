@@ -8,6 +8,7 @@ import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from
 import { SurveyService } from '../services/survey-service';
 import { getValidationMessage } from '../../shared/utils/validation-messages.util';
 import { SurveyForm, QuestionGroup } from '../interfaces/survey-form';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-survey-dialog',
@@ -50,6 +51,9 @@ export class SurveyDialog {
   private pendingPublishCleanup = false;
   overlayMessage = signal<string>('');
   overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
+  readonly router = inject(Router);
+  readonly TIME_SHOW_OVERLAY_TOTAL = 2000;
+  readonly TIME_SHOW_OVERLAY_FADE = 300;
 
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
@@ -124,6 +128,9 @@ export class SurveyDialog {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
       this.pendingPublishCleanup = true;
       this.openOverlay(0);
+      setTimeout(() => {
+        this.closeOverlay();
+      }, this.TIME_SHOW_OVERLAY_TOTAL - this.TIME_SHOW_OVERLAY_FADE);
     }
   }
 
@@ -164,34 +171,37 @@ export class SurveyDialog {
     this.addQuestion();
     this.renderer.removeClass(this.document.body, 'noscroll');
   }
-
+  
   /**
    * This function opens an overlay message based on the provided message index. It checks if the index is valid and sets the overlay message
    * accordingly. It also sets the showOverlay signal to true, making the overlay visible to the user.
    * @param messageIndex - The index of the message to be displayed in the overlay. It should correspond to an entry in the overlayMessageText array.
-   */
-  openOverlay(messageIndex: number) {
-    if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
-      this.overlayMessage.set(this.overlayMessageText[messageIndex]);
-      this.showOverlay.set(true);
+  */
+ openOverlay(messageIndex: number) {
+   if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
+     this.overlayMessage.set(this.overlayMessageText[messageIndex]);
+     this.showOverlay.set(true);
     }
   }
-
+  
   /**
    * This function closes the overlay message by setting the showOverlay signal to false, making the overlay invisible to the user.
    * It is typically called when the user interacts with the overlay's close button or when the overlay needs to be dismissed programmatically.
-   */
-  closeOverlay() {
-    this.showOverlay.set(false);
-
-    if (this.pendingPublishCleanup) {
-      this.pendingPublishCleanup = false;
-      this.surveyForm.reset();
-      this.questions.clear();
-      this.addQuestion();
-      this.submitted.set(false);
-      this.surveyService.closeSurveyDialog();
-      this.renderer.removeClass(this.document.body, 'noscroll');
-    }
+  */
+ closeOverlay() {
+   this.showOverlay.set(false);
+   
+   setTimeout(() => {
+     if (this.pendingPublishCleanup) {
+       this.pendingPublishCleanup = false;
+       this.surveyForm.reset();
+       this.questions.clear();
+       this.addQuestion();
+       this.submitted.set(false);
+       this.surveyService.closeSurveyDialog();
+       this.renderer.removeClass(this.document.body, 'noscroll');
+       this.router.navigate(['/dashboard']);
+      }
+    }, this.TIME_SHOW_OVERLAY_FADE);
   }
 }
