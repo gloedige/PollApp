@@ -31,7 +31,7 @@ export class SurveyDialog {
   overlayMessage = signal<string>('');
   overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
   readonly router = inject(Router);
-  readonly TIME_SHOW_OVERLAY_TOTAL = 2000;
+  readonly TIME_SHOW_OVERLAY_TOTAL = 1300;
   readonly TIME_SHOW_OVERLAY_FADE = 300;
 
   constructor() {
@@ -133,17 +133,14 @@ export class SurveyDialog {
   /**
    * This function is called when the survey form is submitted. It checks if the form is valid and handles the form submission accordingly.
    */
-  formSubmit() {
+  async formSubmit() {
     this.submitted.set(true);
     this.surveyForm.markAllAsTouched();
-    console.log('Survey Form Submitted:', this.surveyForm.getRawValue());
     if (this.surveyForm.valid) {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
-      this.pendingPublishCleanup = true;
-      this.openOverlay(0);
-      setTimeout(() => {
-        this.closeOverlay();
-      }, this.TIME_SHOW_OVERLAY_TOTAL - this.TIME_SHOW_OVERLAY_FADE);
+      await this.openOverlay(0);
+      this.closeSurveyCreationDialog();
+      this.router.navigate(['/dashboard']);
     }
   }
 
@@ -166,21 +163,24 @@ export class SurveyDialog {
    * This function cancels the survey creation process. It closes the survey dialog, resets the survey form to its initial state, and sets the
    * submitted signal to false. This allows users to exit the survey creation process without saving any changes.
    */
-  cancelSurveyCreation() {
+  closeSurveyCreationDialog() {
     this.deepResetDialogState();
     this.surveyService.closeSurveyDialog();
     this.renderer.removeClass(this.document.body, 'noscroll');
   }
   
   /**
-   * This function opens an overlay message based on the provided message index. It checks if the index is valid and sets the overlay message
-   * accordingly. It also sets the showOverlay signal to true, making the overlay visible to the user.
+   * This function opens an overlay message with a specific message based on the provided index. It sets the overlayMessage signal to the corresponding
+   * message from the overlayMessageText array and shows the overlay for a specified duration before hiding it again.
    * @param messageIndex - The index of the message to be displayed in the overlay. It should correspond to an entry in the overlayMessageText array.
   */
- openOverlay(messageIndex: number) {
-   if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
-     this.overlayMessage.set(this.overlayMessageText[messageIndex]);
-     this.showOverlay.set(true);
+ async openOverlay(messageIndex: number) {
+    if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
+      this.overlayMessage.set(this.overlayMessageText[messageIndex]);
+      this.showOverlay.set(true);
+      await this.delay(this.TIME_SHOW_OVERLAY_TOTAL - this.TIME_SHOW_OVERLAY_FADE);
+      this.showOverlay.set(false);
+      await this.delay(this.TIME_SHOW_OVERLAY_FADE);
     }
   }
   
@@ -189,15 +189,11 @@ export class SurveyDialog {
    * It is typically called when the user interacts with the overlay's close button or when the overlay needs to be dismissed programmatically.
   */
   closeOverlay() {
-    this.showOverlay.set(false); 
-    setTimeout(() => {
-      if (this.pendingPublishCleanup) {
-        this.deepResetDialogState();
-        this.surveyService.closeSurveyDialog();
-        this.renderer.removeClass(this.document.body, 'noscroll');
-        this.router.navigate(['/dashboard']);
-      }
-    }, this.TIME_SHOW_OVERLAY_FADE);
+    this.showOverlay.set(false);
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**

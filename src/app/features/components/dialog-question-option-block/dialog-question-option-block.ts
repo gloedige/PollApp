@@ -92,7 +92,6 @@ export class DialogQuestionOptionBlock {
           text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
         })
       );
-      console.log('count of options in formOptions:', this.formOptions.length);
     }
     if (this.formOptions.length === this.maximumNumberOfOptions) {
       this.maxOptionCountReached.emit(true);
