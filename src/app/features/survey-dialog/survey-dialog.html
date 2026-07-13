@@ -19,7 +19,7 @@
             <div class="dialog-container-form__shell">
                 <div class="form-detail-container">
                     <div class="form-detail-container--title-date-container">
-                        <label for="survey-title" class="dialog-container-form__label" [class.invalid_label]="surveyTitleInvalid">Survey name</label>
+                        <label for="survey-title" class="dialog-container-form__label" [class.invalid_label]="surveyTitleInvalid">Survey name*</label>
                         <div class="form-detail-container__input-container">
                             <input 
                                 id="survey-title" 
@@ -56,7 +56,7 @@
                                 <div class="form-detail-container__dummy"></div>
                             </div>
                             <div class="form-detail-container--category-container">
-                                <app-category-menu [text]="'Choose category'" [categoryControl]="formCategory"></app-category-menu>
+                                <app-category-menu [text]="'Choose category*'" [categoryControl]="formCategory"></app-category-menu>
                             </div>
                         </div>   
                     </div>
@@ -100,6 +100,7 @@
                             (click)="addQuestion()"></app-button>
                     </div>
                 </div>
+                <span class="dialog-container-form__info">* Required fields</span>
             </div>
             <footer class="dialog-container-footer">
                 <app-button 

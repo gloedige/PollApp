@@ -3,7 +3,7 @@
 @if(currentQuestionGroup){
 <div class="dialog-question-option-block-shell">
     <div class="dialog-question-option-block-header">
-        <label for="{{questionId}}" class="dialog-question-option-block-header__question-title" [class.invalid_label]="questionTitleInvalid">{{questionIndex() + 1}}. Question</label>
+        <label for="{{questionId}}" class="dialog-question-option-block-header__question-title" [class.invalid_label]="questionTitleInvalid">{{questionIndex() + 1}}. Question*</label>
         <button class="dialog-question-option-block-header__delete-button" type="button" (click)="removeQuestion(questionIndex())" aria-label="Delete question">
             <img src="assets/icons/delete-icon-default.png" class="dialog-question-option-block-header__delete-button--icon-default" alt="delete icon">
             <img src="assets/icons/delete-icon-hover.png" class="dialog-question-option-block-header__delete-button--icon-hover" alt="delete hover icon">
@@ -20,7 +20,7 @@
         <p id="survey-category-error" class="dialog-question-option-block__error-message--text">{{ getInputErrorMessage('title') }}</p>
     </div>
     <div class="dialog-question-option-block-options-header">
-        <p class="dialog-question-option-block-options-header__title">Answers</p>
+        <p class="dialog-question-option-block-options-header__title">Answers*</p>
         <div class="dialog-question-option-block-options-header__multiple-options-container">
             <app-form-checkbox [checkBoxControl]="formMultiple" [isCheckboxForMultipleOptions]="true"></app-form-checkbox>
             <span class="dialog-question-option-block-options-header__multiple-options-container--checkbox-label">Allow multiple answers.</span>
