@@ -117,7 +117,7 @@ export class SurveyService {
     }
 
     const byState = this.filterSurveysByExpiry(todayStart, surveys, state);
-    if (category == null) return byState;
+    if (category == null || category === '') return byState;
     return byState.filter((survey) => survey.category === category);
   }
 
