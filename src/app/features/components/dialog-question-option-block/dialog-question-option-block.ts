@@ -1,4 +1,4 @@
-import { Component, input, inject, output } from '@angular/core';
+import { Component, input, inject, output} from '@angular/core';
 import { DialogQuestionOption } from '../dialog-question-option/dialog-question-option';
 import { FormCheckbox} from "../../../shared/components/form-checkbox/form-checkbox";
 import { Button } from '../../../shared/components/button/button';
@@ -24,7 +24,6 @@ export class DialogQuestionOptionBlock {
 
   questionIndex = input<number>(0);
   initialOptionCount = input<number>(0);
-  optionCount: number = 0;
   maxOptionCountReached = output<boolean>();
   
   constructor(private controlContainer: ControlContainer) {}
@@ -87,25 +86,17 @@ export class DialogQuestionOptionBlock {
    * @returns void
    */
   addOption(): void {
-    if (this.optionCount < this.maximumNumberOfOptions) {
-      this.optionCount = this.optionCount + 1;
+    if (this.formOptions.length < this.maximumNumberOfOptions) {
       this.formOptions.push(
         new FormGroup({
           text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
         })
       );
+      console.log('count of options in formOptions:', this.formOptions.length);
     }
-    if (this.optionCount === this.maximumNumberOfOptions) {
+    if (this.formOptions.length === this.maximumNumberOfOptions) {
       this.maxOptionCountReached.emit(true);
     }
-  }
-
-  /**
-   * This function is called when the component is initialized. It retrieves the next question number, creates a new client ID for 
-   * the question, and initializes the default options for the question.
-   */
-  ngOnInit() {
-    this.optionCount = this.initialOptionCount();
   }
 
   /**
