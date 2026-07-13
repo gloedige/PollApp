@@ -53,8 +53,10 @@
             </div>
         </div>
         <div class="all-surveys-section__no-surveys">
-            @if (filteredSurveys().length === 0) {
-            <p>No past surveys.</p>
+            @if (filteredSurveys().length === 0 && buttonIsActive) {
+                <p>No active surveys.</p>
+            } @else if (filteredSurveys().length === 0 && !buttonIsActive) {
+                <p>No past surveys.</p>
             }
         </div>
 

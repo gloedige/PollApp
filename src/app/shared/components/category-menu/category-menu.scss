@@ -33,6 +33,10 @@
 
         &__item{
             cursor: pointer;
+            &--reset{
+                color: colors.$primary_orange;
+                font-family: var(--font-family-text-bold);
+            }
         }
 
         &__item:hover{

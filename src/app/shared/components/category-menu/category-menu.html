@@ -18,6 +18,9 @@
                 <a class="menu-container__dropdown-content__item" (click)="selectCategory(categoryType)">{{categoryType}}</a>
             </li>
         }
+        <li>
+            <a class="menu-container__dropdown-content__item menu-container__dropdown-content__item--reset" (click)="resetCategorySelection()">Reset</a>
+        </li>
     </menu>
     @if (categoryControl(); as control) {
         <div class="menu-container__selected-category">{{selectedCategory()}}</div>

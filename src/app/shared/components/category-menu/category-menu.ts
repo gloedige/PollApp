@@ -1,4 +1,4 @@
-import { Component, Input, input, signal, inject } from '@angular/core';
+import { Component, Input, input, signal, inject, computed } from '@angular/core';
 import { SurveyService } from '../../../features/services/survey-service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { getValidationMessage } from '../../utils/validation-messages.util';
@@ -16,7 +16,6 @@ export class CategoryMenu {
   readonly categoryTypes = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation', ''];
   selectedCategory = signal<typeof this.categoryTypes[number] | null>(null);
   private readonly surveyServiceProvider = inject(SurveyService);
-
   categoryControl = input<FormControl<string> | null>(null);
 
   get categoryTitleInvalid(): boolean {
@@ -55,6 +54,20 @@ export class CategoryMenu {
     const control = this.categoryControl();
     if (control) {
       control.setValue(category);
+      control.markAsDirty();
+      control.markAsTouched();
+    }
+    this.isMenuOpen = false;
+  }
+
+  resetCategorySelection(): void {
+    this.selectedCategory.set(null);
+    this.surveyServiceProvider.selectedCategory.set(null);
+    this.isCategorySelected = false;
+
+    const control = this.categoryControl();
+    if (control) {
+      control.setValue('');
       control.markAsDirty();
       control.markAsTouched();
     }

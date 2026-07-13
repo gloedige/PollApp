@@ -17,7 +17,7 @@ export class SurveyService {
   surveys = this.dbService.surveys;
 
   endingSoonSurveys = computed(this.getFilteredSurveysEndingSoon.bind(this));
-  surveyState = signal<'active' | 'past'>('active');
+  surveyState = signal<'active' | 'past' | 'undefined'>('active');
   pastSurveys = computed(() => this.filterPastSurveys());
 
   readonly visibleSurveys = computed(this.getFilteredSurveysByStateOrCategory.bind(this));
@@ -29,20 +29,18 @@ export class SurveyService {
 
   /**
    * This function filters the surveys to find those that are ending soon. It checks if the expiry date of each survey 
-   * is within the next three days.
+   * is today or later.
    * @returns - An array of surveys that are ending soon.
    */
   getFilteredSurveysEndingSoon() {
     const todayStart = this.getStartOfDayTimestamp(new Date());
-    const threeDaysLaterStart = this.getStartOfDayTimestamp(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000));
-
     const endingSurveys =  this.surveys().filter(survey => {
       if (!survey.expiry_date) return false;
       const expiryStart = this.getStartOfDayTimestamp(this.parseSurveyDate(survey.expiry_date));
-      return expiryStart >= todayStart && expiryStart <= threeDaysLaterStart;
+      return expiryStart >= todayStart;
     });
     const orderedSurveys = this.orderSurveysByExpiryDate(endingSurveys);
-    return orderedSurveys;
+    return orderedSurveys[0] ? orderedSurveys.slice(0, 3) : [];
   }
   
   /**
@@ -109,8 +107,29 @@ export class SurveyService {
     const category = this.selectedCategory();
     const state = this.surveyState();
     const todayStart = this.getStartOfDayTimestamp(new Date());
+    const surveys = this.surveys();
 
-    const byState = this.surveys().filter((survey) => {
+    if (state === 'undefined') {
+      return category == null
+        ? surveys
+        : surveys.filter((survey) => survey.category === category);
+    }
+
+    const byState = this.filterSurveysByExpiry(todayStart, surveys, state);
+    if (category == null) return byState;
+    return byState.filter((survey) => survey.category === category);
+  }
+
+  /**
+   * This function filters surveys based on their expiry date and the specified state ('active' or 'past'). It compares the start of the day 
+   * timestamp of each survey's expiry date with the current date to determine if it is active or past.
+   * @param todayStart - The timestamp representing the start of the current day.
+   * @param surveys - An array of surveys to filter.
+   * @param state - The state to filter by, either 'active' or 'past'.
+   * @returns - An array of surveys filtered by the specified state.
+   */
+  filterSurveysByExpiry(todayStart: number, surveys: Survey[], state: 'active' | 'past'): Survey[] {
+    return surveys.filter((survey) => {
       if (survey.expiry_date == null) return state === 'active';
       const expiryStart = this.getStartOfDayTimestamp(
         this.parseSurveyDate(survey.expiry_date)
@@ -119,9 +138,6 @@ export class SurveyService {
       else if (expiryStart < todayStart) return state === 'past';
       else return false;
     });
-
-    if (!category) return byState;
-    return byState.filter((survey) => survey.category === category);
   }
 
   /**
