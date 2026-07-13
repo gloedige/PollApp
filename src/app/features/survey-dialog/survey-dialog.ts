@@ -120,7 +120,6 @@ export class SurveyDialog {
   formSubmit() {
     this.submitted.set(true);
     this.surveyForm.markAllAsTouched();
-    console.log('Form submitted:', this.surveyForm.value);
     if (this.surveyForm.valid) {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
       this.pendingPublishCleanup = true;

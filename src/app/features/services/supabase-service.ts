@@ -123,8 +123,7 @@ export class SupabaseService {
     if (error) {
       console.error('Error adding new votes:', error);
     } else {
-      console.log('New votes added:', data);
-      this.getAllVotes(); // Refresh the votes after adding new ones
+      this.getAllVotes();
     }
   }
 
@@ -240,11 +239,7 @@ export class SupabaseService {
       .insert(survey)
       .select('id')
       .single();
-    if (surveyError || !insertedSurvey) {
-      console.error('Error storing new survey:', surveyError);
-    } else {
-      console.log('New survey stored:', insertedSurvey);
-    }
+    if (surveyError || !insertedSurvey) console.error('Error storing new survey:', surveyError);
     return { id: insertedSurvey?.id, error: surveyError };
   }
 
@@ -260,11 +255,7 @@ export class SupabaseService {
       .insert(questionObj)
       .select('id')
       .single();
-    if (error) {
-      console.error('Error adding new question:', error);
-    } else {
-      console.log('New question added:', insertedQuestion);
-    }
+    if (error) console.error('Error adding new question:', error);
 
     return insertedQuestion?.id;
   }
