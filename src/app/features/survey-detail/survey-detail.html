@@ -77,5 +77,9 @@
             </section>
         </div>
     </div>
+    <app-info-overlay 
+        [(showOverlay)]="showDetailOverlay" 
+        [overlayMessage]="detailOverlayMessage()">
+    </app-info-overlay>
 </div>
 <app-survey-dialog style="display: none;"></app-survey-dialog>

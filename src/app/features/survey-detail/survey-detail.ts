@@ -10,12 +10,12 @@ import { SupabaseService } from '../services/supabase-service';
 import {ActivatedRoute} from "@angular/router";
 import { Survey } from '../interfaces/survey';
 import {DatePipe} from "@angular/common";
-import {ParamMap} from "@angular/router";
 import { switchMap } from 'rxjs';
+import {InfoOverlay} from "../../shared/components/info-overlay/info-overlay";
 
 @Component({
   selector: 'app-survey-detail',
-  imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog, DatePipe],
+  imports: [Button, QuestionOptionBlock, QuestionResultBlock, SurveyDialog, DatePipe, InfoOverlay],
   templateUrl: './survey-detail.html',
   styleUrl: './survey-detail.scss',
 })
@@ -37,6 +37,8 @@ export class SurveyDetail {
   readonly questions = this.dbService.questions;
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
   surveyId: number | null = null;
+  showDetailOverlay = signal<boolean>(false);
+  detailOverlayMessage = signal<string>('');
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
@@ -133,6 +135,21 @@ export class SurveyDetail {
    */
   toggleResults() {
     this.showResults.set(!this.showResults());
+  }
+
+  /**
+   * This function shows an information overlay with a specific message. It sets the showDetailOverlay signal to true and updates the detailOverlayMessage
+   * signal with the provided message. This allows users to see important information or notifications related to the survey detail.
+   * @param message - The message to be displayed in the overlay. 
+   */
+  async showInfoByOverlay(message: string) {
+    this.showDetailOverlay.set(true);
+    this.detailOverlayMessage.set(message);
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1400);
+    });
   }
 
 }
