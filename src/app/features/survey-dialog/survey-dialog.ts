@@ -1,6 +1,6 @@
 import { Component, inject, Renderer2, signal } from '@angular/core';
 import { SupabaseService } from '../services/supabase-service';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT} from '@angular/common';
 import { Button } from '../../shared/components/button/button';
 import { CategoryMenu } from '../../shared/components/category-menu/category-menu';
 import { DialogQuestionOptionBlock } from '../components/dialog-question-option-block/dialog-question-option-block';
@@ -9,10 +9,11 @@ import { SurveyService } from '../services/survey-service';
 import { getValidationMessage } from '../../shared/utils/validation-messages.util';
 import { SurveyForm, QuestionGroup } from '../interfaces/survey-form';
 import { Router } from '@angular/router';
+import {InfoOverlay} from "../../shared/components/info-overlay/info-overlay";
 
 @Component({
   selector: 'app-survey-dialog',
-  imports: [Button, CategoryMenu, DialogQuestionOptionBlock, ReactiveFormsModule],
+  imports: [Button, CategoryMenu, DialogQuestionOptionBlock, ReactiveFormsModule, InfoOverlay],
   templateUrl: './survey-dialog.html',
   styleUrl: './survey-dialog.scss',
 })
@@ -26,13 +27,10 @@ export class SurveyDialog {
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
   readonly optionCountDialog = signal<number>(0);
-  showOverlay = signal<boolean>(false);
-  private pendingPublishCleanup = false;
-  overlayMessage = signal<string>('');
-  overlayMessageText = ['Your survey is now published!', 'Maximum number of options reached.'];
   readonly router = inject(Router);
-  readonly TIME_SHOW_OVERLAY_TOTAL = 1300;
-  readonly TIME_SHOW_OVERLAY_FADE = 300;
+  pendingPublishCleanup = false;
+  showDialogOverlay = signal<boolean>(false);
+  dialogOverlayMessage = signal<string>('');
 
   constructor() {
     this.surveyForm = this.createSurveyForm();
@@ -138,7 +136,7 @@ export class SurveyDialog {
     this.surveyForm.markAllAsTouched();
     if (this.surveyForm.valid) {
       this.dbService.storeAllNewSurveyDetails(this.surveyForm.getRawValue());
-      await this.openOverlay(0);
+      await this.showInfoByOverlay('Your survey is now published!');
       this.closeSurveyCreationDialog();
       this.router.navigate(['/dashboard']);
     }
@@ -168,33 +166,6 @@ export class SurveyDialog {
     this.surveyService.closeSurveyDialog();
     this.renderer.removeClass(this.document.body, 'noscroll');
   }
-  
-  /**
-   * This function opens an overlay message with a specific message based on the provided index. It sets the overlayMessage signal to the corresponding
-   * message from the overlayMessageText array and shows the overlay for a specified duration before hiding it again.
-   * @param messageIndex - The index of the message to be displayed in the overlay. It should correspond to an entry in the overlayMessageText array.
-  */
- async openOverlay(messageIndex: number) {
-    if (messageIndex >= 0 && messageIndex < this.overlayMessageText.length) {
-      this.overlayMessage.set(this.overlayMessageText[messageIndex]);
-      this.showOverlay.set(true);
-      await this.delay(this.TIME_SHOW_OVERLAY_TOTAL - this.TIME_SHOW_OVERLAY_FADE);
-      this.showOverlay.set(false);
-      await this.delay(this.TIME_SHOW_OVERLAY_FADE);
-    }
-  }
-  
-  /**
-   * This function closes the overlay message by setting the showOverlay signal to false, making the overlay invisible to the user.
-   * It is typically called when the user interacts with the overlay's close button or when the overlay needs to be dismissed programmatically.
-  */
-  closeOverlay() {
-    this.showOverlay.set(false);
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 
   /**
    * This function performs a deep reset of the survey dialog state. It resets the survey form to its initial state, adds a new question,
@@ -207,11 +178,26 @@ export class SurveyDialog {
     this.submitted.set(false);
     this.optionCountDialog.set(2);
     this.pendingPublishCleanup = false;
-    this.showOverlay.set(false);
-    this.overlayMessage.set('');
+    this.showDialogOverlay.set(false);
+    this.dialogOverlayMessage.set('');
     this.surveyForm.markAsPristine();
     this.surveyForm.markAsUntouched();
     this.surveyForm.updateValueAndValidity({emitEvent: false});
     this.surveyService.selectedCategory.set(null);
+  }
+
+  /**
+   * This function shows an information overlay with a specific message. It sets the showDialogOverlay signal to true and updates the overlayMessage
+   * signal with the provided message. This allows users to see important information or notifications related to the survey dialog.
+   * @param message - The message to be displayed in the overlay. 
+   */
+  async showInfoByOverlay(message: string) {
+    this.showDialogOverlay.set(true);
+    this.dialogOverlayMessage.set(message);
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1400);
+    });
   }
 }
