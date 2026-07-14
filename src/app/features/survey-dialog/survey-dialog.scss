@@ -115,6 +115,11 @@
 
     &__input{
         @include mixins.dialog-input();
+        cursor: pointer;
+
+        &::-webkit-calendar-picker-indicator{
+            cursor: pointer;
+        }
 
         &::placeholder{
             color: colors.$dark_purple;
