@@ -1,0 +1,10 @@
+@if (isOverlayActive()) {
+    <div class="dialog-background">
+        <div class="dialog-overlay" [class.dialog-overlay--visible]="showOverlay()">
+            <span>{{ overlayMessage() }}</span>
+            <button aria-label="Close overlay" (click)="closeOverlay()">
+                <img src="assets/icons/close_icon_purple.png" alt="Close overlay">
+            </button>
+        </div>
+    </div>
+}
