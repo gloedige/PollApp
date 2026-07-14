@@ -38,10 +38,6 @@ export class SurveyDetail {
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
   surveyId: number | null = null;
 
-  // constructor() {
-  //   this.surveyId = Number(this.route.snapshot.paramMap.get('id'));
-  // }
-
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
    * It also fetches all questions and options related to the active survey from the database.
@@ -57,7 +53,7 @@ export class SurveyDetail {
       this.survey.set(data);
       await this.dbService.getAllQuestionsBySurveyId(this.surveyId!);
       await this.dbService.getAllOptions();
-      console.log('questions', this.questions());
+      this.surveyService.votesOfActiveSurvey.set([]);
     });
 
     this.loadingDone.set(false);
@@ -66,9 +62,6 @@ export class SurveyDetail {
       this.loadingDone.set(true);
       return;
     }
-    // await this.dbService.getSurveyById(this.surveyId).then(singleSurvey => {
-    //   this.survey.set(singleSurvey);
-    // });
     this.loadingDone.set(true);
   }
 
