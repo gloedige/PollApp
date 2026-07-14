@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 
-const DASHBOARD_URL = 'http://localhost:4200/dashboard';
+const DASHBOARD_URL = 'http://localhost:4200/angular-projects/Poll_App/dashboard';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -76,7 +76,7 @@ test.describe('Survey Dialog – survey title field', () => {
     await dialog.locator('#survey-title').blur();
 
     await expect(dialog.locator('#survey-title-error')).toHaveText(
-      'Survey title must be at least 3 characters long.'
+      'Minimum length of 3 characters.'
     );
   });
 
@@ -125,7 +125,7 @@ test.describe('Survey Dialog – description field', () => {
     await dialog.locator('#survey-description').blur();
 
     await expect(dialog.locator('#survey-description-error')).toHaveText(
-      'Description must be at least 10 characters long.'
+      'Minimum length of 10 characters.'
     );
   });
 
@@ -147,7 +147,7 @@ test.describe('Survey Dialog – description field', () => {
     await dialog.locator('#survey-description').blur();
 
     await expect(dialog.locator('#survey-description-error')).toHaveText(
-      'Please enter a valid description.'
+      'Please do not use special characters like <, >, &, etc.'
     );
   });
 
@@ -251,7 +251,7 @@ test.describe('Survey Dialog – question title field', () => {
     const questionTitleError = dialog
       .locator('.dialog-question-option-block__error-message--text')
       .first();
-    await expect(questionTitleError).toHaveText('Title must be at least 3 characters long.');
+    await expect(questionTitleError).toHaveText('Minimum length of 3 characters.');
   });
 
   test('shows no error when question title has 3 or more characters', async ({ page }) => {
@@ -331,8 +331,8 @@ test.describe('Survey Dialog – delete function for all input fields', () => {
     await expect(optionB).toHaveValue('Option B text');
 
     // Click the delete icon for each option (first visible delete icon in each .question-icon-container)
-    await dialog.locator('.question-icon-container').nth(0).click();
-    await dialog.locator('.question-icon-container').nth(1).click();
+    await dialog.locator('.question__delete-button').nth(0).click();
+    await dialog.locator('.question__delete-button').nth(1).click();
 
     // Both option fields should be empty
     await expect(optionA).toHaveValue('');
