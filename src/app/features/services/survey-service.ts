@@ -230,4 +230,25 @@ export class SurveyService {
     }
   }
 
+  /**
+   * This function stores an array of survey IDs in the local storage under the key 'votedSurveyIds'. It converts the array to a JSON 
+   * string before storing it.
+   * @param surveyId - An array of survey IDs to store in local storage.
+   */
+  storeSurveyIdsInLocalStorage(surveyId: number[]) {
+    const surveyIds = this.getSurveyIdsFromLocalStorage();
+    const updatedSurveyIds = [...new Set([...surveyIds, ...surveyId])];
+    localStorage.setItem('votedSurveyIds', JSON.stringify(updatedSurveyIds));
+  }
+
+  /**
+   * This function retrieves the survey IDs stored in local storage as an array of numbers. It checks if the 'votedSurveyIds' key exists 
+   * in local storage, and returns it as an array of numbers.
+   * @returns An array of survey IDs retrieved from local storage.
+   */
+  getSurveyIdsFromLocalStorage(): number[] {
+    const surveyIdsString = localStorage.getItem('votedSurveyIds');
+    return surveyIdsString ? JSON.parse(surveyIdsString) : [];
+  }
+
 }

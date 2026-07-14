@@ -1,4 +1,4 @@
-import { Component, inject, Renderer2, signal, LOCALE_ID } from '@angular/core';
+import { Component, inject, Renderer2, signal, LOCALE_ID, computed } from '@angular/core';
 import { Button } from "../../shared/components/button/button";
 import { DOCUMENT } from "@angular/common";
 import {Router} from "@angular/router";
@@ -39,6 +39,7 @@ export class SurveyDetail {
   surveyId: number | null = null;
   showDetailOverlay = signal<boolean>(false);
   detailOverlayMessage = signal<string>('');
+  surveyIdArrayFromLocalStorage: number[] = computed(() => this.surveyService.getSurveyIdsFromLocalStorage())();
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
@@ -114,8 +115,13 @@ export class SurveyDetail {
    * @returns - void
    */
   async completeSurvey() {
+    if (this.IsSurveyIdExistingInLocalStorage(this.surveyId!)) {
+      await this.showInfoByOverlay('You have already completed this survey!');
+      return;
+    }
     if (this.votesOfActiveSurvey().length > 0) {
       await this.dbService.addNewVotes(this.votesOfActiveSurvey());
+      this.surveyService.storeSurveyIdsInLocalStorage([this.surveyId!]);
       this.router.navigate(['/dashboard']);
     }
   }
@@ -150,6 +156,16 @@ export class SurveyDetail {
         resolve();
       }, 1400);
     });
+  }
+
+  /**
+   * This function checks if a survey ID exists in the local storage. It retrieves the array of survey IDs from local storage and checks if the provided survey
+   * ID is included in that array. If the survey ID exists in local storage, it returns true; otherwise, it returns false.
+   * @param surveyId - The ID of the survey to check in local storage.
+   * @returns - True if the survey ID exists in local storage, false otherwise.
+   */
+  IsSurveyIdExistingInLocalStorage(surveyId: number): boolean {
+    return this.surveyIdArrayFromLocalStorage.includes(surveyId);
   }
 
 }
