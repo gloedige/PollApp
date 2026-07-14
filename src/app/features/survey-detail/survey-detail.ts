@@ -10,6 +10,8 @@ import { SupabaseService } from '../services/supabase-service';
 import {ActivatedRoute} from "@angular/router";
 import { Survey } from '../interfaces/survey';
 import {DatePipe} from "@angular/common";
+import {ParamMap} from "@angular/router";
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-survey-detail',
@@ -36,9 +38,9 @@ export class SurveyDetail {
   readonly votesOfActiveSurvey = this.surveyService.votesOfActiveSurvey;
   surveyId: number | null = null;
 
-  constructor() {
-    this.surveyId = Number(this.route.snapshot.paramMap.get('id'));
-  }
+  // constructor() {
+  //   this.surveyId = Number(this.route.snapshot.paramMap.get('id'));
+  // }
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
@@ -46,17 +48,27 @@ export class SurveyDetail {
    * @returns - void
    */
   async ngOnInit(): Promise<void> {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        this.surveyId = Number(params.get('id'));
+        return this.dbService.getSurveyById(this.surveyId);
+      })
+    ).subscribe(async data => {
+      this.survey.set(data);
+      await this.dbService.getAllQuestionsBySurveyId(this.surveyId!);
+      await this.dbService.getAllOptions();
+      console.log('questions', this.questions());
+    });
+
     this.loadingDone.set(false);
     this.renderer.addClass(this.document.body, 'detail-page');
     if (!this.surveyId) {
       this.loadingDone.set(true);
       return;
     }
-    await this.dbService.getSurveyById(this.surveyId).then(singleSurvey => {
-      this.survey.set(singleSurvey);
-    });
-    await this.dbService.getAllQuestionsBySurveyId(this.surveyId);
-    await this.dbService.getAllOptions();
+    // await this.dbService.getSurveyById(this.surveyId).then(singleSurvey => {
+    //   this.survey.set(singleSurvey);
+    // });
     this.loadingDone.set(true);
   }
 
