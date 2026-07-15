@@ -110,13 +110,20 @@ export class SurveyDetail {
   }
 
   /**
-   * This function is called when the user completes the survey. It checks if there are any votes collected for the active survey.
-   * After storing the votes in the database, it navigates the user to the dashboard page.
+   * This function is called when the user completes the survey. It checks if there are any votes collected for the active survey and if the 
+   * survey ID is already stored in local storage. If the survey ID is not in local storage and there are votes, it stores the votes in the 
+   * database and adds the survey ID to local storage. It also checks if all questions have been voted on before completing the survey. If 
+   * not all questions are voted on, it shows an information overlay message. After storing the votes in the database, it navigates the user 
+   * to the dashboard page.
    * @returns - void
    */
   async completeSurvey() {
     if (this.IsSurveyIdExistingInLocalStorage(this.surveyId!)) {
       await this.showInfoByOverlay('You have already completed this survey!');
+      return;
+    }
+    if (!this.IsAllQuestionsVoted()) {
+      await this.showInfoByOverlay('Please answer all questions before completing the survey!');
       return;
     }
     if (this.votesOfActiveSurvey().length > 0) {
@@ -166,6 +173,19 @@ export class SurveyDetail {
    */
   IsSurveyIdExistingInLocalStorage(surveyId: number): boolean {
     return this.surveyIdArrayFromLocalStorage.includes(surveyId);
+  }
+
+  /**
+   * This function checks if all questions in the active survey have been voted on. It compares the unique question IDs of the votes collected for the active survey
+   * with the question IDs of the active survey. If the number of unique question IDs of votes is equal to the number of question IDs of the active survey, it returns true,
+   * indicating that all questions have been voted on; otherwise, it returns false.
+   * @returns - True if all questions have been voted on, false otherwise.
+   */
+  IsAllQuestionsVoted(): boolean {
+    const questionIdsOfVotes = this.votesOfActiveSurvey().map(vote => vote.question_id);
+    const uniqueQuestionIdsOfVotes = Array.from(new Set(questionIdsOfVotes));
+    const questionIdsOfActiveSurvey = this.questions().map(question => question.id);
+    return uniqueQuestionIdsOfVotes.length === questionIdsOfActiveSurvey.length;
   }
 
 }
