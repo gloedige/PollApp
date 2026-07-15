@@ -40,6 +40,7 @@ export class SurveyDetail {
   showDetailOverlay = signal<boolean>(false);
   detailOverlayMessage = signal<string>('');
   surveyIdArrayFromLocalStorage: number[] = computed(() => this.surveyService.getSurveyIdsFromLocalStorage())();
+  readonly stateInfo = computed(() => this.IsSurveyIdExistingInLocalStorage(this.surveyId!) ? 'Completed' : 'Draft');
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
@@ -122,7 +123,7 @@ export class SurveyDetail {
       await this.showInfoByOverlay('You have already completed this survey!');
       return;
     }
-    if (!this.IsAllQuestionsVoted()) {
+    if (!this.surveyService.IsAllQuestionsVoted()) {
       await this.showInfoByOverlay('Please answer all questions before completing the survey!');
       return;
     }
@@ -174,18 +175,5 @@ export class SurveyDetail {
   IsSurveyIdExistingInLocalStorage(surveyId: number): boolean {
     return this.surveyIdArrayFromLocalStorage.includes(surveyId);
   }
-
-  /**
-   * This function checks if all questions in the active survey have been voted on. It compares the unique question IDs of the votes collected for the active survey
-   * with the question IDs of the active survey. If the number of unique question IDs of votes is equal to the number of question IDs of the active survey, it returns true,
-   * indicating that all questions have been voted on; otherwise, it returns false.
-   * @returns - True if all questions have been voted on, false otherwise.
-   */
-  IsAllQuestionsVoted(): boolean {
-    const questionIdsOfVotes = this.votesOfActiveSurvey().map(vote => vote.question_id);
-    const uniqueQuestionIdsOfVotes = Array.from(new Set(questionIdsOfVotes));
-    const questionIdsOfActiveSurvey = this.questions().map(question => question.id);
-    return uniqueQuestionIdsOfVotes.length === questionIdsOfActiveSurvey.length;
-  }
-
 }
+
