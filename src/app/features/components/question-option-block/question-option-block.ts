@@ -23,6 +23,7 @@ export class QuestionOptionBlock {
   readonly hasMultipleOptions = computed(() => this.surveyDetails.getStateOfMultipleOptions(this.questionId()));
   readonly numberOfQuestion = computed(() => this.surveyDetails.getNumberOfQuestion(this.questionId()));
   readonly order_letter = computed(() => this.surveyDetails.order_letter);
+  readonly isSurveyAlreadyVoted = computed(() => this.surveyDetails.IsSurveyIdExistingInLocalStorage(this.surveyDetails.surveyId!));
 
   /**
    * This function checks if a specific option ID is currently selected. It does this by checking if the option ID is included in the 

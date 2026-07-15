@@ -10,17 +10,22 @@
     color: colors.$dark_purple;
     border-radius: 3px;
     cursor: pointer;
-
+    
     &:hover{
         background-color: colors.$secondary_orange_transparent;
     }
-
+    
     &__order-letter{
+        pointer-events: none;
         font-weight: 700;
     }
-
+    
     &__label{
+        pointer-events: none;
         margin: 0;
-        cursor: pointer;
+    }
+
+    &__disabled{
+        cursor: not-allowed;
     }
 }

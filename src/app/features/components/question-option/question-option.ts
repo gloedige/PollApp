@@ -1,4 +1,5 @@
-import { Component, Input, input, output, signal } from '@angular/core';
+import { Component, input, output, computed, inject } from '@angular/core';
+import { SurveyService } from '../../services/survey-service';
 import { UiCheckbox } from '../../../shared/components/ui-checkbox/ui-checkbox';
 
 @Component({
@@ -14,7 +15,10 @@ export class QuestionOption {
   isSelected = input<boolean>(false);
   optionSelected = output<number>();
   isCheckboxForMultipleOptions = input<boolean>(false);
-
+  isSurveyAlreadyVoted = input<boolean>(false);
+  private readonly surveyService = inject(SurveyService);
+  isOptionOfSurveyVoted = computed(() => this.isSurveyAlreadyVoted());
+  
   /**
    * This function is called when the checkbox for an option is toggled. It emits the option ID of the toggled 
    * checkbox to notify the parent component about the selection change.
@@ -30,11 +34,13 @@ export class QuestionOption {
    * @returns - void
    */
   onOptionsSelected() {
-    if (this.optionId() === undefined) return;
+    if (this.optionId() === undefined || this.isOptionOfSurveyVoted()) return;
      else {
       this.onCheckboxToggle(this.optionId());
     }
   }
+
+
 
 }
   
