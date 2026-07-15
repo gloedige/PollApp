@@ -251,4 +251,17 @@ export class SurveyService {
     return surveyIdsString ? JSON.parse(surveyIdsString) : [];
   }
 
+  /**
+   * This function checks if all questions in the active survey have been voted on. It compares the unique question IDs of the votes collected for the active survey
+   * with the question IDs of the active survey. If the number of unique question IDs of votes is equal to the number of question IDs of the active survey, it returns true,
+   * indicating that all questions have been voted on; otherwise, it returns false.
+   * @returns - True if all questions have been voted on, false otherwise.
+   */
+  IsAllQuestionsVoted(): boolean {
+    const questionIdsOfVotes = this.votesOfActiveSurvey().map(vote => vote.question_id);
+    const uniqueQuestionIdsOfVotes = Array.from(new Set(questionIdsOfVotes));
+    const questionIdsOfActiveSurvey = this.dbService.questions().map(question => question.id);
+    return uniqueQuestionIdsOfVotes.length === questionIdsOfActiveSurvey.length;
+  }
+
 }
