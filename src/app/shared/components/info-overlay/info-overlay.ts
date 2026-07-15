@@ -11,7 +11,7 @@ export class InfoOverlay {
   showOverlay = model<boolean>(false);
   overlayMessage = input<string>('');
 
-  readonly TIME_SHOW_OVERLAY_TOTAL = 1300;
+  readonly TIME_SHOW_OVERLAY_TOTAL = 1800;
   readonly TIME_SHOW_OVERLAY_FADE = 300;
 
   /**
