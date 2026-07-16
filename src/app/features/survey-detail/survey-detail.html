@@ -40,10 +40,11 @@
             <div class="survey-detail-footer">
                 <app-button 
                     [buttonType]="'primary'" 
-                    [text]="surveyService.isMobile() ? 'Complete' : 'Complete survey'"
+                    [text]="getCompleteButtonText()"
                     [hideIcon]="!surveyService.isMobile()" 
                     [type]="'button'" 
-                    (click)="completeSurvey()"></app-button>
+                    (click)="completeSurvey()"
+                    [disabled]="isSurveyExpired"></app-button>
             </div>
         </section>
         } @else {

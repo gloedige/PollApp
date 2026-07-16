@@ -34,7 +34,6 @@
         }
 
         &:disabled{
-            background-color: #{colors.$transparent_gray};
             cursor: not-allowed;
         }
     }

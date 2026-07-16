@@ -15,9 +15,9 @@ export class QuestionOption {
   isSelected = input<boolean>(false);
   optionSelected = output<number>();
   isCheckboxForMultipleOptions = input<boolean>(false);
-  isSurveyAlreadyVoted = input<boolean>(false);
+  isSurveyVotedOrExpired = input<boolean>(false);
   private readonly surveyService = inject(SurveyService);
-  isOptionOfSurveyVoted = computed(() => this.isSurveyAlreadyVoted());
+  isOptionOfSurveyVotedOrExpired = computed(() => this.isSurveyVotedOrExpired());
   
   /**
    * This function is called when the checkbox for an option is toggled. It emits the option ID of the toggled 
@@ -34,7 +34,7 @@ export class QuestionOption {
    * @returns - void
    */
   onOptionsSelected() {
-    if (this.optionId() === undefined || this.isOptionOfSurveyVoted()) return;
+    if (this.optionId() === undefined || this.isOptionOfSurveyVotedOrExpired()) return;
      else {
       this.onCheckboxToggle(this.optionId());
     }

@@ -23,7 +23,7 @@ export class QuestionOptionBlock {
   readonly hasMultipleOptions = computed(() => this.surveyDetails.getStateOfMultipleOptions(this.questionId()));
   readonly numberOfQuestion = computed(() => this.surveyDetails.getNumberOfQuestion(this.questionId()));
   readonly order_letter = computed(() => this.surveyDetails.order_letter);
-  readonly isSurveyAlreadyVoted = computed(() => this.surveyDetails.IsSurveyIdExistingInLocalStorage(this.surveyDetails.surveyId!));
+  readonly isSurveyVotedOrExpired = computed(() => this.checkIsSurveyVotedOrExpired());
 
   /**
    * This function checks if a specific option ID is currently selected. It does this by checking if the option ID is included in the 
@@ -80,6 +80,19 @@ export class QuestionOptionBlock {
       this.selectedOptionIds.set([]);
     } else {
       this.selectedOptionIds.set([optionId]);
+    }
+  }
+
+  /**
+   * This function checks if the survey is either voted or expired. It checks if the survey is expired or if the survey ID is already stored in local storage.
+   * If either condition is true, it returns true, indicating that the survey is either voted or expired. Otherwise, it returns false.
+   * @returns - A boolean value indicating whether the survey is either voted or expired.
+   */
+  private checkIsSurveyVotedOrExpired(): boolean {
+    if (this.surveyDetails.isSurveyExpired || this.surveyDetails.IsSurveyIdExistingInLocalStorage(this.surveyDetails.surveyId!)) {
+      return true;
+    } else {
+      return false;
     }
   }
 

@@ -40,7 +40,7 @@ export class SurveyDetail {
   showDetailOverlay = signal<boolean>(false);
   detailOverlayMessage = signal<string>('');
   surveyIdArrayFromLocalStorage: number[] = computed(() => this.surveyService.getSurveyIdsFromLocalStorage())();
-  readonly stateInfo = computed(() => this.IsSurveyIdExistingInLocalStorage(this.surveyId!) ? 'Completed' : 'Draft');
+  readonly stateInfo = computed(() => this.getStateInfo());
 
   /**
    * This function is called when the component is initialized. It adds a CSS class to the body element to apply specific styles for the survey detail page. 
@@ -175,5 +175,35 @@ export class SurveyDetail {
   IsSurveyIdExistingInLocalStorage(surveyId: number): boolean {
     return this.surveyIdArrayFromLocalStorage.includes(surveyId);
   }
+
+  /**
+   * This getter returns a boolean indicating whether the survey has expired. It checks if the survey is in the list of past surveys.
+   * @returns - True if the survey has expired, false otherwise.
+   */
+  get isSurveyExpired(): boolean {
+    const currentSurvey = this.survey();
+    if (currentSurvey === null) {
+      return false;
+    }
+    return this.surveyService.pastSurveys().find(survey => survey.id === currentSurvey.id) !== undefined;
+  }
+
+  /**
+   * This function returns a string indicating the state of the survey based on its expiration status and whether it has been completed by the user.
+   * If the survey has expired, it returns 'Expired'. If the survey ID exists in local storage, it returns 'Completed'. Otherwise, it returns 'Draft'.
+   * @returns - A string indicating the state of the survey: 'Expired', 'Completed', or 'Draft'.
+   */
+  getStateInfo(): string {
+    if (this.isSurveyExpired) return 'Expired';
+    return this.IsSurveyIdExistingInLocalStorage(this.surveyId!) ? 'Completed' : 'Draft';
+  }
+
+  getCompleteButtonText(): string {
+    if (this.isSurveyExpired) {
+      return 'Survey Expired';
+    }
+    return this.surveyService.isMobile() ? 'Complete' : 'Complete survey';
+  }
+
 }
 

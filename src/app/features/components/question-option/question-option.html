@@ -1,4 +1,4 @@
-<div class="question-option-container" (click)="onOptionsSelected()" [class.question-option-container__disabled]="isOptionOfSurveyVoted()">
+<div class="question-option-container" (click)="onOptionsSelected()" [class.question-option-container__disabled]="isOptionOfSurveyVotedOrExpired()">
     <app-ui-checkbox [optionId]="optionId()" [checked]="isSelected()" (toggle)="onCheckboxToggle($event)"></app-ui-checkbox>
     <span class="question-option-container__order-letter">{{order_letter()}}.</span>
     <label class="question-option-container__label" [attr.for]="'opt_' + optionId()">{{ optionText() }}</label>
