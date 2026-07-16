@@ -1,86 +1,104 @@
 # PollApp
 
-A survey/polling application built with Angular 21, featuring a dashboard to browse surveys and a detail view to fill them in.
+PollApp is an Angular survey application for browsing polls, answering questions, reviewing results, and creating new surveys.
 
-## Tech Stack
+## Table of Contents
 
-- **Framework:** Angular 21 (standalone components, signals)
-- **Language:** TypeScript (strict mode)
-- **Styling:** SCSS
-- **Unit Tests:** [Vitest](https://vitest.dev/)
-- **E2E Tests:** [Playwright](https://playwright.dev/)
+- [Demo](#demo)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [How to Use](#how-to-use)
+- [Features](#features)
+- [File Structure](#file-structure)
+- [Technologies](#technologies)
+- [License](#license)
 
-## Prerequisites
+## Demo
 
-- Node.js ≥ 20
-- npm ≥ 10
+Run the app locally and open:
 
-## Getting Started
+- `http://localhost:4200/dashboard` for the survey overview
+- `http://localhost:4200/detail/:id` for an individual survey
 
-Install dependencies:
+When built for its configured production base path, the app is served under `/angular-projects/Poll_App/`.
+
+## Requirements
+
+- Node.js 20 or newer
+- npm 10 or newer
+
+## Installation
 
 ```bash
 npm install
 ```
 
-Start the development server:
+## How to Use
+
+1. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+2. Open `http://localhost:4200/dashboard`.
+3. Browse active or past surveys and filter them by category.
+4. Open a survey detail page to answer questions and submit votes.
+5. Use the survey dialog to create and publish a new survey.
+
+Optional project commands:
 
 ```bash
-ng serve
-```
-
-Open your browser at `http://localhost:4200/`.
-
-## Routes
-
-| Path | Description |
-|------|-------------|
-| `/dashboard` | Survey dashboard — lists all available surveys |
-| `/detail/:id` | Survey detail — view and interact with a single survey |
-
-## Project Structure
-
-```
-src/
-└── app/
-    ├── features/
-    │   ├── components/       # Shared feature components
-    │   ├── interfaces/       # TypeScript interfaces/models
-    │   ├── services/         # Feature services
-    │   ├── survey-dashboard/ # Dashboard feature
-    │   ├── survey-detail/    # Detail feature
-    │   └── survey-dialog/    # Dialog feature
-    ├── shared/               # App-wide shared utilities
-    ├── styles/               # Global style tokens/mixins
-    ├── environments/         # Environment configs
-    ├── app.config.ts
-    └── app.routes.ts
-```
-
-## Running Unit Tests
-
-Uses [Vitest](https://vitest.dev/):
-
-```bash
-ng test
-```
-
-## Running E2E Tests
-
-Uses [Playwright](https://playwright.dev/):
-
-```bash
+npm test -- --watch=false
+npm run build
 npx playwright test
 ```
 
-## Building
+## Features
 
-```bash
-ng build
+- Survey dashboard with active and past survey views
+- Category-based filtering
+- Survey detail view with voting flow
+- Survey result display
+- Survey creation dialog with reactive form validation
+- Support for single-choice and multiple-choice questions
+- Supabase-backed survey, question, option, and vote persistence
+- Unit and end-to-end test coverage
+
+## File Structure
+
+```text
+src/
+└── app/
+    ├── app.config.ts
+    ├── app.routes.ts
+    ├── environments/
+    ├── features/
+    │   ├── components/
+    │   ├── interfaces/
+    │   ├── services/
+    │   ├── survey-dashboard/
+    │   ├── survey-detail/
+    │   └── survey-dialog/
+    ├── shared/
+    │   └── components/
+    └── styles/
+
+pw tests/
+├── example.spec.ts
+└── survey-dialog.spec.ts
 ```
 
-Build artifacts are output to the `dist/` directory.
+## Technologies
+
+- Angular 21
+- TypeScript
+- SCSS
+- RxJS
+- Supabase JavaScript client
+- Vitest
+- Playwright
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the [MIT License](LICENSE).
