@@ -80,7 +80,7 @@
 
         &--checkbox-label{
             font-family: var(--font-family-text-default);
-            font-size: 0.75rem;
+            font-size: 1rem;
             color: colors.$light_purple_3;
             display: flex;
             flex-direction: row;
@@ -137,5 +137,9 @@
     }
     .dialog-question-option-block-add-option-button-container{
         padding: 0;
+    }
+    .dialog-question-option-block-options-header{
+        flex-direction: column;
+        gap: 4px;
     }
 }
