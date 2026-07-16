@@ -194,13 +194,15 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        flex-grow: 1;
         gap: 8px;
 
         &--description{
             align-items: flex-start;
             max-height: 130px;
             margin-top: 4px;
+        }
+        &--flex{
+            flex-grow: 1;
         }
         
     }
@@ -231,11 +233,12 @@
             gap: 4px;
             width: 100%;
         }
-
+        
         &--category-container{
             display: flex;
             flex-direction: column;
             gap: 4px;
+            min-height: 120px;
         }
     
         &__dummy{
@@ -289,9 +292,14 @@
     .form-detail-container{
         flex-direction: column;
         gap: 4px;
-
+        
+        &--category-container{
+            min-height: 100px;
+        }
+        
         &__input-container{
             position: relative;
+            
         }
 
         &--description-container{

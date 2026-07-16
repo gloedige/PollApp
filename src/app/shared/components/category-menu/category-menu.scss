@@ -145,10 +145,13 @@
     color: colors.$primary_orange;
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 767px) {
     .menu-container{
-        &__button{
-            padding: 0;
+        &__error-message{
+            &--category{
+                max-width: 100%;
+            }
         }
     }
+
 }
