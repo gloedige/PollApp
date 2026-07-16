@@ -10,6 +10,7 @@ import { getValidationMessage } from '../../shared/utils/validation-messages.uti
 import { SurveyForm, QuestionGroup } from '../interfaces/survey-form';
 import { Router } from '@angular/router';
 import {InfoOverlay} from "../../shared/components/info-overlay/info-overlay";
+import { NoWhitespaceValidator } from '../../shared/utils/no-whitespace.validators';
 
 @Component({
   selector: 'app-survey-dialog',
@@ -46,14 +47,18 @@ export class SurveyDialog {
     return new FormGroup({
     survey_title: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3)]
+      validators: [
+          Validators.required, 
+          Validators.minLength(3),
+          NoWhitespaceValidator()]
     }),
     description: new FormControl('', {
       nonNullable: true,
       validators: [
           Validators.minLength(10), 
           Validators.maxLength(500), 
-          Validators.pattern('[a-zA-Z0-9äöüÄÖÜ .,!?]*')] 
+          Validators.pattern('[a-zA-Z0-9äöüÄÖÜ .,!?]*'),
+          NoWhitespaceValidator()] 
     }),
     expiry_date: new FormControl('', {
       nonNullable: true
@@ -65,6 +70,7 @@ export class SurveyDialog {
     questions: new FormArray<QuestionGroup>([])
     });
   }
+
   /**
    * This getter retrieves the questions FormArray from the surveyForm. It allows access to the individual question controls and their values 
    * for the survey dialog.
@@ -118,11 +124,11 @@ export class SurveyDialog {
   addQuestion(): void {
     this.questions.push(
       new FormGroup({
-        title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
+        title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3), NoWhitespaceValidator()] }),
         multiple: new FormControl(false, { nonNullable: true }),
         options: new FormArray([
-          new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
-          new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required] }) }),
+          new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required, NoWhitespaceValidator()] }) }),
+          new FormGroup({ text: new FormControl('', { nonNullable: true, validators: [Validators.required, NoWhitespaceValidator()] }) }),
         ]),
       })
     );
