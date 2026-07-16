@@ -11,7 +11,6 @@ export function getValidationMessage( control: AbstractControl | null, label: st
   if (!control || !control.invalid) return null;
 
   const errors: ValidationErrors | null = control.errors;
-  console.log('Validation errors for control:', label, errors);
   if (!errors) return null;
 
   if (errors['required'] || errors['whitespace']) {

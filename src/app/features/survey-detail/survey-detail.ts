@@ -128,6 +128,7 @@ export class SurveyDetail {
       return;
     }
     if (this.votesOfActiveSurvey().length > 0) {
+      await this.showInfoByOverlay('Thank you for completing the survey!');
       await this.dbService.addNewVotes(this.votesOfActiveSurvey());
       this.surveyService.storeSurveyIdsInLocalStorage([this.surveyId!]);
       this.router.navigate(['/dashboard']);
