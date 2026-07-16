@@ -1,5 +1,5 @@
 import { SurveyCard } from '../components/survey-card/survey-card';
-import { ChangeDetectionStrategy, Component, Input, inject, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, Renderer2, computed } from '@angular/core';
 import { Survey } from '../interfaces/survey';
 import { Button } from '../../shared/components/button/button';
 import {DOCUMENT} from "@angular/common";
@@ -24,7 +24,7 @@ export class SurveyDashboard {
   
   readonly surveys = this.surveyService.surveys;
   readonly endingSoonSurveys = this.surveyService.endingSoonSurveys;
-  readonly filteredSurveys = this.surveyService.visibleSurveys;
+  readonly filteredSurveys = computed(() => this.surveyService.visibleSurveys)();
 
   buttonIsActive: boolean = true;
 

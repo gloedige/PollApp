@@ -264,4 +264,14 @@ export class SurveyService {
     return uniqueQuestionIdsOfVotes.length === questionIdsOfActiveSurvey.length;
   }
 
+  /**
+   * This function resets the selected category and survey state to their default values. It sets the selectedCategory signal to null and the surveyState signal to 'active'.
+   * This is useful for clearing any filters applied to the survey list and returning to the default view of active surveys.
+   * @returns - void
+   */
+  resetFilteredSurveys() {
+    this.selectedCategory.set(null);
+    this.surveyState.set('active');
+  }
+
 }

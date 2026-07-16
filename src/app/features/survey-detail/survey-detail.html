@@ -1,6 +1,6 @@
 <div class="main_content_wrapper align-start body-color">
     <header>
-        <a (click)="router.navigate(['/dashboard'])" class="survey-detail-header__logo">
+        <a (click)="router.navigate(['/dashboard']); this.surveyService.resetFilteredSurveys()" class="survey-detail-header__logo">
             <img src="assets/images/logo_purple_dark.png" alt="Logo">
         </a>
         <app-button 
