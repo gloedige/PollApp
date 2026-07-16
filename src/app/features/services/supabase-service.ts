@@ -200,7 +200,7 @@ export class SupabaseService {
     return {
       title: surveyForm.survey_title,
       description: surveyForm.description,
-      expiry_date: surveyForm.expiry_date ? surveyForm.expiry_date : null,
+      expiry_date: surveyForm.expiry_date ? surveyForm.expiry_date : this.getDefaultExpiryDate(),
       category: surveyForm.category,
       questions: surveyForm.questions.map((question) => ({
         question: question.title,
@@ -271,6 +271,17 @@ export class SupabaseService {
     if (optionError) {
       console.error('Error adding new options:', optionError);
     }
+  }
+
+  /**
+   * This function returns the default expiry date for a survey, which is 7 days from the current date.
+   * @returns A string representing the default expiry date in the format 'YYYY-MM-DD'.
+   */
+  getDefaultExpiryDate(): string {
+    const currentDate = new Date();
+    const defaultExpiryDate = new Date(currentDate);
+    defaultExpiryDate.setDate(currentDate.getDate() + 7);
+    return defaultExpiryDate.toISOString().split('T')[0];
   }
 
 
