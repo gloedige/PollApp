@@ -153,7 +153,7 @@
     gap: 16px;
     flex: 1;
     opacity: 1;
-    max-height: 1200px; // ausreichend groß für Inhalt
+    max-height: 1200px;
     overflow: hidden;
     visibility: visible;
     pointer-events: auto;
@@ -209,18 +209,15 @@
             position: absolute;
             max-width: 100%;
             opacity: 0;
-            // transition: transform 0.3s ease, opacity 0.3s ease;
         }
         
         &:not(&--is-open):hover &--hover-img{
             opacity: 1;
-            // transition: transform 0.3s ease, opacity 0.3s ease;
         }
         
         &--is-open &--default-img,
         &--is-open &--hover-img{
             opacity: 0;
-            // transition: transform 0.3s ease, opacity 0.3s ease;
         }
         
         &--is-open &--default-img,

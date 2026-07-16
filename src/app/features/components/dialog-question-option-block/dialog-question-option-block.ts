@@ -76,7 +76,7 @@ export class DialogQuestionOptionBlock {
       const questionIndex = (this.controlContainer as any).formDirective.form.getRawValue().questions.findIndex((q: any) => q.clientId === this.currentQuestionGroup.value.clientId);
       return questionIndex;
     }
-    return -1; // Return -1 if the question control is not found
+    return -1;
   }
 
   /**

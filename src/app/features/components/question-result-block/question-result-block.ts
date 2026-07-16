@@ -14,7 +14,6 @@ import { Question } from '../../interfaces/question';
 export class QuestionResultBlock {
   surveyDetails = inject(SurveyDetail);
   dbService = inject(SupabaseService);
-  // questionId = input<number>(0);
   vote = input<Vote>();
   readonly questionOfResult = input.required<Question>();
 
