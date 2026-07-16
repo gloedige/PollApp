@@ -1,9 +1,8 @@
 <a 
     class="survey-card"  
     [class.survey-card--ending-soon]="showsEndingSoonCard()" 
-    (click)="canOpenDetail ? onSurveyClick($event) : $event.preventDefault()"
-    [attr.aria-disabled]="!canOpenDetail"
-    [attr.tabindex]="canOpenDetail ? 0 : -1">
+    (click)="onSurveyClick($event)"
+    [class.survey-card--empty]="survey().id === 0">
     <div class="survey-card__header">
         <span class="survey-card__category" [class.survey-card__category--ending-soon]="showsEndingSoonCard()">{{ survey().category}}</span>
     </div>

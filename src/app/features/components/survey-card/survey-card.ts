@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Survey } from '../../interfaces/survey';
 import {Router} from "@angular/router";
 import { SurveyService } from '../../services/survey-service';
@@ -80,23 +80,12 @@ export class SurveyCard {
   }
 
   /**
-   * This getter returns a boolean indicating whether the survey detail page can be opened. It checks if the survey is not in the list of past surveys.
-   * @returns - True if the survey detail page can be opened, false otherwise.
-   */
-  get canOpenDetail(): boolean {
-    return this.surveyService.pastSurveys().find(survey => survey.id === this.survey().id) === undefined;
-  }
-
-  /**
    * This function is called when the survey card is clicked. It sets the survey detail in the SurveyService to the current survey, allowing the survey detail 
    * page to display the correct survey information.
    */
   onSurveyClick(event: MouseEvent): void {
     event.preventDefault();
     event.stopImmediatePropagation();
-    if (!this.canOpenDetail) {
-      return;
-    }
     this.surveyService.surveyDetail.set(this.survey());
     this.router.navigate(['/detail', this.survey().id]);
   }
