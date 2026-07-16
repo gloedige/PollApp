@@ -199,6 +199,11 @@ export class SurveyDetail {
     return this.IsSurveyIdExistingInLocalStorage(this.surveyId!) ? 'Completed' : 'Draft';
   }
 
+  /**
+   * This function returns the appropriate text for the "Complete" button based on the survey's expiration status and the device type (mobile or desktop).
+   * If the survey has expired, it returns 'Survey Expired'. If the survey is not expired, it returns 'Complete' for mobile devices and 'Complete survey' for desktop devices.
+   * @returns - A string representing the text to be displayed on the "Complete" button.
+   */
   getCompleteButtonText(): string {
     if (this.isSurveyExpired) {
       return 'Survey Expired';

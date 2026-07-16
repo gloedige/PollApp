@@ -15,8 +15,6 @@ export class CategoryMenu {
   isMenuOpen = signal<boolean>(false);
   isCategorySelected = signal<boolean>(false);
   readonly text = input<string>('Button');
-
-  // selectedCategory = signal<CategoryTypes[number] | null>(null);
   readonly surveyServiceProvider = inject(SurveyService);
   categoryControl = input<FormControl<string> | null>(null);
   categoryTypesArray = computed(() => this.getArrayOfCategoryTypes());
@@ -37,7 +35,6 @@ export class CategoryMenu {
    * @returns void
    */
   ngOnInit() {
-    // this.selectedCategory.set(this.surveyServiceProvider.selectedCategory());
     this.surveyServiceProvider.selectedCategory.set(this.categoryTypesArray()[6]);
   }
 
@@ -73,7 +70,6 @@ export class CategoryMenu {
    * @param category The category to be selected.
    */
   selectCategory(category: CategoryTypes[number]): void {
-    // this.selectedCategory.set(category);
     this.surveyServiceProvider.selectedCategory.set(category);
     this.isCategorySelected.set(true);
 
@@ -92,7 +88,6 @@ export class CategoryMenu {
    * @returns void
    */
   resetCategorySelection(): void {
-    // this.selectedCategory.set(null);
     this.surveyServiceProvider.selectedCategory.set(null);
     this.isCategorySelected.set(false);
 
